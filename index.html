@@ -8,9 +8,9 @@
         body { font-family: sans-serif; margin: 0; background-color: #f4f4f4; text-align: center; }
         header { background-color: #1a2a3a; color: white; padding: 40px; }
         .container { max-width: 900px; margin: 20px auto; background: white; padding: 20px; border-radius: 8px; text-align: left; }
-        .member-cards { display: flex; justify-content: space-around; flex-wrap: wrap; }
-        .card { border: 1px solid #ddd; border-radius: 10px; padding: 15px; width: 250px; margin: 10px; text-align: center; }
-        .card img { width: 150px; border-radius: 10%; }
+        .member-cards { display: flex; justify-content: flex-start; flex-wrap: wrap; gap: 20px; }
+        .card { border: 1px solid #ddd; border-radius: 10px; padding: 15px; width: 200px; margin: 10px; text-align: center; background: white; }
+        .card img { width: 150px; height: 150px; object-fit: cover; border-radius: 10%; }
         .intro-box { background-color: #eef6ff; border-left: 5px solid #3b82f6; padding: 15px; margin: 20px 0; }
     </style>
 </head>
@@ -24,18 +24,244 @@
 <div class="container">
     <h2>About our project</h2>
     <div class="intro-box">
-        <p>这里是简介</p>
+        <p>这里是项目简介。例如</p>
     </div>
 
     <h2>Group Members</h2>
     <div class="member-cards">
         <div class="card">
-            <img src="mrx.jpg" alt="头像">
+            <img src="mrx.jpg" alt="Ruoxuan Mai">
             <h3>Ruoxuan Mai</h3>
             <p>ID: 2364111</p>
         </div>
-        </div>s
+
+        <div class="card">
+            <img src="avatar2.jpg" alt="组员名字">
+            <h3>组员姓名</h3>
+            <p>ID: 23xxxxx</p>
+        </div>
+
+        <div class="card">
+            <img src="avatar3.jpg" alt="组员名字">
+            <h3>组员姓名</h3>
+            <p>ID: 23xxxxx</p>
+        </div>
+
+        <div class="card">
+            <img src="avatar4.jpg" alt="组员名字">
+            <h3>组员姓名</h3>
+            <p>ID: 23xxxxx</p>
+        </div>
+    </div>
 </div>
 
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CPT208 Climb Project</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f0f4f7; /* 更浅更清爽的底色 */
+      color: #34495e;
+      line-height: 1.6;
+    }
+
+    header {
+      /* 换成更有活力的渐变色 */
+      background: linear-gradient(135deg, #1abc9c 0%, #3498db 100%);
+      color: white;
+      padding: 60px 20px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      opacity: 0.9;
+      font-weight: 300;
+      font-size: 1.1em;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: -30px auto 30px; /* 让内容区向上稍微重叠，更有设计感 */
+      padding: 30px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    }
+
+    h2 {
+      color: #2c3e50;
+      border-bottom: 3px solid #1abc9c;
+      display: inline-block;
+      padding-bottom: 5px;
+      margin-bottom: 25px;
+    }
+
+    section {
+      margin-bottom: 50px;
+    }
+
+    .highlight {
+      background: #e8f8f5; /* 浅浅的薄荷绿 */
+      border-left: 6px solid #1abc9c;
+      padding: 20px;
+      border-radius: 10px;
+      font-size: 1.05em;
+    }
+
+    .member-list, .persona-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 25px;
+      margin-top: 20px;
+    }
+
+    .card {
+      border: 1px solid #edf2f7;
+      border-radius: 15px;
+      padding: 25px;
+      background: #ffffff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+      transition: all 0.3s ease; /* 增加平滑过渡 */
+    }
+
+    /* 悬停时的活力反馈 */
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 20px rgba(0,0,0,0.08);
+      border-color: #1abc9c;
+    }
+
+    .card img {
+      width: 130px;
+      height: 130px;
+      object-fit: cover; /* 建议改成 cover 图片填充感更好 */
+      background: #f9fafb;
+      border-radius: 50%; /* 头像改成圆形通常更有亲和力 */
+      display: block;
+      margin: 0 auto 15px;
+      border: 4px solid #f0f4f7;
+    }
+
+    .card h3 {
+      text-align: center;
+      color: #2c3e50;
+      margin-top: 10px;
+    }
+
+    .card p {
+      font-size: 0.95em;
+      margin: 5px 0;
+    }
+
+    /* Persona 卡片的特殊强调 */
+    .persona-list .card {
+      border-top: 5px solid #3498db;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: #95a5a6;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CPT208 XJTLU Student Development Project</h1>
+    <p>Group Portfolio Page - Human-Centered Computing</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>About Our Project</h2>
+      <div class="highlight">
+        <p>
+          xxxxx
+        </p>
+        <p>
+          XXXXX
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Group Members</h2>
+      <div class="member-list">
+        <div class="card">
+          <img src="mrx.jpg" alt="Ruoxuan Mai photo">
+          <h3>Ruoxuan Mai</h3>
+          <p><strong>Student ID:</strong> 2364111</p>
+          <p><i>Team Member</i></p>
+        </div>
+
+        <div class="card">
+          <img src="" alt="photo">
+          <h3></h3>
+          <p><strong>Student ID:</strong></p>
+          <p><i>Team Member</i></p>
+        </div>
+
+        <div class="card">
+          <img src="" alt="photo">
+          <h3></h3>
+          <p><strong>Student ID:</strong> </p>
+          <p><i>Team Member</i></p>
+        </div>
+
+        <div class="card">
+          <img src="" alt="photo">
+          <h3>Youming Yang</h3>
+          <p><strong>Student ID:</strong></p>
+          <p><i>Team Member</i></p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Project Personas</h2>
+      <div class="persona-list">
+        <div class="card">
+          <h3 style="color: #3498db;">Persona 1: </h3>
+          <p style="background:#e1f5fe; color:#01579b; display:inline-block; padding:2px 8px; border-radius:4px; font-size:0.8em; margin-bottom:10px;">Core User (80%)</p>
+          <p><strong>Age:</strong> </p>
+          <p><strong>Occupation:</strong> </p>
+          <p><strong>Goal:</strong> To start climbing safely without feeling overwhelmed by complex gear or lack of partners.</p>
+          <p><strong>Need:</strong> Simple, visual route guides and a way to find other beginners.</p>
+        </div>
+
+        <div class="card">
+          <h3 style="color: #3498db;">Persona 2: Ryan Li</h3>
+          <p style="background:#fff3e0; color:#e65100; display:inline-block; padding:2px 8px; border-radius:4px; font-size:0.8em; margin-bottom:10px;">Extreme User (10%)</p>
+          <p><strong>Age:</strong> 30</p>
+          <p><strong>Occupation:</strong> Office Manager</p>
+          <p><strong>Goal:</strong> Overcome a plateau in climbing skill and find highly specific training data.</p>
+          <p><strong>Need:</strong> Detailed movement analysis and professional-grade performance tracking.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Created for CPT208 Week 2 Homework</p>
+  </footer>
 </body>
 </html>
