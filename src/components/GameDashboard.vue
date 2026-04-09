@@ -1,5 +1,38 @@
 <template>
   <div class="game-dashboard">
+    <!-- Header with User Info and Actions -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 mb-6">
+      <div class="flex items-center justify-between">
+        <!-- User Info -->
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-2xl text-white font-bold">
+            {{ userName.charAt(0).toUpperCase() }}
+          </div>
+          <div>
+            <h3 class="font-bold text-gray-900">{{ userName }}</h3>
+            <span class="px-2 py-0.5 rounded-full text-xs font-medium"
+                  :class="userRole === 'confused' ? 'bg-blue-100 text-blue-700' : 'bg-orange-100 text-orange-700'">
+              {{ userRole === 'confused' ? 'Explorer' : 'Sprint' }}
+            </span>
+          </div>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="flex items-center gap-2">
+          <button @click="$emit('switch-role')"
+                  class="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-sm font-medium transition-all">
+            <span>🔄</span>
+            <span>Switch Role</span>
+          </button>
+          <button @click="$emit('show-advisor')"
+                  class="flex items-center gap-2 px-4 py-2 bg-purple-100 hover:bg-purple-200 text-purple-700 rounded-xl text-sm font-medium transition-all">
+            <span>👨‍💼</span>
+            <span>Advisor</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Dual Value Dashboard -->
     <div class="grid md:grid-cols-2 gap-4 mb-8">
       <!-- Learning Value Card -->
@@ -264,7 +297,9 @@ defineEmits([
   'add-task', 
   'view-story', 
   'reset-progress',
-  'unlock-story'  // 新增：通知父组件剧情已解锁
+  'unlock-story',  // 通知父组件剧情已解锁
+  'switch-role',   // 切换角色
+  'show-advisor'   // 显示顾问面板
 ])
 
 // ============================================

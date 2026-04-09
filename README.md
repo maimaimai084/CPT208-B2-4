@@ -50,7 +50,20 @@ npm install
 npm run dev
 ```
 
-The application will be available at `http://localhost:5173`
+The application will be available at `http://localhost:5173/CPT208-B2-4/`
+
+### Website Sections
+
+| Route | Description |
+|-------|-------------|
+| `/` | Portfolio Home - Project overview and module navigation |
+| `/intro` | Module 2: Introduction & Problem Statement |
+| `/users` | Module 3: Target Users & Personas |
+| `/process` | Module 4: Design Process & Methodology |
+| `/prototype` | Module 5: Prototype & Implementation (existing) |
+| `/evaluation` | Module 6: Evaluation & Results |
+| `/conclusion` | Module 7: Conclusion & Future Work |
+| `/demo` | Live Game Demo - Playable game interface |
 
 ### Build for Production
 
@@ -70,7 +83,20 @@ Output will be in the `dist/` directory.
 │   │   ├── QuizInterface.vue       # Quiz challenge interface
 │   │   ├── AdvisorDashboard.vue    # Advisor analytics panel
 │   │   ├── PrototypeShowcase.vue   # Module 5 poster showcase
+│   │   ├── Navigation.vue          # Top navigation bar
 │   │   └── AchievementNotification.vue # Achievement unlock popup
+│   │   └── portfolio/              # Portfolio page components
+│   │       └── ModuleHeader.vue    # Shared module page header
+│   ├── views/               # Portfolio page views
+│   │   ├── Home.vue                # Portfolio home
+│   │   ├── Introduction.vue        # Module 2: Introduction
+│   │   ├── TargetUsers.vue         # Module 3: User Personas
+│   │   ├── DesignProcess.vue       # Module 4: Design Process
+│   │   ├── Evaluation.vue          # Module 6: Evaluation
+│   │   ├── Conclusion.vue          # Module 7: Conclusion
+│   │   └── GameDemo.vue            # Live game demo entry
+│   ├── router/
+│   │   └── index.js                # Vue Router configuration
 │   ├── data/
 │   │   └── questions.ts            # Question bank data
 │   ├── App.vue              # Main application component
@@ -125,16 +151,15 @@ This project uses AI tools as permitted by course guidelines:
 
 | Tool | Usage | Citation |
 |------|-------|----------|
-| Claude 3.5 Sonnet | Code generation, debugging | [1] |
-| Gemini | UI design inspiration, mockup generation | [2] |
+| Gemini 2.0 | UI design inspiration, mockup generation, content optimization | [1] |
 
-**Core design logic**, user research, and project motivation are original work by the team.
+**Core design logic**, user research, game mechanics, and project motivation are original work by the team.
 
 ### Citation
 
-[1] Claude 3.5 Sonnet, Anthropic, accessed on 2026-04-07, available at https://claude.ai/. Used for code scaffolding and debugging assistance.
-
-[2] Gemini 2.0, Google, accessed on 2026-04-07, available at https://gemini.google.com/. Used for generating low-fi wireframes and UI mockups.
+[1] Gemini 2.0, Google, accessed on 2026-04-07, available at https://gemini.google.com/. 
+    Used for generating low-fi wireframes, UI mockups, and content optimization assistance.
+    All core game mechanics and design decisions were made by the team.
 
 ## 📄 License
 
