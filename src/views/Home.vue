@@ -111,25 +111,42 @@
       </div>
     </section>
 
-    <!-- Quick Stats -->
-    <section class="py-12 px-4 bg-white">
+    <!-- Team Members -->
+    <section class="py-16 px-4 bg-white">
       <div class="max-w-5xl mx-auto">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-          <div>
-            <div class="text-3xl font-bold text-blue-600 mb-1">5</div>
-            <div class="text-sm text-gray-600">Application Stages</div>
+        <h2 class="text-2xl font-bold text-gray-900 text-center mb-12">Meet Our Team</h2>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <!-- Team Member 1: Ruoxuan Mai -->
+          <div class="text-center">
+            <div class="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-blue-100">
+              <img src="/images/mrx.jpg" alt="Ruoxuan Mai" class="w-full h-full object-cover">
+            </div>
+            <h3 class="font-bold text-gray-900">Ruoxuan Mai</h3>
           </div>
-          <div>
-            <div class="text-3xl font-bold text-orange-600 mb-1">2</div>
-            <div class="text-sm text-gray-600">User Types</div>
+
+          <!-- Team Member 2: Yueyue Wang -->
+          <div class="text-center">
+            <div class="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-blue-100">
+              <img src="/images/wyy2.jpg" alt="Yueyue Wang" class="w-full h-full object-cover">
+            </div>
+            <h3 class="font-bold text-gray-900">Yueyue Wang</h3>
           </div>
-          <div>
-            <div class="text-3xl font-bold text-green-600 mb-1">4.6/5</div>
-            <div class="text-sm text-gray-600">User Satisfaction</div>
+
+          <!-- Team Member 3: Yeyun Wan -->
+          <div class="text-center">
+            <div class="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-blue-100">
+              <img src="/images/wyy.jpg" alt="Yeyun Wan" class="w-full h-full object-cover">
+            </div>
+            <h3 class="font-bold text-gray-900">Yeyun Wan</h3>
           </div>
-          <div>
-            <div class="text-3xl font-bold text-purple-600 mb-1">90%</div>
-            <div class="text-sm text-gray-600">Learning Motivation</div>
+
+          <!-- Team Member 4: Ziying Ren -->
+          <div class="text-center">
+            <div class="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-blue-100">
+              <img src="/images/rzy.jpg" alt="Ziying Ren" class="w-full h-full object-cover">
+            </div>
+            <h3 class="font-bold text-gray-900">Ziying Ren</h3>
           </div>
         </div>
       </div>
