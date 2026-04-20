@@ -3,7 +3,7 @@
  * CPT208 B2 Portfolio Website Routes
  */
 
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 // Portfolio Pages
 import Home from '../views/Home.vue'
@@ -90,7 +90,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes,
   scrollBehavior() {
     // Always scroll to top when navigating
