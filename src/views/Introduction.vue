@@ -27,7 +27,7 @@
             Students struggle with scattered information, conflicting advice, and the pressure of deadlines.
           </p>
           <p class="text-gray-700 leading-relaxed">
-            This project addresses these challenges by introducing a gamified approach to postgraduate application support, 
+            This project addresses these challenges by introducing a gamified approach [4] to postgraduate application support, 
             transforming a stressful process into an engaging, structured adventure.
           </p>
         </div>

@@ -1,6 +1,6 @@
-﻿<!--
+<!--
   Evaluation.vue - Module 6: Evaluation & Results
-  展示用户测试数据和反馈
+  展示用户测试数据、量化结果和质性反馈
 -->
 
 <template>
@@ -16,14 +16,18 @@
       <!-- Evaluation Methods -->
       <section class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         <h2 class="text-2xl font-bold text-gray-900 mb-6">🔬 Evaluation Methods</h2>
-        <div class="grid md:grid-cols-2 gap-6">
+        <div class="grid md:grid-cols-3 gap-6">
           <div class="p-6 bg-blue-50 rounded-xl border border-blue-100">
             <h3 class="font-bold text-blue-900 mb-2">Heuristic Evaluation</h3>
-            <p class="text-gray-700 text-sm">Evaluated interface usability based on human-computer interaction design principles</p>
+            <p class="text-gray-700 text-sm">Evaluated interface usability based on human-computer interaction design principles (Nielsen's 10 heuristics) [2].</p>
           </div>
           <div class="p-6 bg-green-50 rounded-xl border border-green-100">
             <h3 class="font-bold text-green-900 mb-2">User Testing</h3>
-            <p class="text-gray-700 text-sm">Pilot testing with 8 students and 2 advisors completing core game levels</p>
+            <p class="text-gray-700 text-sm">Pilot testing with 8 students and 2 advisors completing core game levels and providing task-based feedback.</p>
+          </div>
+          <div class="p-6 bg-purple-50 rounded-xl border border-purple-100">
+            <h3 class="font-bold text-purple-900 mb-2">System Usability Scale (SUS)</h3>
+            <p class="text-gray-700 text-sm">Standardized 10-item questionnaire measuring perceived usability of the game interface [3].</p>
           </div>
         </div>
       </section>
@@ -40,7 +44,7 @@
                 <div class="text-sm text-gray-500">Confused Type</div>
               </div>
             </div>
-            <p class="text-gray-700 italic">5 minutes per level fits perfectly into my break time. Unlocking strategies with points feels rewarding!</p>
+            <p class="text-gray-700 italic">"5 minutes per level fits perfectly into my break time. Unlocking strategies with points feels rewarding!"</p>
           </div>
           <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
             <div class="flex items-center gap-3 mb-4">
@@ -50,7 +54,7 @@
                 <div class="text-sm text-gray-500">Sprint Type</div>
               </div>
             </div>
-            <p class="text-gray-700 italic">The essay writing scenarios are very practical. The tips I unlocked helped me avoid common mistakes.</p>
+            <p class="text-gray-700 italic">"The essay writing scenarios are very practical. The tips I unlocked helped me avoid common mistakes."</p>
           </div>
           <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
             <div class="flex items-center gap-3 mb-4">
@@ -60,7 +64,7 @@
                 <div class="text-sm text-gray-500">Secondary User</div>
               </div>
             </div>
-            <p class="text-gray-700 italic">Students now understand the basics before coming to me. I can focus on personalized guidance instead of repetitive Q&A.</p>
+            <p class="text-gray-700 italic">"Students now understand the basics before coming to me. I can focus on personalized guidance instead of repetitive Q&A."</p>
           </div>
         </div>
       </section>
@@ -69,8 +73,9 @@
       <section class="mb-12 bg-gradient-to-r from-blue-600 to-purple-700 rounded-2xl p-8 text-white">
         <h2 class="text-2xl font-bold mb-4">🔍 Key Findings</h2>
         <p class="text-lg leading-relaxed">
-          The points-based story unlocking mechanism effectively enhances students motivation and knowledge retention in postgraduate application preparation. 
-          Gamification proves to be an effective complement to traditional college guidance.
+          The points-based story unlocking mechanism effectively enhances students' motivation and knowledge retention in postgraduate application preparation. 
+          Gamification proves to be an effective complement to traditional college guidance. The dual-value system successfully 
+          distinguishes theoretical learning from practical skills, giving students clear feedback on their progress.
         </p>
       </section>
 

@@ -1,6 +1,6 @@
-﻿<!--
+<!--
   DesignProcess.vue - Module 4: Design Process
-  展示设计方法论、Crazy 8s、设计决策
+  展示设计方法论、设计概念、设计决策
 -->
 
 <template>
@@ -15,31 +15,58 @@
       
       <!-- Project Objectives -->
       <section class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6">🎯 4 Project Objectives</h2>
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">🎯 4 Specific Project Objectives</h2>
         <div class="grid md:grid-cols-2 gap-4">
           <div class="flex items-start gap-4 p-4 bg-blue-50 rounded-xl">
             <div class="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">1</div>
-            <p class="text-gray-700">Break down 5 core application stages into text-based game format</p>
+            <p class="text-gray-700">Deconstruct the 5 core stages of Master's applications, using a text-based game to let students master the application process and knowledge.</p>
           </div>
           <div class="flex items-start gap-4 p-4 bg-orange-50 rounded-xl">
             <div class="w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">2</div>
-            <p class="text-gray-700">Create dual-value system (Learning + Task) to motivate fragmented learning</p>
+            <p class="text-gray-700">Create a dual-metric system of "Learning Points + Task Points" to incentivize students' fragmented learning.</p>
           </div>
           <div class="flex items-start gap-4 p-4 bg-green-50 rounded-xl">
             <div class="w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">3</div>
-            <p class="text-gray-700">Unlock key strategies when reaching value thresholds</p>
+            <p class="text-gray-700">Trigger key storylines upon reaching point thresholds, unlocking practical Master's application guides and useful templates.</p>
           </div>
           <div class="flex items-start gap-4 p-4 bg-purple-50 rounded-xl">
             <div class="w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">4</div>
-            <p class="text-gray-700">Build lightweight advisor portal for hybrid online-offline guidance</p>
+            <p class="text-gray-700">Build a lightweight auxiliary dashboard for advisors to realize a mixed scenario of online game-based learning + offline targeted guidance.</p>
           </div>
         </div>
       </section>
 
-      <!-- Design Concept -->
+      <!-- Design Process Model -->
+      <section class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">🔄 Design Process</h2>
+        <p class="text-gray-600 mb-4">We followed the Interaction Design Lifecycle Model by Sharp, Preece & Rogers [1].</p>
+        <div class="flex justify-center mb-6">
+          <img src="/images/docx/module4_process/image_003.png" alt="Interaction Design Lifecycle Model" class="max-w-full rounded-lg border border-gray-100">
+        </div>
+        <div class="grid md:grid-cols-4 gap-4 text-center">
+          <div class="p-4 bg-blue-50 rounded-xl">
+            <div class="font-bold text-blue-900">Establishing Requirements</div>
+            <p class="text-sm text-gray-600 mt-1">User research & pain points</p>
+          </div>
+          <div class="p-4 bg-green-50 rounded-xl">
+            <div class="font-bold text-green-900">Designing Alternatives</div>
+            <p class="text-sm text-gray-600 mt-1">Brainstorming & Crazy 8s</p>
+          </div>
+          <div class="p-4 bg-orange-50 rounded-xl">
+            <div class="font-bold text-orange-900">Prototyping</div>
+            <p class="text-sm text-gray-600 mt-1">Low-fi → High-fi evolution</p>
+          </div>
+          <div class="p-4 bg-purple-50 rounded-xl">
+            <div class="font-bold text-purple-900">Evaluating</div>
+            <p class="text-sm text-gray-600 mt-1">Heuristic & user testing</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Core Design Concept -->
       <section class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         <h2 class="text-2xl font-bold text-gray-900 mb-6">💡 Core Design Concept</h2>
-        <div class="bg-gray-50 rounded-xl p-6">
+        <div class="bg-gray-50 rounded-xl p-6 mb-6">
           <div class="flex flex-wrap items-center justify-center gap-2 text-center">
             <span class="px-4 py-2 bg-white rounded-lg shadow-sm">Register</span>
             <span class="text-gray-400">→</span>
@@ -54,55 +81,65 @@
             <span class="px-4 py-2 bg-pink-100 rounded-lg shadow-sm">Get Strategies</span>
           </div>
         </div>
+        <div class="flex justify-center">
+          <img src="/images/docx/module4_process/image_002.jpeg" alt="Core Design Concepts" class="max-w-full rounded-lg border border-gray-100">
+        </div>
       </section>
 
-      <!-- Crazy 8s -->
-      <section class="mb-12">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6">✏️ Crazy 8s Sketches</h2>
-        <p class="text-gray-600 mb-6">8 ideas generated in 8 minutes</p>
-        <div class="grid grid-cols-4 gap-4">
-          <div v-for="n in 8" :key="n" class="aspect-square bg-white rounded-xl border-2 border-dashed border-gray-300 flex flex-col items-center justify-center">
-            <span class="text-4xl mb-2">📝</span>
-            <span class="text-sm text-gray-500">Sketch {{ n }}</span>
+      <!-- Double Diamond -->
+      <section class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">💎 Double Diamond Design Process</h2>
+        <div class="flex justify-center mb-6">
+          <img src="/images/docx/module4_process/image_001.jpeg" alt="Double Diamond Design Process" class="max-w-full rounded-lg border border-gray-100">
+        </div>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="font-bold text-blue-900 mb-2">🔵 Discover & Define (Research)</h3>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>• User surveys (n=90) and advisor interviews (n=3)</li>
+              <li>• Pain point analysis: fragmented info, dull formats, no guidance</li>
+              <li>• Persona creation: Confused Year 2 & Sprint Year 3</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-bold text-orange-900 mb-2">🟠 Develop & Deliver (Design)</h3>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>• Crazy 8s brainstorming for game mechanics</li>
+              <li>• Low-fi sketching and high-fi prototyping</li>
+              <li>• Iterative design based on user feedback</li>
+            </ul>
           </div>
         </div>
       </section>
 
-      <!-- Design Decisions -->
+      <!-- Engaging Highlights -->
       <section class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6">🤔 Key Design Decisions</h2>
-        <div class="overflow-x-auto">
-          <table class="w-full">
-            <thead>
-              <tr class="border-b-2 border-gray-200">
-                <th class="text-left py-3 px-4">Aspect</th>
-                <th class="text-left py-3 px-4">Alternative</th>
-                <th class="text-left py-3 px-4">Chosen ✅</th>
-                <th class="text-left py-3 px-4">Rationale</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="border-b border-gray-100">
-                <td class="py-4 px-4 font-medium">Game Format</td>
-                <td class="py-4 px-4 text-gray-500">Card/Puzzle Game</td>
-                <td class="py-4 px-4"><span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Text Adventure</span></td>
-                <td class="py-4 px-4 text-gray-600">Lightweight, low dev cost</td>
-              </tr>
-              <tr class="border-b border-gray-100">
-                <td class="py-4 px-4 font-medium">Points System</td>
-                <td class="py-4 px-4 text-gray-500">Single Score</td>
-                <td class="py-4 px-4"><span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Dual Values</span></td>
-                <td class="py-4 px-4 text-gray-600">Distinguish learning vs doing</td>
-              </tr>
-              <tr class="border-b border-gray-100">
-                <td class="py-4 px-4 font-medium">Story Trigger</td>
-                <td class="py-4 px-4 text-gray-500">Level Completion</td>
-                <td class="py-4 px-4"><span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Points Threshold</span></td>
-                <td class="py-4 px-4 text-gray-600">Motivates repeated learning</td>
-              </tr>
-            </tbody>
-          </table>
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">✨ Engaging Highlights</h2>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="p-4 bg-blue-50 rounded-xl border border-blue-100">
+            <div class="text-2xl mb-2">⏱️</div>
+            <h4 class="font-bold text-gray-900 mb-1">Fragmented (Micro-learning)</h4>
+            <p class="text-sm text-gray-600">5-10 minutes per stage, perfectly adapting to breaks and daily commutes, aligning with students' scattered schedules.</p>
+          </div>
+          <div class="p-4 bg-green-50 rounded-xl border border-green-100">
+            <div class="text-2xl mb-2">🎯</div>
+            <h4 class="font-bold text-gray-900 mb-1">Customization</h4>
+            <p class="text-sm text-gray-600">Tailored to XJTLU students' application preferences, featuring exclusive storylines and question banks.</p>
+          </div>
+          <div class="p-4 bg-orange-50 rounded-xl border border-orange-100">
+            <div class="text-2xl mb-2">🎮</div>
+            <h4 class="font-bold text-gray-900 mb-1">Interactivity</h4>
+            <p class="text-sm text-gray-600">Student decisions directly impact point accumulation, and narrative outcomes provide feedback for practical application steps.</p>
+          </div>
         </div>
+      </section>
+
+      <!-- Reference -->
+      <section class="mb-12 bg-gray-100 rounded-2xl p-6">
+        <h3 class="font-bold text-gray-700 mb-2">Reference</h3>
+        <p class="text-sm text-gray-600">
+          [1] Sharp, H., Preece, J., & Rogers, Y. (2007). Interaction design: beyond human-computer interaction (2nd ed.). Wiley.
+        </p>
       </section>
 
     </main>

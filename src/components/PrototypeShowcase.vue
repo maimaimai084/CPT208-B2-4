@@ -1,56 +1,54 @@
 <template>
   <div class="prototype-showcase min-h-screen bg-gray-50">
-    <!-- Header -->
-    <div class="bg-white shadow-sm sticky top-0 z-40">
-      <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-        <h1 class="text-2xl font-bold text-gray-900">Module 5: Prototype & Implementation</h1>
-        <button @click="$emit('back')" 
-                class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-700 transition-colors">
-          ← Back to Game
-        </button>
-      </div>
-    </div>
+    <ModuleHeader
+      title="Prototype & Implementation"
+      subtitle="From sketches to interactive prototype"
+      icon="📱"
+    />
 
     <!-- Main Content -->
-    <main class="max-w-6xl mx-auto px-4 py-8">
-      
+    <main class="max-w-6xl mx-auto px-4 py-8 pb-20">
+
       <!-- Section 1: Evolution -->
       <section class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
           <span>📈</span> Prototype Evolution
         </h2>
-        
-        <div class="grid md:grid-cols-2 gap-8">
-          <!-- Low-fi -->
-          <div>
-            <h3 class="text-lg font-semibold text-gray-700 mb-4">Low-Fi Sketches</h3>
-            <div class="grid grid-cols-2 gap-4">
-              <div v-for="(sketch, index) in lowfiSketches" :key="index"
-                   class="aspect-square bg-gray-100 rounded-xl flex items-center justify-center text-4xl">
-                {{ sketch.icon }}
-              </div>
-            </div>
+
+        <!-- Low-Fi: full width row -->
+        <div class="mb-8">
+          <h3 class="text-lg font-semibold text-gray-700 mb-4">Low-Fi Sketches</h3>
+          <div class="rounded-xl overflow-hidden border border-gray-200 max-w-2xl mx-auto">
+            <img src="/images/docx/module5_prototype/image_004.jpeg" alt="Low-fi sketch version 1.0" class="w-full">
           </div>
-          
-          <!-- High-fi -->
-          <div>
-            <h3 class="text-lg font-semibold text-gray-700 mb-4">High-Fi Prototype</h3>
-            <div class="grid grid-cols-2 gap-4">
-              <div v-for="(screen, index) in hifiScreens" :key="index"
-                   class="aspect-square bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl flex items-center justify-center text-4xl border-2 border-blue-100">
-                {{ screen.icon }}
-              </div>
-            </div>
+          <p class="text-sm text-gray-500 text-center mt-2">Version 1.0 — Hand-drawn wireframe</p>
+        </div>
+
+        <!-- High-Fi: full width row below -->
+        <div class="mb-8">
+          <h3 class="text-lg font-semibold text-gray-700 mb-4">High-Fi Prototype</h3>
+          <div class="rounded-xl overflow-hidden border border-gray-200 max-w-2xl mx-auto">
+            <img src="/images/docx/module5_prototype/image_006.png" alt="High-fi prototype" class="w-full">
           </div>
+          <p class="text-sm text-gray-500 text-center mt-2">Current version — Interactive prototype</p>
         </div>
 
         <!-- 3 Key Improvements -->
         <div class="mt-8 grid md:grid-cols-3 gap-4">
-          <div v-for="(improvement, index) in improvements" :key="index"
-               class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 border border-blue-200">
-            <div class="text-2xl mb-2">{{ improvement.icon }}</div>
-            <h4 class="font-bold text-gray-900">{{ improvement.title }}</h4>
-            <p class="text-sm text-gray-600 mt-1">{{ improvement.desc }}</p>
+          <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 border border-blue-200">
+            <div class="text-2xl mb-2">📱💻</div>
+            <h4 class="font-bold text-gray-900">Single → Dual Platform</h4>
+            <p class="text-sm text-gray-600 mt-1">Mobile for fragmented learning + PC for deep reading</p>
+          </div>
+          <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-4 border border-green-200">
+            <div class="text-2xl mb-2">📊</div>
+            <h4 class="font-bold text-gray-900">Value Visualization</h4>
+            <p class="text-sm text-gray-600 mt-1">Real-time progress bars for Learning & Task values with unlock nodes</p>
+          </div>
+          <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-4 border border-purple-200">
+            <div class="text-2xl mb-2">✨</div>
+            <h4 class="font-bold text-gray-900">Simplified Interface</h4>
+            <p class="text-sm text-gray-600 mt-1">Focus on core task entries, reduce visual distraction and cognitive load</p>
           </div>
         </div>
       </section>
@@ -60,7 +58,7 @@
         <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
           <span>🏗️</span> System Architecture
         </h2>
-        
+
         <div class="bg-gray-50 rounded-xl p-6">
           <div class="space-y-4">
             <div v-for="(layer, index) in architectureLayers" :key="index"
@@ -80,6 +78,25 @@
             </div>
           </div>
         </div>
+
+        <div class="mt-6 grid md:grid-cols-2 gap-4">
+          <div class="p-4 bg-blue-50 rounded-xl">
+            <h4 class="font-bold text-blue-900 mb-2">Frontend Layer</h4>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>• Mobile: iOS/Android app for micro-learning</li>
+              <li>• PC: Desktop/web portal for immersive deep work</li>
+              <li>• Advisor: Data panel for student progress review</li>
+            </ul>
+          </div>
+          <div class="p-4 bg-orange-50 rounded-xl">
+            <h4 class="font-bold text-orange-900 mb-2">Core System</h4>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>• Dual-value points system (Learning + Task)</li>
+              <li>• 5-stage Master's application story database</li>
+              <li>• Differentiated question banks for two personas</li>
+            </ul>
+          </div>
+        </div>
       </section>
 
       <!-- Section 3: Core Features -->
@@ -87,7 +104,7 @@
         <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
           <span>⚙️</span> Core Features (Step 1-5)
         </h2>
-        
+
         <div class="space-y-4">
           <div v-for="(step, index) in coreSteps" :key="index"
                class="flex items-start gap-4 p-4 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors">
@@ -107,7 +124,7 @@
         <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
           <span>🎯</span> Design Decisions
         </h2>
-        
+
         <div class="overflow-x-auto">
           <table class="w-full">
             <thead>
@@ -140,7 +157,7 @@
         <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
           <span>🎮</span> 5 Application Stages
         </h2>
-        
+
         <div class="grid md:grid-cols-5 gap-4">
           <div v-for="(stage, index) in stages" :key="index"
                class="text-center p-4 rounded-xl border-2 transition-all"
@@ -157,7 +174,7 @@
         <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
           <span>📊</span> Dual Value System
         </h2>
-        
+
         <div class="grid md:grid-cols-2 gap-6">
           <div class="bg-blue-50 rounded-xl p-6 border-2 border-blue-200">
             <div class="flex items-center gap-3 mb-4">
@@ -167,7 +184,7 @@
             <p class="text-gray-700 mb-4">Earned through answering quiz questions correctly. Represents theoretical knowledge about postgraduate applications.</p>
             <div class="text-sm text-blue-700 font-medium">Unlock: PS Writing Guide at 100 points</div>
           </div>
-          
+
           <div class="bg-orange-50 rounded-xl p-6 border-2 border-orange-200">
             <div class="flex items-center gap-3 mb-4">
               <span class="text-3xl">✅</span>
@@ -183,8 +200,8 @@
       <section class="bg-gray-100 rounded-2xl p-6">
         <h3 class="font-bold text-gray-700 mb-2">AI Usage Declaration</h3>
         <p class="text-sm text-gray-600">
-          [1] Gemini, version 2.0, accessed on 2026-04-07, available at https://gemini.google.com/. 
-          Used for generating low-fi sketch wireframes, high-fi UI mockups, system architecture diagram, 
+          [1] Gemini, version 2.0, accessed on 2026-04-07, available at https://gemini.google.com/.
+          Used for generating low-fi sketch wireframes, high-fi UI mockups, system architecture diagram,
           and design decision visualization in the prototype section.
         </p>
       </section>
@@ -194,110 +211,68 @@
 
 <script setup>
 /**
- * Prototype & Implementation 展示页面
- * 用于海报模块5的内容展示
- * 包含：原型演变、系统架构、核心功能、设计决策等
+ * Prototype & Implementation Showcase
+ * Module 5 content with images from docx files
  */
 
-defineEmits(['back'])
+import ModuleHeader from './portfolio/ModuleHeader.vue'
 
-// ============================================
-// 数据定义
-// ============================================
-
-// Low-fi草图数据
-const lowfiSketches = [
-  { icon: '📱', name: 'Home Screen' },
-  { icon: '🎯', name: 'Level Selection' },
-  { icon: '📊', name: 'Stats Panel' },
-  { icon: '🎁', name: 'Story Modal' }
-]
-
-// High-fi屏幕数据
-const hifiScreens = [
-  { icon: '📱', name: 'Dashboard' },
-  { icon: '🎯', name: 'Levels' },
-  { icon: '📊', name: 'Progress' },
-  { icon: '🎁', name: 'Unlock' }
-]
-
-// 3大优化点
-const improvements = [
-  { 
-    icon: '📱💻', 
-    title: 'Single → Dual Platform', 
-    desc: 'Mobile for fragmented learning + PC for deep reading' 
-  },
-  { 
-    icon: '📊', 
-    title: 'Value Visualization', 
-    desc: 'Real-time progress bars for Learning & Task values' 
-  },
-  { 
-    icon: '✨', 
-    title: 'Simplified Interface', 
-    desc: 'Focus on core tasks, reduce visual distraction' }
-]
-
-// 系统架构层
 const architectureLayers = [
-  { 
-    icon: '🖥️', 
-    name: 'Frontend Layer', 
+  {
+    icon: '🖥️',
+    name: 'Frontend Layer',
     desc: 'Mobile/PC Dual Interface: Stages / Stats / Stories',
     bgClass: 'bg-blue-50 border-blue-200'
   },
-  { 
-    icon: '⚙️', 
-    name: 'Core System', 
+  {
+    icon: '⚙️',
+    name: 'Core System',
     desc: 'Points System + Story Database + Question Bank',
     bgClass: 'bg-orange-50 border-orange-200'
   },
-  { 
-    icon: '💾', 
-    name: 'Data Layer', 
-    desc: 'User Progress / Points Records / Learning Data',
+  {
+    icon: '💾',
+    name: 'Data Layer',
+    desc: 'User Progress / Points Records / Learning Data (LocalStorage)',
     bgClass: 'bg-gray-100 border-gray-300'
   },
-  { 
-    icon: '👨‍💼', 
-    name: 'Advisor Portal', 
+  {
+    icon: '👨‍💼',
+    name: 'Advisor Portal',
     desc: 'Student Analytics Panel / Strategy Library',
     bgClass: 'bg-purple-50 border-purple-200'
   }
 ]
 
-// 核心功能步骤
 const coreSteps = [
   { title: 'Register & Select Role', desc: 'Choose your postgraduate application role: Explorer (Year 2) or Sprint (Year 3)' },
   { title: 'Enter Application Stages', desc: 'Complete 5 stages: School Selection → Documents → Essay → Application → Interview' },
-  { title: 'Accumulate Values', desc: 'Earn Learning Value (knowledge) and Task Value (practice) through quizzes' },
-  { title: 'Unlock Strategies', desc: 'Reach value thresholds to unlock exclusive postgraduate application guides' },
+  { title: 'Accumulate Values', desc: 'Earn Learning Value (knowledge) and Task Value (practice) through quizzes and simulations' },
+  { title: 'Unlock Strategies', desc: 'Reach value thresholds to unlock exclusive postgraduate application guides and templates' },
   { title: 'Advisor Guidance', desc: 'Advisors review student progress data for targeted offline support' }
 ]
 
-// 设计决策数据
 const designDecisions = [
-  { 
-    aspect: 'Game Format', 
-    alternative: 'Card/Puzzle Game', 
-    chosen: 'Text Adventure', 
-    rationale: 'Lightweight, low dev cost, fits fragmented learning' 
+  {
+    aspect: 'Game Format',
+    alternative: 'Card/Puzzle Game',
+    chosen: 'Text Adventure',
+    rationale: 'Lightweight, low dev cost, fits fragmented learning, dual-platform friendly'
   },
-  { 
-    aspect: 'Points System', 
-    alternative: 'Single Score', 
-    chosen: 'Dual Values (Learning + Task)', 
-    rationale: 'Distinguish "learning" vs "doing", fits application needs' 
+  {
+    aspect: 'Points System',
+    alternative: 'Single Score',
+    chosen: 'Dual Values (Learning + Task)',
+    rationale: 'Distinguish "learning" vs "doing", fits application "study + practice" needs'
   },
-  { 
-    aspect: 'Story Trigger', 
-    alternative: 'Level Completion', 
-    chosen: 'Points Threshold', 
-    rationale: 'Motivates repeated learning, prevents "quit after clear"' }
+  {
+    aspect: 'Story Trigger',
+    alternative: 'Level Completion',
+    chosen: 'Points Threshold',
+    rationale: 'Motivates repeated learning, prevents "quit after clear", enhances stickiness'
+  }
 ]
 
-// 5大关卡
 const stages = [
   { icon: '🎓', name: 'School Selection', borderClass: 'border-blue-200 bg-blue-50' },
   { icon: '📄', name: 'Documents', borderClass: 'border-green-200 bg-green-50' },
@@ -308,7 +283,6 @@ const stages = [
 </script>
 
 <style scoped>
-/* 页面过渡动画 */
 .prototype-showcase {
   animation: fadeIn 0.5s ease-out;
 }
@@ -318,7 +292,6 @@ const stages = [
   to { opacity: 1; }
 }
 
-/* 表格样式优化 */
 table {
   border-collapse: separate;
   border-spacing: 0;
@@ -334,12 +307,11 @@ td:last-child {
   border-radius: 0 8px 8px 0;
 }
 
-/* 响应式优化 */
 @media (max-width: 768px) {
   .prototype-showcase h1 {
     font-size: 1.25rem;
   }
-  
+
   table {
     font-size: 0.875rem;
   }
