@@ -28,7 +28,7 @@
         <div class="mb-8">
           <h3 class="text-lg font-semibold text-gray-700 mb-4">High-Fi Prototype</h3>
           <div class="rounded-xl overflow-hidden border border-gray-200 max-w-2xl mx-auto">
-            <img src="/images/docx/module5_prototype/image_006.png" alt="High-fi prototype" class="w-full">
+            <img src="/images/docx/module5_poster/image_006.png" alt="High-fi prototype" class="w-full">
           </div>
           <p class="text-sm text-gray-500 text-center mt-2">Current version — Interactive prototype</p>
         </div>
