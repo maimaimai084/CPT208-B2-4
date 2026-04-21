@@ -120,7 +120,7 @@
           <!-- Team Member 1: Ruoxuan Mai -->
           <div class="text-center">
             <div class="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-blue-100">
-              <img src="/images/mrx.jpg" alt="Ruoxuan Mai" class="w-full h-full object-cover">
+              <img src="/images/team/mrx.jpg" alt="Ruoxuan Mai" class="w-full h-full object-cover">
             </div>
             <h3 class="font-bold text-gray-900">Ruoxuan Mai</h3>
           </div>
@@ -128,7 +128,7 @@
           <!-- Team Member 2: Yueyue Wang -->
           <div class="text-center">
             <div class="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-blue-100">
-              <img src="/images/wyy2.jpg" alt="Yueyue Wang" class="w-full h-full object-cover">
+              <img src="/images/team/wyy2.jpg" alt="Yueyue Wang" class="w-full h-full object-cover">
             </div>
             <h3 class="font-bold text-gray-900">Yueyue Wang</h3>
           </div>
@@ -136,7 +136,7 @@
           <!-- Team Member 3: Yeyun Wan -->
           <div class="text-center">
             <div class="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-blue-100">
-              <img src="/images/wyy.jpg" alt="Yeyun Wan" class="w-full h-full object-cover">
+              <img src="/images/team/wyy.jpg" alt="Yeyun Wan" class="w-full h-full object-cover">
             </div>
             <h3 class="font-bold text-gray-900">Yeyun Wan</h3>
           </div>
@@ -144,7 +144,7 @@
           <!-- Team Member 4: Ziying Ren -->
           <div class="text-center">
             <div class="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-blue-100">
-              <img src="/images/rzy.jpg" alt="Ziying Ren" class="w-full h-full object-cover">
+              <img src="/images/team/rzy.jpg" alt="Ziying Ren" class="w-full h-full object-cover">
             </div>
             <h3 class="font-bold text-gray-900">Ziying Ren</h3>
           </div>

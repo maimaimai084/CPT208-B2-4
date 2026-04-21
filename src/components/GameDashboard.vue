@@ -1,38 +1,5 @@
 <template>
   <div class="game-dashboard">
-    <!-- Header with User Info and Actions -->
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 mb-6">
-      <div class="flex items-center justify-between">
-        <!-- User Info -->
-        <div class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-2xl text-white font-bold">
-            {{ userName.charAt(0).toUpperCase() }}
-          </div>
-          <div>
-            <h3 class="font-bold text-gray-900">{{ userName }}</h3>
-            <span class="px-2 py-0.5 rounded-full text-xs font-medium"
-                  :class="userRole === 'confused' ? 'bg-blue-100 text-blue-700' : 'bg-orange-100 text-orange-700'">
-              {{ userRole === 'confused' ? 'Explorer' : 'Sprint' }}
-            </span>
-          </div>
-        </div>
-        
-        <!-- Action Buttons -->
-        <div class="flex items-center gap-2">
-          <button @click="$emit('switch-role')"
-                  class="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-sm font-medium transition-all">
-            <span>🔄</span>
-            <span>Switch Role</span>
-          </button>
-          <button @click="$emit('show-advisor')"
-                  class="flex items-center gap-2 px-4 py-2 bg-purple-100 hover:bg-purple-200 text-purple-700 rounded-xl text-sm font-medium transition-all">
-            <span>👨‍💼</span>
-            <span>Advisor</span>
-          </button>
-        </div>
-      </div>
-    </div>
-
     <!-- Dual Value Dashboard -->
     <div class="grid md:grid-cols-2 gap-4 mb-8">
       <!-- Learning Value Card -->
@@ -203,63 +170,6 @@
         </div>
       </div>
     </div>
-
-    <!-- ============================================ -->
-    <!-- 剧情解锁弹窗 - 新增功能 -->
-    <!-- ============================================ -->
-    <Transition name="modal">
-      <div v-if="showStoryUnlockModal" 
-           class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-           @click.self="closeStoryModal">
-        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full overflow-hidden transform transition-all">
-          <!-- 弹窗头部 - 渐变背景 -->
-          <div class="bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 p-8 text-center relative overflow-hidden">
-            <!-- 装饰性背景图案 -->
-            <div class="absolute inset-0 opacity-20">
-              <div class="absolute top-4 left-4 text-2xl animate-pulse">✨</div>
-              <div class="absolute top-8 right-8 text-xl animate-pulse delay-100">🎉</div>
-              <div class="absolute bottom-4 left-8 text-lg animate-pulse delay-200">⭐</div>
-            </div>
-            
-            <div class="relative z-10">
-              <div class="text-6xl mb-4 animate-bounce">🏆</div>
-              <h3 class="text-2xl font-bold text-white mb-2">Strategy Unlocked!</h3>
-              <p class="text-white/90 text-sm">{{ unlockedStoryData.title }}</p>
-            </div>
-          </div>
-          
-          <!-- 弹窗内容 -->
-          <div class="p-6">
-            <div class="bg-gray-50 rounded-xl p-4 mb-4 border border-gray-200">
-              <div class="flex items-center gap-3 mb-3">
-                <div class="w-12 h-12 bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg flex items-center justify-center text-2xl">
-                  {{ unlockedStoryData.icon }}
-                </div>
-                <div>
-                  <h4 class="font-bold text-gray-900">{{ unlockedStoryData.title }}</h4>
-                  <p class="text-xs text-gray-500">Strategy Guide • Exclusive Content</p>
-                </div>
-              </div>
-              <p class="text-sm text-gray-600 leading-relaxed">
-                {{ unlockedStoryData.description }}
-              </p>
-            </div>
-            
-            <!-- 按钮组 -->
-            <div class="flex gap-3">
-              <button @click="viewUnlockedStory" 
-                      class="flex-1 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl">
-                View Strategy
-              </button>
-              <button @click="closeStoryModal" 
-                      class="px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-semibold transition-all">
-                Continue
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </Transition>
   </div>
 </template>
 
@@ -267,11 +177,6 @@
 /**
  * 游戏主面板组件
  * 展示双数值系统、关卡选择、已解锁剧情
- * 
- * 新增功能：剧情解锁弹窗
- * - 当学习值/任务值达到阈值时自动触发
- * - 显示精美的解锁动画和提示
- * - 支持立即查看或稍后查看
  */
 
 import { ref, computed, watch } from 'vue'
@@ -288,19 +193,7 @@ const props = defineProps({
   unlockedStories: Array
 })
 
-// ============================================
-// Emits定义 - 添加新的事件
-// ============================================
-defineEmits([
-  'start-level', 
-  'add-learning', 
-  'add-task', 
-  'view-story', 
-  'reset-progress',
-  'unlock-story',  // 通知父组件剧情已解锁
-  'switch-role',   // 切换角色
-  'show-advisor'   // 显示顾问面板
-])
+defineEmits(['start-level', 'add-learning', 'add-task', 'view-story', 'reset-progress'])
 
 // ============================================
 // 动画数值（用于数字滚动效果）
@@ -311,14 +204,10 @@ const animatedTask = ref(props.taskValue)
 // 监听数值变化，添加动画
 watch(() => props.learningValue, (newVal, oldVal) => {
   animateValue(animatedLearning, oldVal, newVal, 1000)
-  // 数值变化时检查解锁
-  checkStoryUnlocks()
 })
 
 watch(() => props.taskValue, (newVal, oldVal) => {
   animateValue(animatedTask, oldVal, newVal, 1000)
-  // 数值变化时检查解锁
-  checkStoryUnlocks()
 })
 
 /**
@@ -341,133 +230,6 @@ function animateValue(target, start, end, duration) {
   }
   
   requestAnimationFrame(update)
-}
-
-// ============================================
-// 剧情解锁弹窗状态 - 新增
-// ============================================
-const showStoryUnlockModal = ref(false)
-const unlockedStoryId = ref('')
-
-/**
- * 剧情数据配置
- */
-const storiesConfig = {
-  'story-essay': {
-    id: 'story-essay',
-    title: 'PS Writing Master Guide',
-    icon: '📄',
-    description: 'Unlock exclusive tips for writing compelling Personal Statements that stand out to admission committees.',
-    unlockLearning: 100,
-    unlockTask: null
-  },
-  'story-school': {
-    id: 'story-school',
-    title: 'School Selection Strategy',
-    icon: '🎓',
-    description: 'Master the art of choosing the right university and program for your postgraduate journey.',
-    unlockLearning: null,
-    unlockTask: 200
-  },
-  'story-cv': {
-    id: 'story-cv',
-    title: 'CV Writing Excellence',
-    icon: '📋',
-    description: 'Learn how to craft a professional CV that highlights your strengths and achievements effectively.',
-    unlockLearning: 80,
-    unlockTask: null
-  },
-  'story-interview': {
-    id: 'story-interview',
-    title: 'Interview Success Guide',
-    icon: '🎤',
-    description: 'Master interview techniques and prepare for common questions with confidence.',
-    unlockLearning: 150,
-    unlockTask: 100
-  }
-}
-
-/**
- * 当前解锁的剧情数据（计算属性）
- */
-const unlockedStoryData = computed(() => {
-  return storiesConfig[unlockedStoryId.value] || {
-    title: 'Strategy Guide',
-    icon: '📄',
-    description: 'New strategy content unlocked!'
-  }
-})
-
-/**
- * 已检查过的解锁（防止重复弹窗）
- */
-const checkedUnlocks = ref(new Set())
-
-/**
- * 检查剧情解锁 - 核心函数
- * 当数值达到阈值时触发弹窗
- */
-function checkStoryUnlocks() {
-  // 检查每个剧情的解锁条件
-  Object.values(storiesConfig).forEach(story => {
-    // 如果已经解锁过，跳过
-    if (props.unlockedStories.includes(story.id)) return
-    if (checkedUnlocks.value.has(story.id)) return
-    
-    // 检查解锁条件
-    let shouldUnlock = false
-    
-    if (story.unlockLearning && story.unlockTask) {
-      // 需要同时满足学习值和任务值
-      shouldUnlock = props.learningValue >= story.unlockLearning && 
-                     props.taskValue >= story.unlockTask
-    } else if (story.unlockLearning) {
-      // 只需要学习值
-      shouldUnlock = props.learningValue >= story.unlockLearning
-    } else if (story.unlockTask) {
-      // 只需要任务值
-      shouldUnlock = props.taskValue >= story.unlockTask
-    }
-    
-    // 触发解锁
-    if (shouldUnlock) {
-      checkedUnlocks.value.add(story.id)
-      unlockedStoryId.value = story.id
-      showStoryUnlockModal.value = true
-      
-      // 通知父组件剧情已解锁
-      // 注意：这里不直接emit，因为父组件可能通过watch监听unlockedStories变化
-    }
-  })
-}
-
-/**
- * 关闭剧情解锁弹窗
- */
-function closeStoryModal() {
-  showStoryUnlockModal.value = false
-  
-  // 延迟后重置，允许下次解锁
-  setTimeout(() => {
-    unlockedStoryId.value = ''
-  }, 300)
-}
-
-/**
- * 查看解锁的剧情
- */
-function viewUnlockedStory() {
-  closeStoryModal()
-  // 触发父组件的view-story事件
-  // 使用setTimeout确保弹窗关闭动画完成
-  setTimeout(() => {
-    const emit = defineEmits
-    // 这里需要通过某种方式通知父组件打开剧情
-    // 可以通过全局事件总线或父组件监听
-    window.dispatchEvent(new CustomEvent('view-story-request', { 
-      detail: { storyId: unlockedStoryId.value } 
-    }))
-  }, 300)
 }
 
 // ============================================
@@ -522,30 +284,175 @@ const levels = [
 ]
 
 // ============================================
-// 攻略数据（用于标题显示）
+// Strategy Guides (Stories)
 // ============================================
 const stories = {
-  'story-essay': {
-    title: 'PS Writing Master Guide',
+  'story-strategy': {
+    title: 'Overseas Masters Application Strategy',
     content: `
-      <h4>Common Mistakes to Avoid</h4>
+      <h3>Welcome to Your MasterApply Journey!</h3>
+      <p>This guide covers the essential strategies for applying to overseas master's programs.</p>
+      
+      <h4>📅 Timeline Overview</h4>
       <ul>
-        <li>Heavy template usage without personal touch</li>
-        <li>Simply listing experiences without reflection</li>
-        <li>Unclear goals - why this major/school?</li>
-        <li>Grammar and spelling errors</li>
+        <li><strong>12+ months before:</strong> Research programs, take standardized tests (GRE/GMAT/IELTS)</li>
+        <li><strong>6-9 months before:</strong> Prepare申请 materials, request recommendation letters</li>
+        <li><strong>3-6 months before:</strong> Write and refine PS/Essays, submit applications</li>
+        <li><strong>1-3 months before:</strong> Interview preparation (if required), receive decisions</li>
       </ul>
-      <h4>Core Techniques</h4>
+      
+      <h4>🎯 Key Components</h4>
+      <ul>
+        <li><strong>Academic Transcripts:</strong> Official scores from all institutions attended</li>
+        <li><strong>Statement of Purpose:</strong> Your story - why this program, why now</li>
+        <li><strong>Letters of Recommendation:</strong> 2-3 letters from academics who know you well</li>
+        <li><strong>Resume/CV:</strong> Highlight relevant experience and achievements</li>
+        <li><strong>Standardized Tests:</strong> GRE/GMAT (varies by program), English proficiency tests</li>
+      </ul>
+      
+      <h4>💡 Pro Tips</h4>
+      <ul>
+        <li>Start early - give yourself time to revise</li>
+        <li>Tailor each application to the specific program</li>
+        <li>Show genuine interest and fit with the program</li>
+        <li>Proofread multiple times, ideally with native speakers</li>
+        <li>Apply to a range of schools (reach, match, safety)</li>
+      </ul>
+    `
+  },
+  'story-essay': {
+    title: 'Personal Statement Master Guide',
+    content: `
+      <h3>Writing Your Personal Statement</h3>
+      <p>Your personal statement is your chance to tell your unique story to the admissions committee.</p>
+      
+      <h4>❌ Common Mistakes to Avoid</h4>
+      <ul>
+        <li>Using generic templates without personalization</li>
+        <li>Simply listing resume achievements without reflection</li>
+        <li>Unclear motivation - why this major? Why this school?</li>
+        <li>Grammar and spelling errors</li>
+        <li>Being too verbose or too brief</li>
+      </ul>
+      
+      <h4>✅ Core Techniques</h4>
       <ul>
         <li><strong>Show motivation through stories:</strong> Use specific experiences to explain your choice</li>
         <li><strong>Demonstrate fit:</strong> Show how your background matches the program</li>
         <li><strong>Future planning:</strong> Clear short-term and long-term career goals</li>
+        <li><strong>Be authentic:</strong> Let your voice shine through</li>
+        <li><strong>Connect the dots:</strong> Show how past experiences lead to future goals</li>
+      </ul>
+      
+      <h4>📝 Structure Example</h4>
+      <ul>
+        <li>Opening hook - grab attention with a relevant story/moment</li>
+        <li>Academic background and relevant experiences</li>
+        <li>Why this program specifically</li>
+        <li>Future career goals</li>
+        <li>Closing - reinforce your fit and enthusiasm</li>
       </ul>
     `
   },
   'story-school': {
     title: 'School Selection Strategy',
-    content: '<p>Detailed guide for UK/US/HK/Singapore university selection...</p>'
+    content: `
+      <h3>Choosing the Right Programs</h3>
+      <p>Finding the right fit involves balancing rankings, research, location, and costs.</p>
+      
+      <h4>🏫 Key Factors to Consider</h4>
+      <ul>
+        <li><strong>Program Ranking:</strong> Overall and major-specific rankings</li>
+        <li><strong>Faculty & Research:</strong> Active professors, cutting-edge research</li>
+        <li><strong>Location:</strong> UK, US, HK, Singapore, Australia - each has advantages</li>
+        <li><strong>Cost & Scholarships:</strong> Tuition, living expenses, funding opportunities</li>
+        <li><strong>Career Services:</strong> Job placement rates, industry connections</li>
+      </ul>
+      
+      <h4>🌍 Country Comparison</h4>
+      <ul>
+        <li><strong>UK:</strong> 1-year programs, strong academics, compact</li>
+        <li><strong>US:</strong> 2-year programs, comprehensive, diverse options</li>
+        <li><strong>Hong Kong:</strong> International environment, proximity to China, growing programs</li>
+        <li><strong>Singapore:</strong> Safe, English-taught, quality education</li>
+        <li><strong>Australia:</strong> Work-friendly policies, quality universities</li>
+      </ul>
+      
+      <h4>🎯 Application Strategy</h4>
+      <ul>
+        <li>Apply to 5-8 programs as a balanced list</li>
+        <li>Include 2-3 reach schools</li>
+        <li>Include 2-3 match schools</li>
+        <li>Include 1-2 safety schools</li>
+      </ul>
+    `
+  },
+  'story-cv': {
+    title: 'CV Writing Excellence',
+    content: `
+      <h3>Crafting Your Professional CV</h3>
+      <p>Your CV is a targeted marketing document. Make every word count!</p>
+      
+      <h4>📋 CV Structure</h4>
+      <ul>
+        <li><strong>Contact Info:</strong> Name, email, phone, location (no ID numbers)</li>
+        <li><strong>Education:</strong> Degree, university, GPA (if strong), relevant coursework</li>
+        <li><strong>Experience:</strong> internships, jobs, research projects</li>
+        <li><strong>Activities:</strong> Leadership, community service</li>
+        <li><strong>Skills:</strong> Languages, technical skills, certifications</li>
+      </ul>
+      
+      <h4>✍️ Writing Tips</h4>
+      <ul>
+        <li>Use action verbs: Led, Developed, Analyzed, Created</li>
+        <li>Quantify achievements: "Increased efficiency by 30%"</li>
+        <li>Tailor to each application</li>
+        <li>Keep it to 1-2 pages</li>
+        <li>Use consistent formatting</li>
+      </ul>
+      
+      <h4>✅ Do's and Don'ts</h4>
+      <ul>
+        <li>✅ Use bullet points</li>
+        <li>✅ Be specific about your contributions</li>
+        <li>✅ Proofread carefully</li>
+        <li>❌ Don't list every course you've taken</li>
+        <li>❌ Don't use personal pronouns</li>
+      </ul>
+    `
+  },
+  'story-interview': {
+    title: 'Interview Preparation',
+    content: `
+      <h3>Mastering Program Interviews</h3>
+      <p>Some programs require interviews. Preparation is key to success!</p>
+      
+      <h4>🎯 Common Interview Types</h4>
+      <ul>
+        <li><strong>Admissions Interview:</strong> Evaluate your fit and motivation</li>
+        <li><strong>Alumni Interview:</strong> Learn about student experience</li>
+        <li><strong>Team Interview:</strong> Group discussion/activities</li>
+      </ul>
+      
+      <h4>📝 Common Questions</h4>
+      <ul>
+        <li>Tell me about yourself</li>
+        <li>Why this program/school?</li>
+        <li>What are your career goals?</li>
+        <li>Tell me about a challenge you overcame</li>
+        <li>Why should we accept you?</li>
+      </ul>
+      
+      <h4>💡 Preparation Tips</h4>
+      <ul>
+        <li>Research the program thoroughly</li>
+        <li>Practice out loud</li>
+        <li>Prepare 2-3 questions to ask them</li>
+        <li>Test your technology in advance</li>
+        <li>Dress professionally</li>
+        <li>Be yourself - authenticity matters!</li>
+      </ul>
+    `
   }
 }
 
@@ -579,7 +486,7 @@ function getLevelCardClass(level) {
  * 获取攻略标题
  */
 function getStoryTitle(storyId) {
-  return stories[storyId]?.title || storiesConfig[storyId]?.title || 'Strategy Guide'
+  return stories[storyId]?.title || 'Strategy Guide'
 }
 </script>
 
@@ -587,40 +494,6 @@ function getStoryTitle(storyId) {
 /* 关卡卡片悬停效果 */
 .group:hover {
   transform: translateY(-2px);
-}
-
-/* Modal过渡动画 - 新增 */
-.modal-enter-active,
-.modal-leave-active {
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.modal-enter-from,
-.modal-leave-to {
-  opacity: 0;
-  transform: scale(0.95);
-}
-
-/* 弹窗内元素动画 */
-@keyframes bounce-in {
-  0% {
-    opacity: 0;
-    transform: scale(0.3);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  70% {
-    transform: scale(0.9);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.animate-bounce {
-  animation: bounce-in 0.6s ease-out;
 }
 
 /* 响应式调整 */

@@ -21,16 +21,18 @@
           <div class="rounded-xl overflow-hidden border border-gray-200 max-w-2xl mx-auto">
             <img src="/images/docx/module5_prototype/image_004.jpeg" alt="Low-fi sketch version 1.0" class="w-full">
           </div>
-          <p class="text-sm text-gray-500 text-center mt-2">Version 1.0 — Hand-drawn wireframe</p>
+          <p class="text-sm text-gray-500 text-center mt-2">Version 1.0</p>
         </div>
 
         <!-- High-Fi: full width row below -->
         <div class="mb-8">
           <h3 class="text-lg font-semibold text-gray-700 mb-4">High-Fi Prototype</h3>
-          <div class="rounded-xl overflow-hidden border border-gray-200 max-w-2xl mx-auto">
-            <img src="/images/docx/module5_poster/image_006.png" alt="High-fi prototype" class="w-full">
+          <div class="grid md:grid-cols-2 gap-4 rounded-xl overflow-hidden border border-gray-200 max-w-4xl mx-auto">
+            <img src="/images/docx/module5_prototype/1.jpg" alt="High-fi prototype version 1" class="w-full">
+            <img src="/images/docx/module5_prototype/2.png" alt="High-fi prototype version 2" class="w-full">
           </div>
-          <p class="text-sm text-gray-500 text-center mt-2">Current version — Interactive prototype</p>
+          <p class="text-sm text-gray-500 text-center mt-2">Version 2.0</p>
+          <p class="text-sm text-gray-400 text-center mt-1">Version 3.0 is available as an interactive demo - visit the /demo route to play the game</p>
         </div>
 
         <!-- 3 Key Improvements -->
@@ -60,50 +62,17 @@
         </h2>
 
         <div class="bg-gray-50 rounded-xl p-6">
-          <div class="space-y-4">
-            <div v-for="(layer, index) in architectureLayers" :key="index"
-                 class="flex items-center gap-4"
-                 :class="{ 'opacity-50': index === architectureLayers.length - 1 }">
-              <div class="flex-1 rounded-xl p-4 border-2"
-                   :class="layer.bgClass">
-                <div class="flex items-center gap-3">
-                  <span class="text-2xl">{{ layer.icon }}</span>
-                  <div>
-                    <h4 class="font-bold text-gray-900">{{ layer.name }}</h4>
-                    <p class="text-sm text-gray-600">{{ layer.desc }}</p>
-                  </div>
-                </div>
-              </div>
-              <div v-if="index < architectureLayers.length - 1" class="text-2xl text-gray-400">↓</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="mt-6 grid md:grid-cols-2 gap-4">
-          <div class="p-4 bg-blue-50 rounded-xl">
-            <h4 class="font-bold text-blue-900 mb-2">Frontend Layer</h4>
-            <ul class="text-sm text-gray-600 space-y-1">
-              <li>• Mobile: iOS/Android app for micro-learning</li>
-              <li>• PC: Desktop/web portal for immersive deep work</li>
-              <li>• Advisor: Data panel for student progress review</li>
-            </ul>
-          </div>
-          <div class="p-4 bg-orange-50 rounded-xl">
-            <h4 class="font-bold text-orange-900 mb-2">Core System</h4>
-            <ul class="text-sm text-gray-600 space-y-1">
-              <li>• Dual-value points system (Learning + Task)</li>
-              <li>• 5-stage Master's application story database</li>
-              <li>• Differentiated question banks for two personas</li>
-            </ul>
-          </div>
+          <img src="/images/docx/module5_prototype/image_013.png" alt="System Architecture" class="max-w-full mx-auto rounded-lg">
         </div>
       </section>
 
       <!-- Section 3: Core Features -->
       <section class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-          <span>⚙️</span> Core Features (Step 1-5)
+          <span>👤</span> User Journey
         </h2>
+
+        <img src="/images/docx/module5_prototype/image_015.png" alt="User Journey" class="max-w-full mx-auto mb-6 rounded-lg border border-gray-200">
 
         <div class="space-y-4">
           <div v-for="(step, index) in coreSteps" :key="index"
@@ -125,30 +94,8 @@
           <span>🎯</span> Design Decisions
         </h2>
 
-        <div class="overflow-x-auto">
-          <table class="w-full">
-            <thead>
-              <tr class="border-b-2 border-gray-200">
-                <th class="text-left py-3 px-4 font-semibold text-gray-700">Aspect</th>
-                <th class="text-left py-3 px-4 font-semibold text-gray-700">Alternative</th>
-                <th class="text-left py-3 px-4 font-semibold text-gray-700">Chosen Solution ✅</th>
-                <th class="text-left py-3 px-4 font-semibold text-gray-700">Rationale</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(decision, index) in designDecisions" :key="index"
-                  class="border-b border-gray-100">
-                <td class="py-4 px-4 font-medium">{{ decision.aspect }}</td>
-                <td class="py-4 px-4 text-gray-500">{{ decision.alternative }}</td>
-                <td class="py-4 px-4">
-                  <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
-                    {{ decision.chosen }}
-                  </span>
-                </td>
-                <td class="py-4 px-4 text-gray-600">{{ decision.rationale }}</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="bg-gray-50 rounded-xl p-6">
+          <img src="/images/docx/module5_prototype/image_012.png" alt="Design Decisions" class="max-w-full mx-auto rounded-lg">
         </div>
       </section>
 

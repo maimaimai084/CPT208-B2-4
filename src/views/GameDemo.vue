@@ -64,6 +64,12 @@
         v-else-if="currentView === 'advisor'"
         @back="currentView = 'dashboard'"
       />
+
+      <!-- Achievement Notification Popup -->
+      <AchievementNotification 
+        :achievement="currentAchievement" 
+        @close="currentAchievement = null"
+      />
     </div>
   </div>
 </template>
@@ -74,6 +80,7 @@ import RoleSelect from '../components/RoleSelect.vue'
 import GameDashboard from '../components/GameDashboard.vue'
 import QuizInterface from '../components/QuizInterface.vue'
 import AdvisorDashboard from '../components/AdvisorDashboard.vue'
+import AchievementNotification from '../components/AchievementNotification.vue'
 
 // ============================================
 // Game State
@@ -84,8 +91,14 @@ const userName = ref('')
 const learningValue = ref(0)
 const taskValue = ref(0)
 const currentLevel = ref(1)
-const completedLevels = ref(['level-1'])  // Default: first level completed
+const completedLevels = ref(['level-1'])
 const unlockedStories = ref([])
+const currentAchievement = ref(null)
+
+// Story unlock configuration
+const storyUnlockMap = {
+  'level-3': 'story-cv'
+}
 
 // ============================================
 // Event Handlers - Role Selection
@@ -126,7 +139,11 @@ function handleRoleConfirmed(data) {
  * Called when user clicks on a level card
  */
 function handleStartLevel(level) {
-  currentLevel.value = level
+  if (typeof level === 'object' && level.id) {
+    currentLevel.value = level.id
+  } else {
+    currentLevel.value = level
+  }
   currentView.value = 'quiz'
 }
 
@@ -173,6 +190,9 @@ function handleAddTask() {
 function handleResetProgress() {
   learningValue.value = 0
   taskValue.value = 0
+  completedLevels.value = ['level-1']
+  unlockedStories.value = []
+  currentAchievement.value = null
   saveProgress()
 }
 
@@ -207,14 +227,29 @@ function handleQuizComplete(results) {
   taskValue.value += results.task || 0
   
   // Add completed level
-  const levelId = `level-${currentLevel.value}`
+  let levelId = currentLevel.value
+  if (typeof levelId === 'number') {
+    levelId = `level-${levelId}`
+  }
   if (!completedLevels.value.includes(levelId)) {
     completedLevels.value.push(levelId)
   }
   
-  // Add unlocked story if any
-  if (results.unlockedStory && !unlockedStories.value.includes(results.unlockedStory)) {
-    unlockedStories.value.push(results.unlockedStory)
+  // Check for story unlock based on completed level
+  const unlockedStory = storyUnlockMap[levelId]
+  if (unlockedStory && !unlockedStories.value.includes(unlockedStory)) {
+    unlockedStories.value.push(unlockedStory)
+    
+    // Show achievement notification
+    currentAchievement.value = {
+      name: 'CV Writing Excellence',
+      icon: '📝'
+    }
+    
+    // Auto-hide notification after 3 seconds
+    setTimeout(() => {
+      currentAchievement.value = null
+    }, 3000)
   }
   
   // Save progress

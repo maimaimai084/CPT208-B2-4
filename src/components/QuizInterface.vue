@@ -92,7 +92,7 @@ import { getQuestionsByLevel } from '@/data/questions'
 
 const props = defineProps({
   level: {
-    type: Object,
+    type: [Object, String],
     required: true
   },
   userType: {
@@ -111,17 +111,31 @@ const hasAnswered = ref(false)
 const totalLearning = ref(0)
 const totalTask = ref(0)
 
+// Get level ID from either object or string
+const levelId = computed(() => {
+  if (typeof props.level === 'object' && props.level?.id) {
+    return props.level.id
+  }
+  return props.level
+})
+
 // Computed
 const currentQuestion = computed(() => questions.value[currentQuestionIndex.value] || null)
 const isLastQuestion = computed(() => currentQuestionIndex.value === questions.value.length - 1)
 const progressPercent = computed(() => ((currentQuestionIndex.value + (hasAnswered.value ? 1 : 0)) / questions.value.length) * 100)
-const levelTitle = computed(() => props.level?.title || 'Stage Challenge')
+const levelTitle = computed(() => {
+  if (typeof props.level === 'object' && props.level?.title) {
+    return props.level.title
+  }
+  return 'Stage Challenge'
+})
 
 // Methods
 onMounted(() => {
   // Load questions based on level ID and user type
-  if (props.level?.id) {
-    questions.value = getQuestionsByLevel(props.level.id, props.userType)
+  const id = levelId.value
+  if (id) {
+    questions.value = getQuestionsByLevel(id, props.userType)
   }
 })
 
