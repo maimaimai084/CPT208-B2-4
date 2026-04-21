@@ -110,6 +110,8 @@ const selectedIndex = ref(null)
 const hasAnswered = ref(false)
 const totalLearning = ref(0)
 const totalTask = ref(0)
+const correctCount = ref(0)
+const totalQuestions = ref(0)
 
 // Get level ID from either object or string
 const levelId = computed(() => {
@@ -136,6 +138,7 @@ onMounted(() => {
   const id = levelId.value
   if (id) {
     questions.value = getQuestionsByLevel(id, props.userType)
+    totalQuestions.value = questions.value.length
   }
 })
 
@@ -144,6 +147,11 @@ function selectOption(option, index) {
   
   selectedIndex.value = index
   hasAnswered.value = true
+  
+  // Check if this is a correct answer (has positive learning reward)
+  if (option.learning > 0) {
+    correctCount.value++
+  }
   
   // Accumulate values
   totalLearning.value += option.learning
@@ -183,7 +191,8 @@ function submitQuiz() {
   emit('complete', {
     learning: totalLearning.value,
     task: totalTask.value,
-    answers: questions.value.length
+    correctCount: correctCount.value,
+    totalQuestions: totalQuestions.value
   })
 }
 </script>

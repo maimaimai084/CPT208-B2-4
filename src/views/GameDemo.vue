@@ -41,6 +41,8 @@
         :task-value="taskValue"
         :completed-levels="completedLevels"
         :unlocked-stories="unlockedStories"
+        :current-combo="currentCombo"
+        :max-combo="maxCombo"
         @start-level="handleStartLevel"
         @switch-role="handleSwitchRole"
         @show-advisor="handleShowAdvisor"
@@ -61,8 +63,8 @@
 
       <!-- Advisor Dashboard -->
       <AdvisorDashboard
-        v-else-if="currentView === 'advisor'"
-        @back="currentView = 'dashboard'"
+        v-if="currentView === 'advisor'"
+        @close="currentView = 'dashboard'"
       />
 
       <!-- Achievement Notification Popup -->
@@ -70,17 +72,32 @@
         :achievement="currentAchievement" 
         @close="currentAchievement = null"
       />
+
+      <!-- Guide Modal for viewing unlocked guides -->
+      <GuideModal
+        :is-open="showGuide"
+        :title="currentGuide?.title || 'Guide'"
+        :subtitle="currentGuide?.icon || ''"
+        @close="showGuide = false"
+      >
+        <div v-if="currentGuide" v-html="currentGuide.content"></div>
+      </GuideModal>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import RoleSelect from '../components/RoleSelect.vue'
 import GameDashboard from '../components/GameDashboard.vue'
 import QuizInterface from '../components/QuizInterface.vue'
 import AdvisorDashboard from '../components/AdvisorDashboard.vue'
 import AchievementNotification from '../components/AchievementNotification.vue'
+import GuideModal from '../components/GuideModal.vue'
+import { getGuideById } from '../data/guides'
+import { calculateComboReward } from '../data/combos'
+import { DAILY_QUESTS, initializeDailyProgress } from '../data/dailyquests'
+import { ACHIEVEMENTS, checkAchievements } from '../data/achievements'
 
 // ============================================
 // Game State
@@ -94,11 +111,38 @@ const currentLevel = ref(1)
 const completedLevels = ref(['level-1'])
 const unlockedStories = ref([])
 const currentAchievement = ref(null)
+const currentGuide = ref(null)
+const showGuide = ref(false)
+
+// Combo System State
+const currentCombo = ref(0)
+const maxCombo = ref(0)
+
+// Daily Quest State
+const dailyQuestProgress = ref(initializeDailyProgress())
+
+// Achievement State
+const unlockedAchievements = ref([])
+const totalCorrectAnswers = ref(0)
+const perfectLevelsCount = ref(0)
 
 // Story unlock configuration
 const storyUnlockMap = {
-  'level-3': 'story-cv'
+  'level-3': 'story-cv',
+  'level-5': 'story-interview'
 }
+
+// Daily Quest Computed
+const dailyQuestsWithProgress = computed(() => {
+  return DAILY_QUESTS.map(quest => {
+    const progress = dailyQuestProgress.value.find(p => p.questId === quest.id)
+    return {
+      ...quest,
+      current: progress?.current || 0,
+      completed: progress?.completed || false
+    }
+  })
+})
 
 // ============================================
 // Event Handlers - Role Selection
@@ -201,8 +245,11 @@ function handleResetProgress() {
  * Called when user clicks on an unlocked story
  */
 function handleViewStory(storyId) {
-  // TODO: Implement story viewing modal or navigation
-  console.log('View story:', storyId)
+  const guide = getGuideById(storyId)
+  if (guide) {
+    currentGuide.value = guide
+    showGuide.value = true
+  }
 }
 
 // ============================================
@@ -222,10 +269,52 @@ function handleQuizClose() {
  * Called when user completes a quiz level
  */
 function handleQuizComplete(results) {
-  // Add earned values
-  learningValue.value += results.learning || 0
-  taskValue.value += results.task || 0
-  
+  // Track correct answers for achievements
+  const correctCount = results.correctCount || 0
+  const totalQuestions = results.totalQuestions || 3
+  const isPerfect = correctCount === totalQuestions
+
+  totalCorrectAnswers.value += correctCount
+
+  // Update combo system - reset on wrong answer, increment on correct
+  if (isPerfect) {
+    currentCombo.value++
+    if (currentCombo.value > maxCombo.value) {
+      maxCombo.value = currentCombo.value
+    }
+  } else {
+    currentCombo.value = 0
+  }
+
+  // Calculate combo rewards
+  const baseLearning = results.learning || 0
+  const baseTask = results.task || 0
+  const { learning: comboLearning, task: comboTask, bonus, comboReward } = calculateComboReward(
+    baseLearning,
+    baseTask,
+    currentCombo.value
+  )
+
+  // Add earned values with combo bonus
+  learningValue.value += comboLearning
+  taskValue.value += comboTask
+
+  // Update daily quest progress
+  if (correctCount > 0) {
+    updateDailyQuestProgress('daily-correct-5', correctCount)
+  }
+  if (isPerfect) {
+    perfectLevelsCount.value++
+    updateDailyQuestProgress('daily-perfect', 1)
+    updateDailyQuestProgress('daily-quiz-1', 1)
+  }
+  if (currentCombo.value >= 3) {
+    updateDailyQuestProgress('daily-streak-3', currentCombo.value)
+  }
+
+  // Check for achievements
+  checkAchievementsProgress()
+
   // Add completed level
   let levelId = currentLevel.value
   if (typeof levelId === 'number') {
@@ -234,29 +323,116 @@ function handleQuizComplete(results) {
   if (!completedLevels.value.includes(levelId)) {
     completedLevels.value.push(levelId)
   }
-  
+
   // Check for story unlock based on completed level
   const unlockedStory = storyUnlockMap[levelId]
   if (unlockedStory && !unlockedStories.value.includes(unlockedStory)) {
     unlockedStories.value.push(unlockedStory)
-    
+
+    const guideNames = {
+      'story-cv': 'CV Writing Excellence',
+      'story-interview': 'Interview Preparation'
+    }
+
     // Show achievement notification
     currentAchievement.value = {
-      name: 'CV Writing Excellence',
+      name: guideNames[unlockedStory] || 'New Guide Unlocked',
       icon: '📝'
     }
-    
+
     // Auto-hide notification after 3 seconds
     setTimeout(() => {
       currentAchievement.value = null
     }, 3000)
   }
-  
+
+  // Show combo reward notification if active
+  if (comboReward && bonus > 0) {
+    currentAchievement.value = {
+      name: `${comboReward.name} +${Math.round(bonus * 100)}%`,
+      icon: comboReward.icon
+    }
+    setTimeout(() => {
+      currentAchievement.value = null
+    }, 2000)
+  }
+
   // Save progress
   saveProgress()
-  
+
   // Return to dashboard
   currentView.value = 'dashboard'
+}
+
+/**
+ * Update daily quest progress
+ */
+function updateDailyQuestProgress(questId, amount) {
+  const quest = dailyQuestProgress.value.find(p => p.questId === questId)
+  if (quest && !quest.completed) {
+    quest.current += amount
+    const dailyQuest = DAILY_QUESTS.find(q => q.id === questId)
+    if (dailyQuest && quest.current >= dailyQuest.target) {
+      quest.completed = true
+      // Add rewards
+      learningValue.value += dailyQuest.reward.learning
+      taskValue.value += dailyQuest.reward.task
+      // Show notification
+      currentAchievement.value = {
+        name: `${dailyQuest.title} Complete!`,
+        icon: dailyQuest.icon
+      }
+      setTimeout(() => {
+        currentAchievement.value = null
+      }, 2500)
+    }
+    quest.lastUpdated = new Date().toISOString()
+  }
+}
+
+/**
+ * Check achievements progress
+ */
+function checkAchievementsProgress() {
+  const progress = {
+    levelsCompleted: completedLevels.value.length,
+    totalCorrectAnswers: totalCorrectAnswers.value,
+    maxCombo: maxCombo.value,
+    daysStreak: 1,
+    totalLearning: learningValue.value,
+    totalTask: taskValue.value,
+    perfectLevels: perfectLevelsCount.value
+  }
+
+  const { newAchievements: newAchieves, rewards: achieveRewards } = checkAchievements(
+    progress,
+    unlockedAchievements.value
+  )
+
+  // Unlock new achievements
+  for (const id of newAchieves) {
+    unlockedAchievements.value.push(id)
+  }
+
+  // Add achievement rewards
+  for (const reward of achieveRewards) {
+    if (reward.reward.type === 'learning') {
+      learningValue.value += reward.reward.value
+    } else if (reward.reward.type === 'task') {
+      taskValue.value += reward.reward.value
+    }
+    // Show achievement reward notification
+    const achieve = ACHIEVEMENTS.find(a => a.id === reward.id)
+    if (achieve) {
+      currentAchievement.value = {
+        name: `${achieve.title} Unlocked!`,
+        icon: achieve.icon
+      }
+      setTimeout(() => {
+        currentAchievement.value = null
+      }, 2500)
+    }
+  }
 }
 
 // ============================================

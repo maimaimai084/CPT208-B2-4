@@ -58,7 +58,7 @@
     </div>
 
     <!-- Quick Actions -->
-    <div class="flex gap-3 justify-center mb-8">
+    <div class="flex gap-3 justify-center mb-8 flex-wrap">
       <button @click="$emit('add-learning')" 
               class="flex items-center gap-2 px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-xl font-medium transition-all shadow-md hover:shadow-lg active:scale-95">
         <span>📚</span>
@@ -69,11 +69,37 @@
         <span>✅</span>
         <span>+10 Task</span>
       </button>
-      <button @click="$emit('reset-progress')" 
+      <button @click="$emit('show-advisor')" 
+              class="flex items-center gap-2 px-6 py-3 bg-purple-500 hover:bg-purple-600 text-white rounded-xl font-medium transition-all shadow-md hover:shadow-lg active:scale-95">
+        <span>🎓</span>
+        <span>Advisor</span>
+      </button>
+      <button @click="$emit('switch-role')" 
               class="flex items-center gap-2 px-4 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-xl font-medium transition-all">
         <span>🔄</span>
+        <span class="hidden sm:inline">Switch Role</span>
+      </button>
+      <button @click="$emit('reset-progress')" 
+              class="flex items-center gap-2 px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-500 rounded-xl font-medium transition-all">
+        <span>🔁</span>
         <span class="hidden sm:inline">Reset</span>
       </button>
+    </div>
+
+    <!-- Combo Display -->
+    <div v-if="currentCombo > 0" class="mb-6 flex justify-center">
+      <div class="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-2xl">
+        <span class="text-2xl animate-pulse">
+          {{ currentCombo >= 10 ? '🌟' : currentCombo >= 5 ? '🔥' : currentCombo >= 3 ? '⚡' : '💫' }}
+        </span>
+        <div class="text-center">
+          <div class="text-xs text-yellow-600 font-medium uppercase tracking-wide">Combo</div>
+          <div class="text-lg font-bold text-yellow-700">{{ currentCombo }} <span class="text-sm font-normal">in a row</span></div>
+        </div>
+        <div v-if="currentCombo >= 3" class="text-xs text-yellow-600 bg-yellow-100 px-2 py-1 rounded-full">
+          +{{ currentCombo >= 10 ? 50 : currentCombo >= 5 ? 25 : 15 }}% bonus
+        </div>
+      </div>
     </div>
 
     <!-- Level Selection -->
@@ -180,6 +206,7 @@
  */
 
 import { ref, computed, watch } from 'vue'
+import { getGuideById } from '../data/guides'
 
 // ============================================
 // Props定义
@@ -190,10 +217,12 @@ const props = defineProps({
   learningValue: Number,
   taskValue: Number,
   completedLevels: Array,
-  unlockedStories: Array
+  unlockedStories: Array,
+  currentCombo: { type: Number, default: 0 },
+  maxCombo: { type: Number, default: 0 }
 })
 
-defineEmits(['start-level', 'add-learning', 'add-task', 'view-story', 'reset-progress'])
+defineEmits(['start-level', 'add-learning', 'add-task', 'view-story', 'reset-progress', 'switch-role', 'show-advisor'])
 
 // ============================================
 // 动画数值（用于数字滚动效果）
@@ -483,9 +512,13 @@ function getLevelCardClass(level) {
 }
 
 /**
- * 获取攻略标题
+ * Get guide title by ID
  */
 function getStoryTitle(storyId) {
+  const guide = getGuideById(storyId)
+  if (guide) {
+    return guide.title
+  }
   return stories[storyId]?.title || 'Strategy Guide'
 }
 </script>
