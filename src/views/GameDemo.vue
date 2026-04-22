@@ -18,9 +18,11 @@
           <span class="text-2xl">🎮</span>
           <span class="font-bold text-gray-900">MasterApply Quest - Live Demo</span>
         </div>
-        <router-link to="/" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-700 text-sm transition-colors">
-          ← Exit Demo
-        </router-link>
+        <div class="flex items-center gap-2">
+          <router-link to="/" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-700 text-sm transition-colors">
+            ← Exit Demo
+          </router-link>
+        </div>
       </div>
     </header>
 
@@ -457,7 +459,7 @@ function saveProgress() {
 <style scoped>
 .game-demo-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-color: #F8FAFC;
 }
 
 .game-container {

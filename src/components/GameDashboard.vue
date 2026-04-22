@@ -3,56 +3,47 @@
     <!-- Dual Value Dashboard -->
     <div class="grid md:grid-cols-2 gap-4 mb-8">
       <!-- Learning Value Card -->
-      <div class="bg-white rounded-2xl shadow-sm border border-blue-100 p-5 relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-full -mr-16 -mt-16 opacity-50"></div>
-        <div class="relative z-10">
-          <div class="flex items-center justify-between mb-3">
-            <div class="flex items-center gap-2">
-              <span class="text-2xl">📚</span>
-              <span class="font-semibold text-gray-700">Learning Value</span>
-            </div>
-            <span class="text-3xl font-bold text-blue-600">{{ animatedLearning }}</span>
+      <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-2">
+            <span class="text-2xl">📚</span>
+            <span class="font-semibold text-slate-700">Learning Value</span>
           </div>
-          
-          <!-- Progress Bar with Stars -->
-          <div class="relative h-3 bg-gray-100 rounded-full overflow-hidden">
-            <div class="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-400 to-blue-600 rounded-full transition-all duration-500" 
-                 :style="{ width: Math.min((learningValue / 100) * 100, 100) + '%' }"></div>
-            <div class="absolute top-1/2 left-1/4 transform -translate-y-1/2 text-[10px]">⭐</div>
-            <div class="absolute top-1/2 left-1/2 transform -translate-y-1/2 text-[10px]">⭐</div>
-            <div class="absolute top-1/2 left-3/4 transform -translate-y-1/2 text-[10px]">⭐</div>
-          </div>
-          
-          <div class="flex justify-between mt-2 text-xs text-gray-500">
-            <span>0</span>
-            <span class="text-blue-600 font-medium">Next unlock: 100 pts</span>
-            <span>100</span>
-          </div>
+          <span class="text-3xl font-bold text-blue-600 font-variant-numeric: tabular-nums">{{ animatedLearning }}</span>
+        </div>
+        
+        <!-- Progress Bar -->
+        <div class="relative h-3 bg-slate-100 rounded-full overflow-hidden">
+          <div class="absolute top-0 left-0 h-full bg-blue-600 rounded-full transition-all duration-500" 
+               :style="{ width: Math.min((learningValue / 100) * 100, 100) + '%' }"></div>
+        </div>
+        
+        <div class="flex justify-between mt-2 text-xs text-slate-500">
+          <span>0</span>
+          <span class="text-blue-600 font-medium">Next unlock: 100 pts</span>
+          <span>100</span>
         </div>
       </div>
 
       <!-- Task Value Card -->
-      <div class="bg-white rounded-2xl shadow-sm border border-orange-100 p-5 relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-32 h-32 bg-orange-50 rounded-full -mr-16 -mt-16 opacity-50"></div>
-        <div class="relative z-10">
-          <div class="flex items-center justify-between mb-3">
-            <div class="flex items-center gap-2">
-              <span class="text-2xl">✅</span>
-              <span class="font-semibold text-gray-700">Task Value</span>
-            </div>
-            <span class="text-3xl font-bold text-orange-500">{{ animatedTask }}</span>
+      <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-2">
+            <span class="text-2xl">✅</span>
+            <span class="font-semibold text-slate-700">Task Value</span>
           </div>
-          
-          <div class="relative h-3 bg-gray-100 rounded-full overflow-hidden">
-            <div class="absolute top-0 left-0 h-full bg-gradient-to-r from-orange-400 to-orange-600 rounded-full transition-all duration-500" 
-                 :style="{ width: Math.min((taskValue / 200) * 100, 100) + '%' }"></div>
-          </div>
-          
-          <div class="flex justify-between mt-2 text-xs text-gray-500">
-            <span>0</span>
-            <span class="text-orange-600 font-medium">Next unlock: 200 pts</span>
-            <span>200</span>
-          </div>
+          <span class="text-3xl font-bold text-amber-500 font-variant-numeric: tabular-nums">{{ animatedTask }}</span>
+        </div>
+        
+        <div class="relative h-3 bg-slate-100 rounded-full overflow-hidden">
+          <div class="absolute top-0 left-0 h-full bg-amber-500 rounded-full transition-all duration-500" 
+               :style="{ width: Math.min((taskValue / 200) * 100, 100) + '%' }"></div>
+        </div>
+        
+        <div class="flex justify-between mt-2 text-xs text-slate-500">
+          <span>0</span>
+          <span class="text-amber-600 font-medium">Next unlock: 200 pts</span>
+          <span>200</span>
         </div>
       </div>
     </div>
@@ -60,27 +51,27 @@
     <!-- Quick Actions -->
     <div class="flex gap-3 justify-center mb-8 flex-wrap">
       <button @click="$emit('add-learning')" 
-              class="flex items-center gap-2 px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-xl font-medium transition-all shadow-md hover:shadow-lg active:scale-95">
+              class="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-medium transition-all hover:scale-105 hover:shadow-lg active:scale-95">
         <span>📚</span>
         <span>+10 Learning</span>
       </button>
       <button @click="$emit('add-task')" 
-              class="flex items-center gap-2 px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-xl font-medium transition-all shadow-md hover:shadow-lg active:scale-95">
+              class="flex items-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-medium transition-all hover:scale-105 hover:shadow-lg active:scale-95">
         <span>✅</span>
         <span>+10 Task</span>
       </button>
       <button @click="$emit('show-advisor')" 
-              class="flex items-center gap-2 px-6 py-3 bg-purple-500 hover:bg-purple-600 text-white rounded-xl font-medium transition-all shadow-md hover:shadow-lg active:scale-95">
+              class="flex items-center gap-2 px-6 py-3 bg-slate-600 hover:bg-slate-700 text-white rounded-xl font-medium transition-all hover:scale-105 hover:shadow-lg active:scale-95">
         <span>🎓</span>
         <span>Advisor</span>
       </button>
       <button @click="$emit('switch-role')" 
-              class="flex items-center gap-2 px-4 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-xl font-medium transition-all">
+              class="flex items-center gap-2 px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-medium transition-all hover:scale-105 active:scale-95">
         <span>🔄</span>
         <span class="hidden sm:inline">Switch Role</span>
       </button>
       <button @click="$emit('reset-progress')" 
-              class="flex items-center gap-2 px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-500 rounded-xl font-medium transition-all">
+              class="flex items-center gap-2 px-4 py-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-500 rounded-xl font-medium transition-all hover:scale-105 active:scale-95">
         <span>🔁</span>
         <span class="hidden sm:inline">Reset</span>
       </button>
@@ -88,111 +79,122 @@
 
     <!-- Combo Display -->
     <div v-if="currentCombo > 0" class="mb-6 flex justify-center">
-      <div class="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-2xl">
-        <span class="text-2xl animate-pulse">
+      <div class="inline-flex items-center gap-3 px-6 py-3 bg-amber-50 border border-amber-200 rounded-2xl hover:scale-105 transition-transform">
+        <span class="text-2xl animate-bounce">
           {{ currentCombo >= 10 ? '🌟' : currentCombo >= 5 ? '🔥' : currentCombo >= 3 ? '⚡' : '💫' }}
         </span>
         <div class="text-center">
-          <div class="text-xs text-yellow-600 font-medium uppercase tracking-wide">Combo</div>
-          <div class="text-lg font-bold text-yellow-700">{{ currentCombo }} <span class="text-sm font-normal">in a row</span></div>
+          <div class="text-xs text-amber-600 font-medium uppercase tracking-wide">Combo</div>
+          <div class="text-lg font-bold text-amber-700">{{ currentCombo }} <span class="text-sm font-normal">in a row</span></div>
         </div>
-        <div v-if="currentCombo >= 3" class="text-xs text-yellow-600 bg-yellow-100 px-2 py-1 rounded-full">
+        <div v-if="currentCombo >= 3" class="text-xs text-amber-600 bg-amber-100 px-2 py-1 rounded-full">
           +{{ currentCombo >= 10 ? 50 : currentCombo >= 5 ? 25 : 15 }}% bonus
         </div>
       </div>
     </div>
 
-    <!-- Level Selection -->
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+    <!-- Level Selection - Journey Map Style -->
+    <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
       <div class="flex items-center justify-between mb-6">
         <div>
-          <h2 class="text-xl font-bold text-gray-900">Application Journey</h2>
-          <p class="text-sm text-gray-500 mt-1">Complete stages to unlock strategy guides</p>
+          <h2 class="text-xl font-bold text-slate-900">Application Journey</h2>
+          <p class="text-sm text-slate-500 mt-1">Complete stages to unlock strategy guides</p>
         </div>
-        <div class="text-sm text-gray-500 bg-gray-50 px-3 py-1 rounded-full">
+        <div class="text-sm text-slate-500 bg-slate-50 px-3 py-1 rounded-full">
           Progress: {{ completedLevels.length }}/5
         </div>
       </div>
 
-      <div class="space-y-4">
-        <div v-for="(level, index) in levels" 
-             :key="level.id"
-             class="group relative flex items-center gap-4 p-4 rounded-2xl border-2 transition-all duration-300"
-             :class="getLevelCardClass(level)">
-          
-          <!-- Level Icon -->
-          <div class="w-14 h-14 rounded-xl flex items-center justify-center text-2xl flex-shrink-0 transition-all"
-               :class="completedLevels.includes(level.id) ? 'bg-green-100' : isLocked(level.id) ? 'bg-gray-100' : 'bg-blue-50 group-hover:bg-blue-100'">
-            {{ level.icon }}
-          </div>
-
-          <!-- Level Info -->
-          <div class="flex-1 min-w-0">
-            <div class="flex items-center gap-2 mb-1">
-              <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-gray-100 text-gray-600">
-                Stage {{ level.order }}
-              </span>
-              <h3 class="font-bold text-gray-900 truncate">{{ level.title }}</h3>
-            </div>
-            <p class="text-sm text-gray-600 mb-2">{{ level.description }}</p>
+      <!-- Journey Map -->
+      <div class="relative">
+        <!-- Connection Lines -->
+        <div class="absolute left-7 top-8 bottom-8 w-0.5 bg-slate-200 -z-10"></div>
+        
+        <div class="space-y-2">
+          <div v-for="(level, index) in levels" 
+               :key="level.id"
+               class="group relative flex items-center gap-4 p-4 rounded-2xl border-2 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+               :class="getJourneyCardClass(level)">
             
-            <!-- Rewards -->
-            <div class="flex gap-2 text-xs">
-              <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-blue-50 text-blue-700">
-                <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
-                +{{ level.rewards.learningValue }} LV
-              </span>
-              <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-orange-50 text-orange-700">
-                <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-                +{{ level.rewards.taskValue }} TV
-              </span>
+            <!-- Journey Node -->
+            <div class="relative z-10 flex-shrink-0">
+              <div v-if="completedLevels.includes(level.id)" 
+                   class="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl border-2 border-emerald-400">
+                ✓
+              </div>
+              <div v-else-if="isLocked(level.id)"
+                   class="w-14 h-14 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center text-xl border-2 border-slate-300 grayscale">
+                🔒
+              </div>
+              <div v-else
+                   class="w-14 h-14 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center text-xl border-2 border-amber-400 ring-4 ring-amber-50 animate-pulse">
+                {{ level.icon }}
+              </div>
             </div>
-          </div>
 
-          <!-- Status/Action -->
-          <div class="flex-shrink-0">
-            <button v-if="completedLevels.includes(level.id)" 
-                    class="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
-              ✓
-            </button>
-            <button v-else-if="isLocked(level.id)"
-                    class="w-10 h-10 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center cursor-not-allowed">
-              🔒
-            </button>
-            <button v-else
-                    @click="$emit('start-level', level)"
-                    class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-xl font-medium text-sm transition-all shadow-md hover:shadow-lg">
-              Start
-            </button>
-          </div>
+            <!-- Level Info -->
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-semibold px-2 py-0.5 rounded-full"
+                      :class="getStatusBadgeClass(level)">
+                  {{ getStatusText(level) }}
+                </span>
+                <h3 class="font-bold text-slate-900 truncate">{{ level.title }}</h3>
+              </div>
+              <p class="text-sm text-slate-600 mb-2">{{ level.description }}</p>
+              
+              <!-- Rewards -->
+              <div class="flex gap-2 text-xs">
+                <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-blue-50 text-blue-700">
+                  <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+                  +{{ level.rewards.learningValue }} LV
+                </span>
+                <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-amber-50 text-amber-700">
+                  <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                  +{{ level.rewards.taskValue }} TV
+                </span>
+              </div>
+            </div>
 
-          <!-- Progress Ring (for current level) -->
-          <div v-if="!completedLevels.includes(level.id) && !isLocked(level.id)" 
-               class="absolute -top-2 -right-2 bg-yellow-400 text-yellow-900 text-xs font-bold px-2 py-1 rounded-full shadow-sm">
-            Next
+            <!-- Action Button -->
+            <div class="flex-shrink-0">
+              <button v-if="completedLevels.includes(level.id)" 
+                      class="px-4 py-2 bg-emerald-50 text-emerald-600 rounded-xl font-medium text-sm">
+                Completed
+              </button>
+              <button v-else-if="isLocked(level.id)"
+                      class="px-4 py-2 bg-slate-100 text-slate-400 rounded-xl font-medium text-sm cursor-not-allowed">
+                Locked
+              </button>
+              <button v-else
+                      @click="$emit('start-level', level)"
+                      class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-medium text-sm transition-all hover:scale-105 active:scale-95">
+                Start
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Unlocked Stories Section -->
-    <div v-if="unlockedStories.length > 0" class="mt-8 bg-gradient-to-br from-purple-50 to-blue-50 rounded-2xl p-6 border border-purple-100">
-      <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+    <div v-if="unlockedStories.length > 0" class="mt-8 bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+      <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
         <span>📖</span>
         <span>Unlocked Strategies</span>
       </h3>
       <div class="grid sm:grid-cols-2 gap-3">
         <div v-for="storyId in unlockedStories" :key="storyId" 
-             class="bg-white rounded-xl p-4 shadow-sm border border-purple-100 flex items-center gap-3 cursor-pointer hover:shadow-md transition-all"
+             class="bg-slate-50 rounded-xl p-4 border border-slate-200 flex items-center gap-3 cursor-pointer hover:bg-slate-100 hover:shadow-md transition-all hover:-translate-y-0.5"
              @click="$emit('view-story', storyId)">
-          <div class="w-10 h-10 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center text-lg">
+          <div class="w-10 h-10 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center text-lg">
             📄
           </div>
           <div class="flex-1">
-            <h4 class="font-semibold text-gray-900 text-sm">{{ getStoryTitle(storyId) }}</h4>
-            <p class="text-xs text-gray-500">Click to view guide</p>
+            <h4 class="font-semibold text-slate-900 text-sm">{{ getStoryTitle(storyId) }}</h4>
+            <p class="text-xs text-slate-500">Click to view guide</p>
           </div>
-          <span class="text-purple-600">→</span>
+          <span class="text-blue-600">→</span>
         </div>
       </div>
     </div>
@@ -509,6 +511,45 @@ function getLevelCardClass(level) {
     return 'bg-gray-50 border-gray-200 opacity-60 cursor-not-allowed'
   }
   return 'bg-white border-blue-200 hover:border-blue-400 hover:shadow-md cursor-pointer'
+}
+
+/**
+ * 获取旅程地图卡片样式
+ */
+function getJourneyCardClass(level) {
+  if (props.completedLevels.includes(level.id)) {
+    return 'bg-emerald-50/50 border-emerald-200 opacity-70'
+  }
+  if (isLocked(level.id)) {
+    return 'bg-slate-50 border-slate-200 opacity-50'
+  }
+  return 'bg-white border-amber-300 cursor-pointer'
+}
+
+/**
+ * 获取状态徽章样式
+ */
+function getStatusBadgeClass(level) {
+  if (props.completedLevels.includes(level.id)) {
+    return 'bg-emerald-100 text-emerald-700'
+  }
+  if (isLocked(level.id)) {
+    return 'bg-slate-100 text-slate-500'
+  }
+  return 'bg-amber-100 text-amber-700'
+}
+
+/**
+ * 获取状态文本
+ */
+function getStatusText(level) {
+  if (props.completedLevels.includes(level.id)) {
+    return 'Completed'
+  }
+  if (isLocked(level.id)) {
+    return 'Locked'
+  }
+  return 'Current'
 }
 
 /**
