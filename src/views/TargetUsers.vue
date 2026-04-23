@@ -37,7 +37,7 @@
         <h2 class="text-2xl font-bold text-gray-900 mb-6">🏢 Stakeholders</h2>
         <div class="flex flex-wrap gap-4">
           <div class="px-6 py-3 bg-blue-50 rounded-xl border border-blue-100">
-            <span class="font-medium text-blue-900">XJTLU SAT School</span>
+            <span class="font-medium text-blue-900">XJTLU SAT School Students</span>
           </div>
           <div class="px-6 py-3 bg-green-50 rounded-xl border border-green-100">
             <span class="font-medium text-green-900">Student Development Advisor Center</span>
@@ -47,7 +47,8 @@
 
       <!-- Personas -->
       <section id="primary-users" class="mb-12">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6">👤 Primary Users</h2>
+        <h2 class="text-2xl font-bold text-gray-900 mb-2">👤 Primary Users: XJTLU SAT School Students</h2>
+        <p class="text-gray-600 mb-6">Second and third-year undergraduate students at XJTLU SAT School preparing for postgraduate applications.</p>
         <div class="grid md:grid-cols-2 gap-6">
           <!-- Persona 1: Emily Chen -->
           <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
@@ -60,23 +61,13 @@
                 <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">Confused Year 2</span>
               </div>
               <h3 class="text-xl font-bold text-gray-900 mb-2">Emily Chen</h3>
-              <p class="text-gray-500 text-sm mb-4">Year 2 Student | Economics | Jiangsu</p>
+              <p class="text-gray-500 text-sm mb-4">Year 2 Student</p>
               <div class="space-y-3">
                 <div>
                   <h4 class="font-medium text-gray-700 mb-1">Pain Points</h4>
                   <ul class="text-sm text-gray-600 space-y-1">
                     <li>• Unclear about application timeline</li>
                     <li>• Information overload from various sources</li>
-                    <li>• 75% have limited understanding of application process</li>
-                    <li>• 85% cannot attend offline lectures due to schedule conflicts</li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 class="font-medium text-gray-700 mb-1">Needs</h4>
-                  <ul class="text-sm text-gray-600 space-y-1">
-                    <li>• 90% accept 5-10 min fragmented learning sessions</li>
-                    <li>• 88% want application timeline/stage breakdown</li>
-                    <li>• Systematic yet fragmented knowledge</li>
                   </ul>
                 </div>
               </div>
@@ -97,23 +88,13 @@
                 <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm font-medium">Sprint Year 3</span>
               </div>
               <h3 class="text-xl font-bold text-gray-900 mb-2">Alex Wang</h3>
-              <p class="text-gray-500 text-sm mb-4">Year 3 Student | Engineering | Beijing</p>
+              <p class="text-gray-500 text-sm mb-4">Year 3 Student</p>
               <div class="space-y-3">
                 <div>
                   <h4 class="font-medium text-gray-700 mb-1">Pain Points</h4>
                   <ul class="text-sm text-gray-600 space-y-1">
                     <li>• Struggling with essay writing (60%)</li>
                     <li>• Uncertain about school selection (52%)</li>
-                    <li>• Interview preparation challenges (40%)</li>
-                    <li>• Details unclear despite having goals</li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 class="font-medium text-gray-700 mb-1">Needs</h4>
-                  <ul class="text-sm text-gray-600 space-y-1">
-                    <li>• 86% want practical guides and templates</li>
-                    <li>• 82% willing to try text-based game for knowledge</li>
-                    <li>• Personalized school/major recommendations</li>
                   </ul>
                 </div>
               </div>
@@ -136,23 +117,57 @@
 
       <!-- Secondary Users -->
       <section id="secondary-users" class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6">👔 Secondary Users</h2>
-        <div class="grid md:grid-cols-3 gap-4">
-          <div class="p-4 bg-gray-50 rounded-xl border border-gray-100">
-            <div class="text-2xl mb-2">🛠️</div>
-            <h4 class="font-bold text-gray-900 mb-1">Lightweight Tools</h4>
-            <p class="text-sm text-gray-600">Reduce repetitive Q&A. Advisors spend 3.5h/week on basic questions.</p>
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">👔 Secondary Users: Development Advisors</h2>
+        <p class="text-gray-600 mb-6">
+          Our secondary users are staff from the <strong>XJTLU Student Development Advisor Center</strong> who provide one-on-one and group guidance to students preparing for postgraduate applications.
+        </p>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <!-- Pain Point 1 -->
+          <div class="p-5 bg-red-50 rounded-xl border border-red-100">
+            <div class="text-2xl mb-3">🛠️</div>
+            <h4 class="font-bold text-gray-900 mb-2">Burdened by Repetitive Q&A</h4>
+            <p class="text-sm text-gray-700 leading-relaxed">
+              Advisors currently spend a significant portion of their weekly hours answering the same foundational questions—application timelines, document checklists, and school selection basics—leaving limited time for personalized, high-value guidance on essays and interview strategy.
+            </p>
           </div>
-          <div class="p-4 bg-gray-50 rounded-xl border border-gray-100">
-            <div class="text-2xl mb-2">📚</div>
-            <h4 class="font-bold text-gray-900 mb-1">Strategy Repository</h4>
-            <p class="text-sm text-gray-600">Deposit core guides: school matching, essay writing, interview tips.</p>
+
+          <!-- Pain Point 2 -->
+          <div class="p-5 bg-orange-50 rounded-xl border border-orange-100">
+            <div class="text-2xl mb-3">📚</div>
+            <h4 class="font-bold text-gray-900 mb-2">Lack of Centralized Strategy Repository</h4>
+            <p class="text-sm text-gray-700 leading-relaxed">
+              Core guidance materials such as school matching frameworks, personal statement templates, and interview tip sheets exist in scattered documents or individual advisors' notes. There is no unified, easily accessible repository that students can review independently before appointments.
+            </p>
           </div>
-          <div class="p-4 bg-gray-50 rounded-xl border border-gray-100">
-            <div class="text-2xl mb-2">⚡</div>
-            <h4 class="font-bold text-gray-900 mb-1">Efficiency Boost</h4>
-            <p class="text-sm text-gray-600">Game-based learning can improve guidance efficiency by 30-40%.</p>
+
+          <!-- Pain Point 3 -->
+          <div class="p-5 bg-purple-50 rounded-xl border border-purple-100">
+            <div class="text-2xl mb-3">⚡</div>
+            <h4 class="font-bold text-gray-900 mb-2">No Visibility into Student Progress</h4>
+            <p class="text-sm text-gray-700 leading-relaxed">
+              Advisors have no systematic way to track which students have mastered basic concepts and which are struggling with specific topics like recommendation letters or school selection. Guidance remains reactive—waiting for students to seek help—rather than proactive and data-informed.
+            </p>
           </div>
+        </div>
+
+        <!-- Advisor Needs Summary -->
+        <div class="mt-6 bg-blue-50 rounded-xl p-6 border border-blue-100">
+          <h4 class="font-bold text-blue-900 mb-3">What Advisors Need</h4>
+          <ul class="space-y-2 text-sm text-gray-700">
+            <li class="flex items-start gap-2">
+              <span class="text-blue-500 mt-1">•</span>
+              <span>A <strong>lightweight, read-only analytics dashboard</strong> that displays student progress, completed stages, and identified knowledge gaps—enabling targeted, efficient offline consultations.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-blue-500 mt-1">•</span>
+              <span>A <strong>centralized strategy library</strong> where curated guides on school matching, essay writing, and interview preparation are embedded into the game and automatically unlocked as students progress.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-blue-500 mt-1">•</span>
+              <span>A <strong>game-based learning channel</strong> that empowers students to acquire foundational application knowledge autonomously, so face-to-face advisor time can be reserved for complex, personalized coaching rather than repetitive basics.</span>
+            </li>
+          </ul>
         </div>
       </section>
 
