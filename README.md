@@ -188,15 +188,15 @@ This project uses AI tools as permitted by course guidelines:
 
 | Tool | Usage | Citation |
 |------|-------|----------|
-| Gemini 2.0 | UI design inspiration, mockup generation, content optimization | [1] |
+| Gemini 2.0 | Non-substantive tasks: visual assets generation (Core Design Concept diagram, Double Diamond Design Process diagram, system architecture diagrams, data-flow visualizations), grammatical polishing | [1] |
 
-**Core design logic**, user research, game mechanics, and project motivation are original work by the team.
+**Core design logic**—including the Dual-Value system, narrative unlocking mechanics, five-stage application structure, user research methodology, and evaluation design—was developed entirely by the team. No AI was used to generate user personas, survey questions, or heuristic evaluation results.
+
+For coding, the project was built with **Vue 3 and Tailwind CSS** written directly by team members. If AI coding assistance was used for debugging or component scaffolding, all prompts are documented in the `/ailogs` folder in our GitHub repository.
 
 ### Citation
 
-[1] Gemini 2.0, Google, accessed on 2026-04-07, available at https://gemini.google.com/. 
-    Used for generating low-fi wireframes, UI mockups, and content optimization assistance.
-    All core game mechanics and design decisions were made by the team.
+[1] Gemini 2.0, Google, accessed on 2026-04-07, available at https://gemini.google.com/.
 
 ## 📄 License
 
