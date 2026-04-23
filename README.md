@@ -16,6 +16,8 @@ A gamified web application for XJTLU students to learn about postgraduate applic
 - 📖 **Story Unlock Mechanism**: Reach value thresholds to unlock exclusive strategy guides
 - 🔄 **Role Switch**: Experience both user personas with independent progress tracking
 - 📋 **Prototype Showcase**: Module 5 poster content integrated into the application
+- ⚡ **Daily Quests**: Refreshable daily challenges for consistent engagement
+- 🔥 **Combo System**: Streak rewards for consecutive correct answers
 
 ## 🛠️ Tech Stack
 
@@ -84,9 +86,11 @@ Output will be in the `dist/` directory.
 │   │   ├── AdvisorDashboard.vue    # Advisor analytics panel
 │   │   ├── PrototypeShowcase.vue   # Module 5 poster showcase
 │   │   ├── Navigation.vue          # Top navigation bar
-│   │   └── AchievementNotification.vue # Achievement unlock popup
+│   │   ├── AchievementNotification.vue # Achievement unlock popup
+│   │   ├── GuideModal.vue          # Strategy guide popup modal
 │   │   └── portfolio/              # Portfolio page components
-│   │       └── ModuleHeader.vue    # Shared module page header
+│   │       ├── ModuleHeader.vue    # Shared module page header
+│   │       └── TableOfContents.vue # Auto-generated TOC component
 │   ├── views/               # Portfolio page views
 │   │   ├── Home.vue                # Portfolio home
 │   │   ├── Introduction.vue        # Module 2: Introduction
@@ -97,11 +101,17 @@ Output will be in the `dist/` directory.
 │   │   └── GameDemo.vue            # Live game demo entry
 │   ├── router/
 │   │   └── index.js                # Vue Router configuration
-│   ├── data/
-│   │   └── questions.ts            # Question bank data
+│   ├── data/                       # Game data files
+│   │   ├── questions.ts            # Question bank for quizzes
+│   │   ├── guides.ts               # Strategy guide content
+│   │   ├── achievements.ts         # Achievement definitions
+│   │   ├── dailyquests.ts          # Daily quest challenges
+│   │   └── combos.ts               # Combo reward calculations
 │   ├── App.vue              # Main application component
 │   ├── main.js              # Application entry point
 │   └── style.css            # Global styles
+├── public/
+│   └── images/              # Game assets and prototype images
 ├── index.html
 ├── package.json
 ├── vite.config.js
@@ -136,6 +146,33 @@ Output will be in the `dist/` directory.
 3. ✍️ **Essay Writing** - Craft compelling PS, CV, and recommendations
 4. 📨 **Application Submission** - Navigate online application systems
 5. 🎤 **Interview Preparation** - Master interview techniques
+
+### Daily Quests
+
+Refreshable daily challenges that reset every 24 hours:
+- Complete 3 quiz questions
+- Earn 50 Learning Value
+- Earn 30 Task Value
+- Maintain a 3+ combo streak
+
+### Combo System
+
+Streak rewards for consecutive correct answers:
+
+| Combo | Bonus |
+|-------|-------|
+| 3+ | +15% points |
+| 5+ | +25% points |
+| 10+ | +50% points |
+
+### Achievement System
+
+Unlock badges through gameplay achievements:
+- First Quiz Complete
+- Explorer/Sprint Role Master
+- Combo Champion
+- Daily Quest Hero
+- Guide Collector
 
 ## 🎓 Course Information
 
@@ -173,5 +210,5 @@ This project is for academic purposes only - XJTLU CPT208 Coursework (2026).
 
 ---
 
-*Last Updated: April 2026*
+*Last Updated: May 2026*
 *Project Status: Active Development*
