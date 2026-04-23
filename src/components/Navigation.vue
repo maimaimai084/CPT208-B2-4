@@ -1,4 +1,4 @@
-﻿<!--
+<!--
   Navigation.vue - Top navigation component
   顶部导航组件
 -->
@@ -9,7 +9,7 @@
       <div class="flex items-center justify-between">
         <!-- Logo -->
         <router-link to="/" class="flex items-center gap-2">
-          <span class="text-2xl">🎓</span>
+          <img src="/images/logo.png" alt="MasterApply Quest" class="h-8 w-8">
           <span class="font-bold text-gray-900">MasterApply Quest</span>
         </router-link>
 

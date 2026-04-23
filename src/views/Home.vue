@@ -9,8 +9,8 @@
     <section class="relative py-20 px-4">
       <div class="max-w-5xl mx-auto text-center">
         <!-- Logo/Icon -->
-        <div class="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center text-4xl shadow-lg">
-          🎓
+        <div class="w-24 h-24 mx-auto mb-6 bg-white rounded-2xl flex items-center justify-center shadow-lg overflow-hidden border border-gray-200">
+          <img src="/images/logo.png" alt="MasterApply Quest" class="w-16 h-16">
         </div>
         
         <!-- Title -->
@@ -116,38 +116,93 @@
       <div class="max-w-5xl mx-auto">
         <h2 class="text-2xl font-bold text-gray-900 text-center mb-12">Meet Our Team</h2>
         
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-          <!-- Team Member 1: Ruoxuan Mai -->
-          <div class="text-center">
-            <div class="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-blue-100">
-              <img src="/images/team/mrx.jpg" alt="Ruoxuan Mai" class="w-full h-full object-cover">
-            </div>
-            <h3 class="font-bold text-gray-900">Ruoxuan Mai</h3>
-          </div>
-
-          <!-- Team Member 2: Yueyue Wang -->
-          <div class="text-center">
-            <div class="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-blue-100">
-              <img src="/images/team/wyy2.jpg" alt="Yueyue Wang" class="w-full h-full object-cover">
-            </div>
-            <h3 class="font-bold text-gray-900">Yueyue Wang</h3>
-          </div>
-
-          <!-- Team Member 3: Yeyun Wan -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+          <!-- Team Member 1: Yeyun Wan -->
           <div class="text-center">
             <div class="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-blue-100">
               <img src="/images/team/wyy.jpg" alt="Yeyun Wan" class="w-full h-full object-cover">
             </div>
             <h3 class="font-bold text-gray-900">Yeyun Wan</h3>
+            <p class="text-sm text-gray-500">Technical Lead</p>
           </div>
 
-          <!-- Team Member 4: Ziying Ren -->
+          <!-- Team Member 2: Ziying Ren -->
           <div class="text-center">
             <div class="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-blue-100">
               <img src="/images/team/rzy.jpg" alt="Ziying Ren" class="w-full h-full object-cover">
             </div>
             <h3 class="font-bold text-gray-900">Ziying Ren</h3>
+            <p class="text-sm text-gray-500">User Research & Video</p>
           </div>
+
+          <!-- Team Member 3: Yueyue Wang -->
+          <div class="text-center">
+            <div class="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-blue-100">
+              <img src="/images/team/wyy2.jpg" alt="Yueyue Wang" class="w-full h-full object-cover">
+            </div>
+            <h3 class="font-bold text-gray-900">Yueyue Wang</h3>
+            <p class="text-sm text-gray-500">Content Research & Video</p>
+          </div>
+
+          <!-- Team Member 4: Ruoxuan Mai -->
+          <div class="text-center">
+            <div class="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-blue-100">
+              <img src="/images/team/mrx.jpg" alt="Ruoxuan Mai" class="w-full h-full object-cover">
+            </div>
+            <h3 class="font-bold text-gray-900">Ruoxuan Mai</h3>
+            <p class="text-sm text-gray-500">Design Methodology & Video</p>
+          </div>
+        </div>
+        
+        <!-- Individual Contributions -->
+        <div class="bg-gray-50 rounded-2xl p-8 mb-8">
+          <h3 class="text-lg font-bold text-gray-900 mb-4 text-center">Individual Contributions</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm border-collapse">
+              <thead>
+                <tr class="bg-gray-200">
+                  <th class="p-3 text-left font-bold border">Member</th>
+                  <th class="p-3 text-left font-bold border">Role</th>
+                  <th class="p-3 text-left font-bold border">Key Contributions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="p-3 border font-medium">Yeyun Wan</td>
+                  <td class="p-3 border">Technical Lead</td>
+                  <td class="p-3 border">Portfolio website development (Vue 3 + Tailwind), Game Demo frontend architecture, interactive components (RoleSelect, QuizInterface, Dashboard, AdvisorPanel), system deployment on GitHub Pages</td>
+                </tr>
+                <tr>
+                  <td class="p-3 border font-medium">Ziying Ren</td>
+                  <td class="p-3 border">User Research & Video</td>
+                  <td class="p-3 border">User survey design and distribution (n=90), persona creation (Emily & Alex), user testing coordination, 2-min project video production</td>
+                </tr>
+                <tr>
+                  <td class="p-3 border font-medium">Yueyue Wang</td>
+                  <td class="p-3 border">Content Research & Video</td>
+                  <td class="p-3 border">Academic literature review (4 papers), commercial product analysis (4 products), research gap synthesis, 2-min project video production</td>
+                </tr>
+                <tr>
+                  <td class="p-3 border font-medium">Ruoxuan Mai</td>
+                  <td class="p-3 border">Design Methodology & Video</td>
+                  <td class="p-3 border">Crazy 8s brainstorming facilitation, design process documentation, design decisions (game format / dual-value / story trigger), 2-min project video production</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+        <!-- GitHub Link -->
+        <div class="text-center">
+          <a href="https://github.com/maimaimai084/CPT208-B2-4"
+             target="_blank"
+             class="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-xl hover:bg-gray-800 transition-colors">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z"/>
+            </svg>
+            View Source Code
+          </a>
+          <p class="text-sm text-gray-500 mt-3">If you'd like to see the source code, click the link above.</p>
         </div>
       </div>
     </section>

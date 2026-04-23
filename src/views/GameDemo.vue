@@ -15,7 +15,7 @@
     <header class="bg-white shadow-sm sticky top-0 z-40">
       <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
         <div class="flex items-center gap-2">
-          <span class="text-2xl">🎮</span>
+          <img src="/images/logo.png" alt="MasterApply Quest" class="h-8 w-8">
           <span class="font-bold text-gray-900">MasterApply Quest - Live Demo</span>
         </div>
         <div class="flex items-center gap-2">

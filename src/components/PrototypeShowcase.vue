@@ -8,9 +8,10 @@
 
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 py-8 pb-20">
+      <TableOfContents :items="tocItems" />
 
       <!-- Section 1: User Journey -->
-      <section class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+      <section id="user-journey" class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
           <span>👤</span> User Journey
         </h2>
@@ -32,7 +33,7 @@
       </section>
 
       <!-- Section 2: 5 Application Stages -->
-      <section class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+      <section id="application-stages" class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
           <span>🎮</span> 5 Application Stages
         </h2>
@@ -49,7 +50,7 @@
       </section>
 
       <!-- Section 3: Dual Value System -->
-      <section class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+      <section id="dual-value" class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
           <span>📊</span> Dual Value System
         </h2>
@@ -76,7 +77,7 @@
       </section>
 
       <!-- Section 4: System Architecture -->
-      <section class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+      <section id="system-architecture" class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
           <span>🏗️</span> System Architecture
         </h2>
@@ -169,8 +170,48 @@
         </div>
       </section>
 
+      <!-- Data Flow & Processing Logic -->
+      <section id="data-flow" class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+          <span>🔄</span> Data Flow & Processing Logic
+        </h2>
+        <p class="text-gray-600 mb-4">
+          The following diagram illustrates how user interactions are processed, persisted,
+          and fed back in real-time, as well as how advisor analytics are generated.
+        </p>
+        
+        <div class="flex justify-center mb-6">
+          <img src="/images/Data Flow.jpg"
+               alt="Data Flow Architecture"
+               class="max-w-full rounded-lg border border-gray-100">
+        </div>
+        
+        <div class="space-y-3">
+          <div class="flex items-start gap-3 p-3 bg-blue-50 rounded-lg">
+            <span class="font-bold text-blue-700">① User Input</span>
+            <span class="text-sm text-gray-700">Role selection, quiz answers, task completions → validated and sanitized</span>
+          </div>
+          <div class="flex items-start gap-3 p-3 bg-orange-50 rounded-lg">
+            <span class="font-bold text-orange-700">② Frontend Processing</span>
+            <span class="text-sm text-gray-700">Vue 3 reactive state: IF correct → LV += 10; IF task done → TV += 15</span>
+          </div>
+          <div class="flex items-start gap-3 p-3 bg-gray-100 rounded-lg">
+            <span class="font-bold text-gray-700">③ LocalStorage</span>
+            <span class="text-sm text-gray-700">Auto-saves JSON: {role, learningValue, taskValue, unlockedStages, completedTasks}</span>
+          </div>
+          <div class="flex items-start gap-3 p-3 bg-green-50 rounded-lg">
+            <span class="font-bold text-green-700">④ Output / Feedback</span>
+            <span class="text-sm text-gray-700">Real-time progress bars + threshold checks (LV ≥ 100 → unlock modal)</span>
+          </div>
+          <div class="flex items-start gap-3 p-3 bg-purple-50 rounded-lg">
+            <span class="font-bold text-purple-700">⑤ Advisor Dashboard</span>
+            <span class="text-sm text-gray-700">Read-only aggregation: parses LocalStorage → student list + knowledge gap tags</span>
+          </div>
+        </div>
+      </section>
+
       <!-- Section: Prototype Evolution -->
-      <section class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+      <section id="prototype-evolution" class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
           <span>📈</span> Prototype Evolution
         </h2>
@@ -179,7 +220,7 @@
         <div class="mb-10">
           <h3 class="text-lg font-semibold text-gray-700 mb-4">Low-Fi</h3>
           <div class="rounded-xl overflow-hidden border border-gray-200 max-w-2xl mx-auto">
-            <img src="/images/docx/module5_prototype/image_004.jpeg" alt="Low-fi sketch version 1.0" class="w-full">
+            <img src="/images/8-crazy.jpg" alt="Low-fi sketch version 1.0" class="w-full">
           </div>
           <p class="text-sm text-gray-500 text-center mt-2">Version 1.0</p>
         </div>
@@ -219,11 +260,12 @@
               <p class="text-xs text-gray-500 mt-1">Story Unlock</p>
             </div>
           </div>
-          <p class="text-sm text-gray-400 text-center mt-3">Version 3.0 is available as an interactive demo - visit the /demo route to play the game</p>
+          <p class="text-sm text-gray-400 text-center mt-3">Version 2.0 </p>
+
         </div>
 
         <!-- 3 Key Improvements -->
-        <div class="grid md:grid-cols-3 gap-4">
+        <div class="grid md:grid-cols-3 gap-4 mt-6">
           <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 border border-blue-200">
             <div class="text-2xl mb-2">📱💻</div>
             <h4 class="font-bold text-gray-900">Single → Dual Platform</h4>
@@ -240,10 +282,11 @@
             <p class="text-sm text-gray-600 mt-1">Focus on core task entries, reduce visual distraction and cognitive load</p>
           </div>
         </div>
+               <p class="text-sm text-gray-400 text-center mt-3">Version 3.0 is available as an interactive demo - visit the /demo route to play the game</p>
       </section>
 
       <!-- Section 7: Design Decisions -->
-      <section class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+      <section id="design-decisions" class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
           <span>🎯</span> Design Decisions
         </h2>
@@ -251,15 +294,6 @@
         <div class="bg-gray-50 rounded-xl p-6">
           <img src="/images/docx/module5_prototype/image_012.png" alt="Design Decisions" class="max-w-full mx-auto rounded-lg">
         </div>
-      </section>
-
-      <!-- Section 8: AI Usage Declaration -->
-      <section class="bg-gray-100 rounded-2xl p-6">
-        <h3 class="font-bold text-gray-700 mb-2">AI Usage Declaration</h3>
-        <p class="text-sm text-gray-600">
-          [1] Gemini, version 2.0, accessed on 2026-04-07, available at `https://gemini.google.com/`. 
-          Used for generating system architecture diagram, user journey, and design decision visualization in the prototype section.
-        </p>
       </section>
     </main>
   </div>
@@ -272,6 +306,7 @@
  */
 
 import ModuleHeader from './portfolio/ModuleHeader.vue'
+import TableOfContents from './portfolio/TableOfContents.vue'
 
 const coreSteps = [
   { title: 'Register & Select Role', desc: 'Choose your postgraduate application role: Explorer (Year 2) or Sprint (Year 3)' },
@@ -287,6 +322,16 @@ const stages = [
   { icon: '✍️', name: 'Essay Writing', borderClass: 'border-purple-200 bg-purple-50' },
   { icon: '📨', name: 'Application', borderClass: 'border-yellow-200 bg-yellow-50' },
   { icon: '🎤', name: 'Interview', borderClass: 'border-red-200 bg-red-50' }
+]
+
+const tocItems = [
+  { id: 'user-journey', title: '👤 User Journey' },
+  { id: 'application-stages', title: '🎮 5 Application Stages' },
+  { id: 'dual-value', title: '📊 Dual Value System' },
+  { id: 'system-architecture', title: '🏗️ System Architecture' },
+  { id: 'data-flow', title: '🔄 Data Flow & Processing' },
+  { id: 'prototype-evolution', title: '📈 Prototype Evolution' },
+  { id: 'design-decisions', title: '🎯 Design Decisions' }
 ]
 </script>
 

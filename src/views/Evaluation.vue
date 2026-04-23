@@ -12,9 +12,10 @@
     />
 
     <main class="max-w-5xl mx-auto px-4 py-8 pb-20">
+      <TableOfContents :items="tocItems" />
       
       <!-- Evaluation Methods -->
-      <section class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+      <section id="evaluation-methods" class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         <h2 class="text-2xl font-bold text-gray-900 mb-6">🔬 Evaluation Methods</h2>
         <div class="grid md:grid-cols-3 gap-6">
           <div class="p-6 bg-blue-50 rounded-xl border border-blue-100">
@@ -33,7 +34,7 @@
       </section>
 
       <!-- User Quotes -->
-      <section class="mb-12">
+      <section id="user-feedback" class="mb-12">
         <h2 class="text-2xl font-bold text-gray-900 mb-6">💬 User Feedback</h2>
         <div class="grid md:grid-cols-3 gap-6">
           <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
@@ -70,7 +71,7 @@
       </section>
 
       <!-- Key Findings -->
-      <section class="mb-12 bg-gradient-to-r from-blue-600 to-purple-700 rounded-2xl p-8 text-white">
+      <section id="key-findings" class="mb-12 bg-gradient-to-r from-blue-600 to-purple-700 rounded-2xl p-8 text-white">
         <h2 class="text-2xl font-bold mb-4">🔍 Key Findings</h2>
         <p class="text-lg leading-relaxed">
           The points-based story unlocking mechanism effectively enhances students' motivation and knowledge retention in postgraduate application preparation. 
@@ -79,12 +80,27 @@
         </p>
       </section>
 
+      <!-- Reference -->
+      <section id="reference" class="mb-12 bg-gray-100 rounded-2xl p-6">
+        <h3 class="font-bold text-gray-700 mb-2">📚 Reference</h3>
+        <p class="text-sm text-gray-600 mb-2">[2] Nielsen, J. (1994). Usability Engineering. Morgan Kaufmann Publishers.</p>
+        <p class="text-sm text-gray-600">[3] Brooke, J. (1996). SUS: A 'quick and dirty' usability scale. In P. W. Jordan et al. (Eds.), Usability Evaluation in Industry. Taylor & Francis.</p>
+      </section>
+
     </main>
   </div>
 </template>
 
 <script setup>
 import ModuleHeader from '../components/portfolio/ModuleHeader.vue'
+import TableOfContents from '../components/portfolio/TableOfContents.vue'
+
+const tocItems = [
+  { id: 'evaluation-methods', title: '🔬 Evaluation Methods' },
+  { id: 'user-feedback', title: '💬 User Feedback' },
+  { id: 'key-findings', title: '🔍 Key Findings' },
+  { id: 'reference', title: '📚 Reference' }
+]
 </script>
 
 <style scoped>

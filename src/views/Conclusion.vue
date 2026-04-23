@@ -12,9 +12,10 @@
     />
 
     <main class="max-w-5xl mx-auto px-4 py-8 pb-20">
+      <TableOfContents :items="tocItems" />
       
       <!-- Project Outcomes -->
-      <section class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+      <section id="project-outcomes" class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         <h2 class="text-2xl font-bold text-gray-900 mb-6">🏆 Project Outcomes</h2>
         <p class="text-gray-700 leading-relaxed mb-6">
           MasterApply Quest successfully developed a text-based game for postgraduate application support, 
@@ -47,7 +48,7 @@
       </section>
 
       <!-- Research Limitations -->
-      <section class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+      <section id="research-limitations" class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         <h2 class="text-2xl font-bold text-gray-900 mb-6">⚠️ Research Limitations</h2>
         <div class="space-y-3">
           <div class="flex items-start gap-3">
@@ -66,7 +67,7 @@
       </section>
 
       <!-- Future Work -->
-      <section class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+      <section id="future-work" class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         <h2 class="text-2xl font-bold text-gray-900 mb-6">🚀 Future Work</h2>
         <div class="space-y-4">
           <div class="flex items-start gap-4 p-4 bg-gray-50 rounded-xl">
@@ -100,8 +101,57 @@
         </div>
       </section>
 
+      <!-- Final Reflection -->
+      <section id="final-reflection" class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">🤔 Final Reflection</h2>
+        
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-lg font-bold text-gray-900 mb-3">Social & Ethical Implications</h3>
+            <p class="text-gray-700 leading-relaxed mb-3">
+              This project addresses a genuine equity gap in postgraduate application support.
+              At XJTLU, students with stronger social networks or more free time often receive
+              better guidance, while others are left navigating fragmented information alone.
+              By transforming application preparation into a free, lightweight, and universally
+              accessible text-based game, we lower the barrier to structured learning.
+              The dual-end design ensures that advisors can identify "silent" struggling students
+              through data rather than waiting for them to seek help, promoting
+              <strong>equality, diversity, and inclusion</strong> in educational support.
+            </p>
+            <p class="text-gray-700 leading-relaxed">
+              Ethically, we prioritized <strong>data privacy</strong> by using browser LocalStorage
+              rather than external servers, ensuring sensitive academic progress remains on the user's device.
+              All application guidance content was cross-referenced with official XJTLU postgraduate support
+              materials to prevent misinformation. The gamification mechanics (5–10 minute stages,
+              threshold-based unlocking) were intentionally designed to encourage learning without
+              fostering addictive behavior—there are no infinite scrolls, no daily streak punishments,
+              and no pay-to-win elements.
+            </p>
+          </div>
+          
+          <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+            <h3 class="text-lg font-bold text-gray-900 mb-3">🤖 AI Tool Usage</h3>
+            <p class="text-gray-700 text-sm leading-relaxed mb-3">
+              <strong>Generative AI (Gemini 2.0) 🤖</strong> was used for <em>non-substantive</em> tasks only, such as generating visual assets including the Core Design Concept diagram, Double Diamond Design Process diagram, system architecture diagrams, and data-flow visualizations. It was also used for grammatical polishing of portfolio text.
+            </p>
+            <p class="text-gray-700 text-sm leading-relaxed mb-3">
+              <strong>All core design logic</strong>—including the Dual-Value system, narrative unlocking
+              mechanics, five-stage application structure, user research methodology, and evaluation
+              design—was developed entirely by the team. No AI was used to generate user personas,
+              survey questions, or heuristic evaluation results.
+            </p>
+            <p class="text-gray-700 text-sm leading-relaxed">
+              For coding, the project was built with <strong>Vue 3 and Tailwind CSS</strong> written
+              directly by team members. If AI coding assistance was used for debugging or component
+              scaffolding, all prompts are documented in the <code>/ailogs</code> folder in our
+              GitHub repository.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <!-- References -->
-      <section class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+      <section id="references" class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         <h2 class="text-2xl font-bold text-gray-900 mb-6">📚 References</h2>
         <div class="space-y-3 text-sm text-gray-700">
           <p>[1] Sharp, H., Preece, J., & Rogers, Y. (2007). <em>Interaction design: beyond human-computer interaction</em> (2nd ed.). Wiley. — Cited in Design Process (Interaction Design Lifecycle Model).</p>
@@ -111,21 +161,10 @@
         </div>
       </section>
 
-      <!-- AI Usage Declaration -->
-      <section class="mb-12 bg-gray-100 rounded-2xl p-6">
-        <h3 class="font-bold text-gray-700 mb-2">AI Usage Declaration</h3>
-        <p class="text-sm text-gray-600 mb-3">
-          [1] Gemini, version 2.0, accessed on 2026-04-07, available at https://gemini.google.com/. 
-          Used for generating visual assets (low-fi wireframes, high-fi UI mockups, system architecture diagrams) 
-          and content optimization in the portfolio section.
-        </p>
-        <p class="text-sm text-gray-600">
-          All core game mechanics, design decisions, user research, and evaluation were conducted by the team without AI assistance.
-        </p>
-      </section>
+      
 
       <!-- Acknowledgments -->
-      <section class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+      <section id="acknowledgments" class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         <h2 class="text-2xl font-bold text-gray-900 mb-4">🙏 Acknowledgments</h2>
         <p class="text-gray-700">
           We thank XJTLU students and development advisors who participated in our research and testing. 
@@ -139,6 +178,16 @@
 
 <script setup>
 import ModuleHeader from '../components/portfolio/ModuleHeader.vue'
+import TableOfContents from '../components/portfolio/TableOfContents.vue'
+
+const tocItems = [
+  { id: 'project-outcomes', title: '🏆 Project Outcomes' },
+  { id: 'research-limitations', title: '⚠️ Research Limitations' },
+  { id: 'future-work', title: '🚀 Future Work' },
+  { id: 'final-reflection', title: '🤔 Final Reflection' },
+  { id: 'references', title: '📚 References' },
+  { id: 'acknowledgments', title: '🙏 Acknowledgments' }
+]
 </script>
 
 <style scoped>

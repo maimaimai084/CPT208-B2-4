@@ -12,9 +12,10 @@
     />
 
     <main class="max-w-5xl mx-auto px-4 py-8 pb-20">
+      <TableOfContents :items="tocItems" />
       
       <!-- Project Objectives -->
-      <section class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+      <section id="project-objectives" class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         <h2 class="text-2xl font-bold text-gray-900 mb-6">🎯 4 Specific Project Objectives</h2>
         <div class="grid md:grid-cols-2 gap-4">
           <div class="flex items-start gap-4 p-4 bg-blue-50 rounded-xl">
@@ -36,8 +37,8 @@
         </div>
       </section>
 
-      <!-- Design Process Model -->
-      <section class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+      <!-- Design Process -->
+      <section id="design-process" class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         <h2 class="text-2xl font-bold text-gray-900 mb-6">🔄 Design Process</h2>
         <p class="text-gray-600 mb-4">We followed the Interaction Design Lifecycle Model by Sharp, Preece & Rogers [1].</p>
         <div class="flex justify-center mb-6">
@@ -64,7 +65,7 @@
       </section>
 
       <!-- Core Design Concept -->
-      <section class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+      <section id="core-design-concept" class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         <h2 class="text-2xl font-bold text-gray-900 mb-6">💡 Core Design Concept</h2>
         <div class="bg-gray-50 rounded-xl p-6 mb-6">
           <div class="flex flex-wrap items-center justify-center gap-2 text-center">
@@ -87,7 +88,7 @@
       </section>
 
       <!-- Double Diamond -->
-      <section class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+      <section id="double-diamond" class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         <h2 class="text-2xl font-bold text-gray-900 mb-6">💎 Double Diamond Design Process</h2>
         <div class="flex justify-center mb-6">
           <img src="/images/docx/module4_process/image_001.jpeg" alt="Double Diamond Design Process" class="max-w-full rounded-lg border border-gray-100">
@@ -110,10 +111,83 @@
             </ul>
           </div>
         </div>
+        <!-- Crazy 8s Sketches -->
+        <div class="mt-6">
+          <h4 class="font-bold text-gray-900 mb-3">Crazy 8s Sketches</h4>
+          <div class="rounded-xl overflow-hidden border border-gray-200 max-w-2xl mx-auto">
+            <img src="/images/8-crazy.jpg" alt="Crazy 8s Sketches" class="w-full">
+          </div>
+        </div>
+      </section>
+
+      <!-- System-Level Design Alternatives -->
+      <section id="system-alternatives" class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">🔄 System-Level Design Alternatives</h2>
+        <p class="text-gray-600 mb-4">
+          Before converging on our final concept, we compared three distinct system architectures
+          to identify the optimal approach for postgraduate application support.
+        </p>
+        
+        <div class="overflow-x-auto mb-6">
+          <table class="w-full text-sm border-collapse">
+            <thead>
+              <tr class="bg-gray-100">
+                <th class="p-3 text-left font-bold border">Dimension</th>
+                <th class="p-3 text-left font-bold border">Option A: Document Library</th>
+                <th class="p-3 text-left font-bold border">Option B: Card/Puzzle Game</th>
+                <th class="p-3 text-left font-bold border bg-green-50">Option C: Text Adventure ✅</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="p-3 border font-medium">Format</td>
+                <td class="p-3 border">PDF guides + video lectures</td>
+                <td class="p-3 border">Card collection + puzzle solving</td>
+                <td class="p-3 border bg-green-50">Story-driven + quiz decisions</td>
+              </tr>
+              <tr>
+                <td class="p-3 border font-medium">Engagement</td>
+                <td class="p-3 border">Passive reading</td>
+                <td class="p-3 border">High fun, fragmented knowledge</td>
+                <td class="p-3 border bg-green-50">Immersive, systematic</td>
+              </tr>
+              <tr>
+                <td class="p-3 border font-medium">Dev Cost</td>
+                <td class="p-3 border">Low</td>
+                <td class="p-3 border">High (art assets)</td>
+                <td class="p-3 border bg-green-50">Medium (text-based)</td>
+              </tr>
+              <tr>
+                <td class="p-3 border font-medium">Fragmented Fit</td>
+                <td class="p-3 border">❌ Long sessions</td>
+                <td class="p-3 border">⚠️ Long rounds</td>
+                <td class="p-3 border bg-green-50">✅ 5–10 min/stage</td>
+              </tr>
+              <tr>
+                <td class="p-3 border font-medium">Cross-Platform</td>
+                <td class="p-3 border">✅ PC-focused</td>
+                <td class="p-3 border">⚠️ Poor mobile</td>
+                <td class="p-3 border bg-green-50">✅ Mobile + PC</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="bg-blue-50 rounded-xl p-6">
+          <h4 class="font-bold text-blue-900 mb-2">Final Rationale</h4>
+          <p class="text-sm text-gray-700">
+            We rejected <strong>Option A</strong> for its passive, demotivating format and
+            <strong>Option B</strong> for high development overhead and fragmented knowledge delivery.
+            <strong>Option C (Text Adventure)</strong> was selected because it aligns with
+            Sailer et al.'s finding that narrative elements most strongly boost intrinsic motivation,
+            while keeping development lightweight enough to support rapid content iteration across
+            our five-stage application journey.
+          </p>
+        </div>
       </section>
 
       <!-- Engaging Highlights -->
-      <section class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+      <section id="engaging-highlights" class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         <h2 class="text-2xl font-bold text-gray-900 mb-6">✨ Engaging Highlights</h2>
         <div class="grid md:grid-cols-3 gap-4">
           <div class="p-4 bg-blue-50 rounded-xl border border-blue-100">
@@ -135,8 +209,8 @@
       </section>
 
       <!-- Reference -->
-      <section class="mb-12 bg-gray-100 rounded-2xl p-6">
-        <h3 class="font-bold text-gray-700 mb-2">Reference</h3>
+      <section id="reference" class="mb-12 bg-gray-100 rounded-2xl p-6">
+        <h3 class="font-bold text-gray-700 mb-2">📚 Reference</h3>
         <p class="text-sm text-gray-600">
           [1] Sharp, H., Preece, J., & Rogers, Y. (2007). Interaction design: beyond human-computer interaction (2nd ed.). Wiley.
         </p>
@@ -148,6 +222,17 @@
 
 <script setup>
 import ModuleHeader from '../components/portfolio/ModuleHeader.vue'
+import TableOfContents from '../components/portfolio/TableOfContents.vue'
+
+const tocItems = [
+  { id: 'project-objectives', title: '🎯 Project Objectives' },
+  { id: 'design-process', title: '🔄 Design Process' },
+  { id: 'core-design-concept', title: '💡 Core Design Concept' },
+  { id: 'double-diamond', title: '💎 Double Diamond' },
+  { id: 'system-alternatives', title: '🔄 System Alternatives' },
+  { id: 'engaging-highlights', title: '✨ Engaging Highlights' },
+  { id: 'reference', title: '📚 Reference' }
+]
 </script>
 
 <style scoped>
