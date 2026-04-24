@@ -7,6 +7,7 @@
     - @select-role → @role-confirmed (与RoleSelect.vue一致)
     - @enter-level → @start-level (与GameDashboard.vue一致)
     - 添加缺失的事件处理: add-learning, add-task, reset-progress, view-story
+  - 2026-04-24: 重构为标签页布局 (Journey / Profile / AI Advisor / Q&A / Admission Data / Activities / Advisor View)
 -->
 
 <template>
@@ -26,65 +27,151 @@
       </div>
     </header>
 
-    <!-- Game Container -->
-    <div class="game-container">
-      <!-- Role Selection -->
-      <RoleSelect 
-        v-if="currentView === 'roleselect'"
-        @role-confirmed="handleRoleConfirmed"
-      />
+    <!-- Role Selection -->
+    <RoleSelect 
+      v-if="currentView === 'roleselect'"
+      @role-confirmed="handleRoleConfirmed"
+    />
 
-      <!-- Game Dashboard -->
-      <GameDashboard
-        v-else-if="currentView === 'dashboard'"
-        :user-name="userName"
-        :user-role="userRole"
-        :learning-value="learningValue"
-        :task-value="taskValue"
-        :completed-levels="completedLevels"
-        :unlocked-stories="unlockedStories"
-        :current-combo="currentCombo"
-        :max-combo="maxCombo"
-        @start-level="handleStartLevel"
-        @switch-role="handleSwitchRole"
-        @show-advisor="handleShowAdvisor"
-        @add-learning="handleAddLearning"
-        @add-task="handleAddTask"
-        @reset-progress="handleResetProgress"
-        @view-story="handleViewStory"
-      />
+    <!-- Main Tabbed Interface -->
+    <div v-else-if="currentView === 'main'" class="game-container">
+      <!-- Player Info Bar -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm mb-6">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-violet-600 text-white flex items-center justify-center font-bold">
+              {{ userName ? userName.charAt(0).toUpperCase() : '?' }}
+            </div>
+            <div>
+              <p class="font-bold text-slate-900 text-sm">{{ userName || 'Player' }}</p>
+              <p class="text-xs text-slate-500">
+                {{ userRole === 'confused' ? 'Explorer' : userRole === 'sprint' ? 'Sprint' : 'Player' }}
+              </p>
+            </div>
+          </div>
 
-      <!-- Quiz Interface -->
-      <QuizInterface
-        v-else-if="currentView === 'quiz'"
-        :level="currentLevel"
-        :user-type="userRole"
-        @close="handleQuizClose"
-        @complete="handleQuizComplete"
-      />
+          <div class="flex items-center gap-4">
+            <div class="flex items-center gap-2 text-sm">
+              <span class="text-blue-600 font-bold">{{ learningValue }}</span>
+              <span class="text-slate-400 text-xs">LV</span>
+            </div>
+            <div class="flex items-center gap-2 text-sm">
+              <span class="text-amber-500 font-bold">{{ taskValue }}</span>
+              <span class="text-slate-400 text-xs">TV</span>
+            </div>
+            <div v-if="currentCombo > 0" class="flex items-center gap-1 px-2 py-1 bg-amber-50 border border-amber-200 rounded-full text-xs text-amber-700">
+              <span>{{ currentCombo >= 10 ? '🌟' : currentCombo >= 5 ? '🔥' : '⚡' }}</span>
+              <span class="font-bold">{{ currentCombo }}</span>
+            </div>
+            <button @click="handleSwitchRole"
+                    class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg text-xs font-medium transition-colors">
+              🔄 Switch Role
+            </button>
+          </div>
+        </div>
+      </div>
 
-      <!-- Advisor Dashboard -->
-      <AdvisorDashboard
-        v-if="currentView === 'advisor'"
-        @close="currentView = 'dashboard'"
-      />
+      <!-- Tab Navigation -->
+      <div class="flex gap-1 mb-6 overflow-x-auto pb-1 scrollbar-hide">
+        <button v-for="tab in tabs" :key="tab.id"
+                @click="activeTab = tab.id"
+                class="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-medium whitespace-nowrap transition-all border"
+                :class="activeTab === tab.id 
+                  ? 'bg-blue-600 text-white border-blue-600 shadow-sm' 
+                  : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50 hover:border-slate-300'">
+          <span>{{ tab.icon }}</span>
+          <span>{{ tab.label }}</span>
+        </button>
+      </div>
 
-      <!-- Achievement Notification Popup -->
-      <AchievementNotification 
-        :achievement="currentAchievement" 
-        @close="currentAchievement = null"
-      />
+      <!-- Tab Contents -->
+      <div class="tab-content">
+        <!-- Journey -->
+        <GameDashboard
+          v-if="activeTab === 'journey'"
+          :user-name="userName"
+          :user-role="userRole"
+          :learning-value="learningValue"
+          :task-value="taskValue"
+          :completed-levels="completedLevels"
+          :unlocked-stories="unlockedStories"
+          :current-combo="currentCombo"
+          :max-combo="maxCombo"
+          @start-level="handleStartLevel"
+          @switch-role="handleSwitchRole"
+          @show-advisor="activeTab = 'advisor-view'"
+          @add-learning="handleAddLearning"
+          @add-task="handleAddTask"
+          @reset-progress="handleResetProgress"
+          @view-story="handleViewStory"
+        />
 
-      <!-- Guide Modal for viewing unlocked guides -->
-      <GuideModal
-        :is-open="showGuide"
-        :title="currentGuide?.title || 'Guide'"
-        :subtitle="currentGuide?.icon || ''"
-        @close="showGuide = false"
-      >
-        <div v-if="currentGuide" v-html="currentGuide.content"></div>
-      </GuideModal>
+        <!-- Profile -->
+        <ProfilePanel
+          v-if="activeTab === 'profile'"
+          :user-name="userName"
+          :user-role="userRole"
+          :learning-value="learningValue"
+          :task-value="taskValue"
+          :completed-levels="completedLevels"
+          :unlocked-stories="unlockedStories"
+          :current-combo="currentCombo"
+          :max-combo="maxCombo"
+          :daily-quest-progress="dailyQuestProgress"
+          :unlocked-achievements="unlockedAchievements"
+          :total-correct-answers="totalCorrectAnswers"
+          :perfect-levels-count="perfectLevelsCount"
+        />
+
+        <!-- AI Advisor -->
+        <AIChat v-if="activeTab === 'ai-advisor'" />
+
+        <!-- Q&A -->
+        <QuestionForm v-if="activeTab === 'qa'" :user-name="userName" />
+
+        <!-- Admission Data -->
+        <DemoAdmissionData v-if="activeTab === 'admission'" />
+
+        <!-- Activities -->
+        <DemoActivities v-if="activeTab === 'activities'" />
+
+        <!-- Advisor View -->
+        <AdvisorDashboard
+          v-if="activeTab === 'advisor-view'"
+          :player-name="userName"
+          :player-role="userRole"
+          :player-learning="learningValue"
+          :player-task="taskValue"
+          :player-completed-levels="completedLevels"
+          :player-combo="currentCombo"
+        />
+      </div>
     </div>
+
+    <!-- Quiz Interface (Overlay) -->
+    <QuizInterface
+      v-if="currentView === 'quiz'"
+      :level="currentLevel"
+      :user-type="userRole"
+      @close="handleQuizClose"
+      @complete="handleQuizComplete"
+    />
+
+    <!-- Achievement Notification Popup -->
+    <AchievementNotification 
+      :achievement="currentAchievement" 
+      @close="currentAchievement = null"
+    />
+
+    <!-- Guide Modal for viewing unlocked guides -->
+    <GuideModal
+      :is-open="showGuide"
+      :title="currentGuide?.title || 'Guide'"
+      :subtitle="currentGuide?.icon || ''"
+      @close="showGuide = false"
+    >
+      <div v-if="currentGuide" v-html="currentGuide.content"></div>
+    </GuideModal>
   </div>
 </template>
 
@@ -96,10 +183,30 @@ import QuizInterface from '../components/QuizInterface.vue'
 import AdvisorDashboard from '../components/AdvisorDashboard.vue'
 import AchievementNotification from '../components/AchievementNotification.vue'
 import GuideModal from '../components/GuideModal.vue'
+import ProfilePanel from '../components/ProfilePanel.vue'
+import AIChat from '../components/AIChat.vue'
+import QuestionForm from '../components/QuestionForm.vue'
+import DemoAdmissionData from '../components/DemoAdmissionData.vue'
+import DemoActivities from '../components/DemoActivities.vue'
 import { getGuideById } from '../data/guides'
 import { calculateComboReward } from '../data/combos'
-import { DAILY_QUESTS, initializeDailyProgress } from '../data/dailyquests'
+import { DAILY_QUESTS, initializeDailyProgress, shouldResetDaily } from '../data/dailyquests'
 import { ACHIEVEMENTS, checkAchievements } from '../data/achievements'
+
+// ============================================
+// Tabs Configuration
+// ============================================
+const tabs = [
+  { id: 'journey', label: 'Journey', icon: '🗺️' },
+  { id: 'profile', label: 'Profile', icon: '👤' },
+  { id: 'ai-advisor', label: 'AI Advisor', icon: '🤖' },
+  { id: 'qa', label: 'Q&A', icon: '💬' },
+  { id: 'admission', label: 'Admission Data', icon: '📊' },
+  { id: 'activities', label: 'Activities', icon: '📅' },
+  { id: 'advisor-view', label: 'Advisor View', icon: '🎓' }
+]
+
+const activeTab = ref('journey')
 
 // ============================================
 // Game State
@@ -157,7 +264,8 @@ const dailyQuestsWithProgress = computed(() => {
 function handleRoleConfirmed(data) {
   userRole.value = data.role
   userName.value = data.name
-  currentView.value = 'dashboard'
+  currentView.value = 'main'
+  activeTab.value = 'journey'
   
   // Load saved progress if exists
   const saved = localStorage.getItem(`progress_${data.role}`)
@@ -167,12 +275,32 @@ function handleRoleConfirmed(data) {
     taskValue.value = progress.task || 0
     completedLevels.value = progress.completedLevels || ['level-1']
     unlockedStories.value = progress.unlockedStories || []
+    currentCombo.value = progress.currentCombo || 0
+    maxCombo.value = progress.maxCombo || 0
+    unlockedAchievements.value = progress.unlockedAchievements || []
+    totalCorrectAnswers.value = progress.totalCorrectAnswers || 0
+    perfectLevelsCount.value = progress.perfectLevelsCount || 0
+    if (progress.dailyQuestProgress && progress.dailyQuestProgress.length > 0) {
+      if (shouldResetDaily(progress.dailyQuestProgress)) {
+        dailyQuestProgress.value = initializeDailyProgress()
+      } else {
+        dailyQuestProgress.value = progress.dailyQuestProgress
+      }
+    } else {
+      dailyQuestProgress.value = initializeDailyProgress()
+    }
   } else {
     // New role - use default initial values
     learningValue.value = 60
     taskValue.value = 40
     completedLevels.value = ['level-1']
     unlockedStories.value = []
+    currentCombo.value = 0
+    maxCombo.value = 0
+    unlockedAchievements.value = []
+    totalCorrectAnswers.value = 0
+    perfectLevelsCount.value = 0
+    dailyQuestProgress.value = initializeDailyProgress()
   }
 }
 
@@ -204,14 +332,6 @@ function handleSwitchRole() {
 }
 
 /**
- * Handle show advisor
- * Called when user clicks "Advisor" button
- */
-function handleShowAdvisor() {
-  currentView.value = 'advisor'
-}
-
-/**
  * Handle add learning value
  * Called from debug/test buttons
  */
@@ -239,6 +359,12 @@ function handleResetProgress() {
   completedLevels.value = ['level-1']
   unlockedStories.value = []
   currentAchievement.value = null
+  currentCombo.value = 0
+  maxCombo.value = 0
+  dailyQuestProgress.value = initializeDailyProgress()
+  unlockedAchievements.value = []
+  totalCorrectAnswers.value = 0
+  perfectLevelsCount.value = 0
   saveProgress()
 }
 
@@ -263,7 +389,7 @@ function handleViewStory(storyId) {
  * Called when user clicks close button in quiz
  */
 function handleQuizClose() {
-  currentView.value = 'dashboard'
+  currentView.value = 'main'
 }
 
 /**
@@ -362,8 +488,8 @@ function handleQuizComplete(results) {
   // Save progress
   saveProgress()
 
-  // Return to dashboard
-  currentView.value = 'dashboard'
+  // Return to main view
+  currentView.value = 'main'
 }
 
 /**
@@ -450,6 +576,12 @@ function saveProgress() {
     task: taskValue.value,
     completedLevels: completedLevels.value,
     unlockedStories: unlockedStories.value,
+    currentCombo: currentCombo.value,
+    maxCombo: maxCombo.value,
+    unlockedAchievements: unlockedAchievements.value,
+    totalCorrectAnswers: totalCorrectAnswers.value,
+    perfectLevelsCount: perfectLevelsCount.value,
+    dailyQuestProgress: dailyQuestProgress.value,
     lastUpdated: new Date().toISOString()
   }
   localStorage.setItem(`progress_${userRole.value}`, JSON.stringify(progress))
@@ -466,5 +598,14 @@ function saveProgress() {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+}
+
+/* Hide scrollbar for tab navigation */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
 </style>

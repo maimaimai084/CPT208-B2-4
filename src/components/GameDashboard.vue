@@ -327,7 +327,7 @@ const stories = {
       <h4>📅 Timeline Overview</h4>
       <ul>
         <li><strong>12+ months before:</strong> Research programs, take standardized tests (GRE/GMAT/IELTS)</li>
-        <li><strong>6-9 months before:</strong> Prepare申请 materials, request recommendation letters</li>
+        <li><strong>6-9 months before:</strong> Prepare application materials, request recommendation letters</li>
         <li><strong>3-6 months before:</strong> Write and refine PS/Essays, submit applications</li>
         <li><strong>1-3 months before:</strong> Interview preparation (if required), receive decisions</li>
       </ul>
