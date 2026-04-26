@@ -1,66 +1,65 @@
 <template>
-  <div class="ai-chat bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col h-[600px]">
-    <!-- Header -->
-    <div class="p-4 border-b border-slate-100 flex items-center gap-3">
-      <div class="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 text-white flex items-center justify-center text-lg">
+  <div class="ai-chat bg-white rounded-[2rem] border-2 border-[#E2E8F0] shadow-[0_8px_30px_rgba(0,0,0,0.03)] flex flex-col h-[600px] overflow-hidden">
+    
+    <div class="p-5 border-b border-slate-100 flex items-center gap-4 bg-slate-50/50">
+      <div class="w-12 h-12 rounded-2xl bg-[#7FA1ED] shadow-[0_3px_0_#5B78BA] text-white flex items-center justify-center text-xl">
         🤖
       </div>
       <div>
-        <h3 class="font-bold text-slate-900">AI Advisor</h3>
-        <p class="text-xs text-slate-500">Preset answers only — AI API not yet configured</p>
+        <h3 class="font-black text-slate-700 text-lg tracking-tight">AI Advisor</h3>
+        <p class="text-xs font-medium text-slate-400">Preset answers only — AI API not yet configured</p>
       </div>
     </div>
 
-    <!-- Messages -->
-    <div class="flex-1 overflow-y-auto p-4 space-y-4" ref="messagesContainer">
+    <div class="flex-1 overflow-y-auto p-5 space-y-5 bg-[#F8FAFC]/50 custom-scrollbar" ref="messagesContainer">
       <div v-for="(msg, index) in messages" :key="index" class="flex gap-3" :class="msg.role === 'user' ? 'justify-end' : ''">
-        <div v-if="msg.role === 'assistant'" class="w-8 h-8 rounded-full bg-violet-100 text-violet-600 flex items-center justify-center text-sm flex-shrink-0">
+        
+        <div v-if="msg.role === 'assistant'" class="w-8 h-8 rounded-full bg-white border border-[#E2E8F0] text-[#7FA1ED] shadow-sm flex items-center justify-center text-sm flex-shrink-0">
           🤖
         </div>
-        <div class="max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed whitespace-pre-line"
+        
+        <div class="max-w-[80%] rounded-2xl px-5 py-3.5 text-sm leading-relaxed whitespace-pre-line shadow-sm"
              :class="msg.role === 'user' 
-               ? 'bg-blue-600 text-white rounded-tr-none' 
-               : 'bg-slate-100 text-slate-800 rounded-tl-none'">
+               ? 'bg-[#7FA1ED] text-white rounded-tr-none' 
+               : 'bg-white border border-slate-100 text-slate-700 rounded-tl-none'">
           {{ msg.content }}
         </div>
-        <div v-if="msg.role === 'user'" class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-sm flex-shrink-0">
+
+        <div v-if="msg.role === 'user'" class="w-8 h-8 rounded-full bg-[#EBF0FA] text-[#5B78BA] flex items-center justify-center text-sm flex-shrink-0">
           🧑
         </div>
       </div>
 
-      <!-- Typing indicator -->
       <div v-if="isTyping" class="flex gap-3">
-        <div class="w-8 h-8 rounded-full bg-violet-100 text-violet-600 flex items-center justify-center text-sm flex-shrink-0">🤖</div>
-        <div class="bg-slate-100 rounded-2xl rounded-tl-none px-4 py-3 text-sm text-slate-500">
+        <div class="w-8 h-8 rounded-full bg-white border border-[#E2E8F0] text-[#7FA1ED] shadow-sm flex items-center justify-center text-sm flex-shrink-0">🤖</div>
+        <div class="bg-white border border-slate-100 shadow-sm rounded-2xl rounded-tl-none px-5 py-3 text-sm text-[#7FA1ED] font-medium">
           Typing<span class="animate-pulse">...</span>
         </div>
       </div>
     </div>
 
-    <!-- Quick Questions -->
-    <div class="px-4 py-2 border-t border-slate-100">
-      <p class="text-xs text-slate-500 mb-2">Quick Questions:</p>
+    <div class="px-5 py-3 border-t border-slate-100 bg-white">
+      <p class="text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider">Quick Questions</p>
       <div class="flex flex-wrap gap-2">
         <button v-for="q in presetQuestions" :key="q.id"
                 @click="sendPreset(q)"
-                class="px-3 py-1.5 bg-slate-50 hover:bg-violet-50 text-slate-700 hover:text-violet-700 text-xs rounded-full border border-slate-200 hover:border-violet-200 transition-colors">
+                class="px-4 py-1.5 bg-slate-50 hover:bg-[#EBF0FA] text-slate-500 hover:text-[#5B78BA] text-xs font-semibold rounded-full border border-slate-200 hover:border-[#7FA1ED] transition-colors">
           {{ q.short }}
         </button>
       </div>
     </div>
 
-    <!-- Input -->
-    <div class="p-4 border-t border-slate-100">
-      <div class="flex gap-2">
+    <div class="p-5 border-t border-slate-100 bg-slate-50/50">
+      <div class="flex gap-3">
         <input v-model="inputText" @keyup.enter="sendMessage"
                placeholder="Type your question..."
-               class="flex-1 px-4 py-2.5 rounded-xl border border-slate-200 focus:border-violet-500 focus:outline-none text-sm" />
+               class="flex-1 px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-[#7FA1ED] focus:ring-4 focus:ring-[#7FA1ED]/10 focus:outline-none text-sm font-medium text-slate-700 transition-all bg-white" />
         <button @click="sendMessage"
-                class="px-4 py-2.5 bg-violet-600 hover:bg-violet-700 text-white rounded-xl text-sm font-medium transition-colors">
+                class="px-6 py-3 bg-[#7FA1ED] shadow-[0_4px_0_#5B78BA] text-white rounded-xl font-bold hover:brightness-105 active:translate-y-[4px] active:shadow-none transition-all">
           Send
         </button>
       </div>
-      <p class="text-[10px] text-slate-400 mt-2 text-center">
+      <p class="text-[10px] text-slate-400 mt-3 text-center font-medium">
         AI backend not connected. Configure an API key in settings to enable live AI responses.
       </p>
     </div>
@@ -158,14 +157,18 @@ function scrollToBottom() {
 </script>
 
 <style scoped>
-.overflow-y-auto::-webkit-scrollbar {
+/* 替换为柔雾蓝风格的滚动条 */
+.custom-scrollbar::-webkit-scrollbar {
   width: 6px;
 }
-.overflow-y-auto::-webkit-scrollbar-track {
+.custom-scrollbar::-webkit-scrollbar-track {
   background: transparent;
 }
-.overflow-y-auto::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 3px;
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #E2E8F0;
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #7FA1ED;
 }
 </style>

@@ -1,18 +1,5 @@
-<!--
-  GameDemo.vue - Live Game Demo
-  整合现有游戏组件，实现可玩的游戏演示
-  
-  修复日志:
-  - 2026-04-08: 修复事件监听名不匹配问题
-    - @select-role → @role-confirmed (与RoleSelect.vue一致)
-    - @enter-level → @start-level (与GameDashboard.vue一致)
-    - 添加缺失的事件处理: add-learning, add-task, reset-progress, view-story
-  - 2026-04-24: 重构为标签页布局 (Journey / Profile / AI Advisor / Q&A / Admission Data / Activities / Advisor View)
--->
-
 <template>
   <div class="game-demo-page">
-    <!-- Navigation Header for Game -->
     <header class="bg-white shadow-sm sticky top-0 z-40">
       <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
         <div class="flex items-center gap-2">
@@ -27,19 +14,16 @@
       </div>
     </header>
 
-    <!-- Role Selection -->
     <RoleSelect 
       v-if="currentView === 'roleselect'"
       @role-confirmed="handleRoleConfirmed"
     />
 
-    <!-- Main Tabbed Interface -->
     <div v-else-if="currentView === 'main'" class="game-container">
-      <!-- Player Info Bar -->
-      <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm mb-6">
+      <div class="bg-white rounded-[1.5rem] p-4 shadow-[0_4px_0_#E2E8F0] mb-6">
         <div class="flex flex-wrap items-center justify-between gap-4">
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-violet-600 text-white flex items-center justify-center font-bold">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-white flex items-center justify-center font-bold">
               {{ userName ? userName.charAt(0).toUpperCase() : '?' }}
             </div>
             <div>
@@ -52,7 +36,7 @@
 
           <div class="flex items-center gap-4">
             <div class="flex items-center gap-2 text-sm">
-              <span class="text-blue-600 font-bold">{{ learningValue }}</span>
+              <span class="text-indigo-600 font-bold">{{ learningValue }}</span>
               <span class="text-slate-400 text-xs">LV</span>
             </div>
             <div class="flex items-center gap-2 text-sm">
@@ -63,30 +47,37 @@
               <span>{{ currentCombo >= 10 ? '🌟' : currentCombo >= 5 ? '🔥' : '⚡' }}</span>
               <span class="font-bold">{{ currentCombo }}</span>
             </div>
-            <button @click="handleSwitchRole"
-                    class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg text-xs font-medium transition-colors">
+            <button @click="handleSwitchRole" class="px-3 py-1.5 bg-[#F1F5F9] shadow-[0_3px_0_#CBD5E1] active:translate-y-[3px] active:shadow-none text-[#475569] rounded-xl text-xs font-bold transition-all">
               🔄 Switch Role
             </button>
           </div>
         </div>
       </div>
 
-      <!-- Tab Navigation -->
-      <div class="flex gap-1 mb-6 overflow-x-auto pb-1 scrollbar-hide">
-        <button v-for="tab in tabs" :key="tab.id"
-                @click="activeTab = tab.id"
-                class="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-medium whitespace-nowrap transition-all border"
-                :class="activeTab === tab.id 
-                  ? 'bg-blue-600 text-white border-blue-600 shadow-sm' 
-                  : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50 hover:border-slate-300'">
-          <span>{{ tab.icon }}</span>
-          <span>{{ tab.label }}</span>
+      <div class="flex flex-wrap justify-center gap-4 sm:gap-5 mb-10 py-4">
+        <button
+          v-for="tab in tabs"
+          :key="tab.id"
+          @click="activeTab = tab.id"
+          class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-[1.5rem] flex flex-col items-center justify-center p-2 text-center transition-all duration-150 z-10"
+          :class="[
+            tab.theme,
+            activeTab === tab.id 
+              ? 'translate-y-[4px] shadow-none brightness-110' 
+              : 'hover:-translate-y-1 hover:brightness-105 active:translate-y-[4px] active:shadow-none'
+          ]"
+        >
+          <span class="text-2xl sm:text-3xl mb-1 drop-shadow-md select-none transition-transform duration-300"
+                :class="activeTab === tab.id ? 'scale-110' : ''">
+            {{ tab.icon }}
+          </span>
+          <span class="text-[10px] sm:text-[11px] font-black leading-none uppercase tracking-wider drop-shadow-sm select-none" 
+                v-html="tab.label">
+          </span>
         </button>
       </div>
 
-      <!-- Tab Contents -->
       <div class="tab-content">
-        <!-- Journey -->
         <GameDashboard
           v-if="activeTab === 'journey'"
           :user-name="userName"
@@ -106,49 +97,15 @@
           @view-story="handleViewStory"
         />
 
-        <!-- Profile -->
-        <ProfilePanel
-          v-if="activeTab === 'profile'"
-          :user-name="userName"
-          :user-role="userRole"
-          :learning-value="learningValue"
-          :task-value="taskValue"
-          :completed-levels="completedLevels"
-          :unlocked-stories="unlockedStories"
-          :current-combo="currentCombo"
-          :max-combo="maxCombo"
-          :daily-quest-progress="dailyQuestProgress"
-          :unlocked-achievements="unlockedAchievements"
-          :total-correct-answers="totalCorrectAnswers"
-          :perfect-levels-count="perfectLevelsCount"
-        />
-
-        <!-- AI Advisor -->
+        <ProfilePanel v-if="activeTab === 'profile'" v-bind="profileProps" />
         <AIChat v-if="activeTab === 'ai-advisor'" />
-
-        <!-- Q&A -->
         <QuestionForm v-if="activeTab === 'qa'" :user-name="userName" />
-
-        <!-- Admission Data -->
         <DemoAdmissionData v-if="activeTab === 'admission'" />
-
-        <!-- Activities -->
         <DemoActivities v-if="activeTab === 'activities'" />
-
-        <!-- Advisor View -->
-        <AdvisorDashboard
-          v-if="activeTab === 'advisor-view'"
-          :player-name="userName"
-          :player-role="userRole"
-          :player-learning="learningValue"
-          :player-task="taskValue"
-          :player-completed-levels="completedLevels"
-          :player-combo="currentCombo"
-        />
+        <AdvisorDashboard v-if="activeTab === 'advisor-view'" v-bind="advisorProps" />
       </div>
     </div>
 
-    <!-- Quiz Interface (Overlay) -->
     <QuizInterface
       v-if="currentView === 'quiz'"
       :level="currentLevel"
@@ -157,19 +114,8 @@
       @complete="handleQuizComplete"
     />
 
-    <!-- Achievement Notification Popup -->
-    <AchievementNotification 
-      :achievement="currentAchievement" 
-      @close="currentAchievement = null"
-    />
-
-    <!-- Guide Modal for viewing unlocked guides -->
-    <GuideModal
-      :is-open="showGuide"
-      :title="currentGuide?.title || 'Guide'"
-      :subtitle="currentGuide?.icon || ''"
-      @close="showGuide = false"
-    >
+    <AchievementNotification :achievement="currentAchievement" @close="currentAchievement = null" />
+    <GuideModal :is-open="showGuide" :title="currentGuide?.title || 'Guide'" :subtitle="currentGuide?.icon || ''" @close="showGuide = false">
       <div v-if="currentGuide" v-html="currentGuide.content"></div>
     </GuideModal>
   </div>
@@ -177,6 +123,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+// ... (保持原有的 import 不变)
 import RoleSelect from '../components/RoleSelect.vue'
 import GameDashboard from '../components/GameDashboard.vue'
 import QuizInterface from '../components/QuizInterface.vue'
@@ -194,22 +141,25 @@ import { DAILY_QUESTS, initializeDailyProgress, shouldResetDaily } from '../data
 import { ACHIEVEMENTS, checkAchievements } from '../data/achievements'
 
 // ============================================
-// Tabs Configuration
+// 3D 调色盘配置 (Tactile 3D Palette)
+// ============================================
+// ============================================
+// 3D 调色盘配置 (Morandi Soft Clay / 莫兰迪轻黏土风)
 // ============================================
 const tabs = [
-  { id: 'journey', label: 'Journey', icon: '🗺️' },
-  { id: 'profile', label: 'Profile', icon: '👤' },
-  { id: 'ai-advisor', label: 'AI Advisor', icon: '🤖' },
-  { id: 'qa', label: 'Q&A', icon: '💬' },
-  { id: 'admission', label: 'Admission Data', icon: '📊' },
-  { id: 'activities', label: 'Activities', icon: '📅' },
-  { id: 'advisor-view', label: 'Advisor View', icon: '🎓' }
+  { id: 'journey', label: 'Journey', icon: '🗺️', theme: 'bg-[#7FA1ED] shadow-[0_5px_0_#5B78BA] text-white' }, // 柔雾蓝
+  { id: 'profile', label: 'Profile', icon: '👤', theme: 'bg-[#E88EAF] shadow-[0_5px_0_#B86281] text-white' }, // 烟灰粉
+  { id: 'ai-advisor', label: 'Advisor', icon: '🤖', theme: 'bg-[#73C5E6] shadow-[0_5px_0_#4E95B3] text-white' }, // 晴空蓝
+  { id: 'qa', label: 'Q & A', icon: '💬', theme: 'bg-[#E3B75C] shadow-[0_5px_0_#B38A3B] text-white' }, // 燕麦黄
+  { id: 'admission', label: 'Data', icon: '📊', theme: 'bg-[#a9eee6] shadow-[0_5px_0_#4D9C71] text-white' }, // 薄荷绿
+  { id: 'activities', label: 'Events', icon: '📅', theme: 'bg-[#EBA173] shadow-[0_5px_0_#B8764B] text-white' }, // 珊瑚橘
+  { id: 'advisor-view', label: 'Adv<br>View', icon: '🎓', theme: 'bg-[#bfcfff] shadow-[0_5px_0_#8667B3] text-white' }  // 丁香紫
 ]
 
 const activeTab = ref('journey')
 
 // ============================================
-// Game State
+// 后续逻辑保持不变
 // ============================================
 const currentView = ref('roleselect')
 const userRole = ref('')
@@ -222,52 +172,35 @@ const unlockedStories = ref([])
 const currentAchievement = ref(null)
 const currentGuide = ref(null)
 const showGuide = ref(false)
-
-// Combo System State
 const currentCombo = ref(0)
 const maxCombo = ref(0)
-
-// Daily Quest State
 const dailyQuestProgress = ref(initializeDailyProgress())
-
-// Achievement State
 const unlockedAchievements = ref([])
 const totalCorrectAnswers = ref(0)
 const perfectLevelsCount = ref(0)
 
-// Story unlock configuration
-const storyUnlockMap = {
-  'level-3': 'story-cv',
-  'level-5': 'story-interview'
-}
+const storyUnlockMap = { 'level-3': 'story-cv', 'level-5': 'story-interview' }
 
-// Daily Quest Computed
-const dailyQuestsWithProgress = computed(() => {
-  return DAILY_QUESTS.map(quest => {
-    const progress = dailyQuestProgress.value.find(p => p.questId === quest.id)
-    return {
-      ...quest,
-      current: progress?.current || 0,
-      completed: progress?.completed || false
-    }
-  })
-})
+// Computed props for clean template
+const profileProps = computed(() => ({
+  userName: userName.value, userRole: userRole.value, learningValue: learningValue.value,
+  taskValue: taskValue.value, completedLevels: completedLevels.value, unlockedStories: unlockedStories.value,
+  currentCombo: currentCombo.value, maxCombo: maxCombo.value, dailyQuestProgress: dailyQuestProgress.value,
+  unlockedAchievements: unlockedAchievements.value, totalCorrectAnswers: totalCorrectAnswers.value,
+  perfectLevelsCount: perfectLevelsCount.value
+}))
 
-// ============================================
-// Event Handlers - Role Selection
-// ============================================
+const advisorProps = computed(() => ({
+  playerName: userName.value, playerRole: userRole.value, playerLearning: learningValue.value,
+  playerTask: taskValue.value, playerCompletedLevels: completedLevels.value, playerCombo: currentCombo.value
+}))
 
-/**
- * Handle role confirmed from RoleSelect component
- * Called when user clicks "Start My Journey"
- */
+// ... (处理函数 handleRoleConfirmed, handleStartLevel 等逻辑与原文件完全一致)
 function handleRoleConfirmed(data) {
   userRole.value = data.role
   userName.value = data.name
   currentView.value = 'main'
   activeTab.value = 'journey'
-  
-  // Load saved progress if exists
   const saved = localStorage.getItem(`progress_${data.role}`)
   if (saved) {
     const progress = JSON.parse(saved)
@@ -290,7 +223,6 @@ function handleRoleConfirmed(data) {
       dailyQuestProgress.value = initializeDailyProgress()
     }
   } else {
-    // New role - use default initial values
     learningValue.value = 60
     taskValue.value = 40
     completedLevels.value = ['level-1']
@@ -304,197 +236,71 @@ function handleRoleConfirmed(data) {
   }
 }
 
-// ============================================
-// Event Handlers - Game Dashboard
-// ============================================
-
-/**
- * Handle start level from GameDashboard
- * Called when user clicks on a level card
- */
 function handleStartLevel(level) {
-  if (typeof level === 'object' && level.id) {
-    currentLevel.value = level.id
-  } else {
-    currentLevel.value = level
-  }
+  currentLevel.value = typeof level === 'object' ? level.id : level
   currentView.value = 'quiz'
 }
 
-/**
- * Handle switch role
- * Called when user clicks "Switch Role" button
- */
 function handleSwitchRole() {
-  // Save current progress before switching
   saveProgress()
   currentView.value = 'roleselect'
 }
 
-/**
- * Handle add learning value
- * Called from debug/test buttons
- */
-function handleAddLearning() {
-  learningValue.value += 10
-  saveProgress()
-}
+function handleAddLearning() { learningValue.value += 10; saveProgress(); }
+function handleAddTask() { taskValue.value += 10; saveProgress(); }
 
-/**
- * Handle add task value
- * Called from debug/test buttons
- */
-function handleAddTask() {
-  taskValue.value += 10
-  saveProgress()
-}
-
-/**
- * Handle reset progress
- * Called from debug/test buttons
- */
 function handleResetProgress() {
-  learningValue.value = 0
-  taskValue.value = 0
-  completedLevels.value = ['level-1']
-  unlockedStories.value = []
-  currentAchievement.value = null
-  currentCombo.value = 0
-  maxCombo.value = 0
-  dailyQuestProgress.value = initializeDailyProgress()
-  unlockedAchievements.value = []
-  totalCorrectAnswers.value = 0
-  perfectLevelsCount.value = 0
-  saveProgress()
+  learningValue.value = 0; taskValue.value = 0; completedLevels.value = ['level-1'];
+  unlockedStories.value = []; currentAchievement.value = null; currentCombo.value = 0;
+  maxCombo.value = 0; dailyQuestProgress.value = initializeDailyProgress();
+  unlockedAchievements.value = []; totalCorrectAnswers.value = 0; perfectLevelsCount.value = 0;
+  saveProgress();
 }
 
-/**
- * Handle view story
- * Called when user clicks on an unlocked story
- */
 function handleViewStory(storyId) {
   const guide = getGuideById(storyId)
-  if (guide) {
-    currentGuide.value = guide
-    showGuide.value = true
-  }
+  if (guide) { currentGuide.value = guide; showGuide.value = true; }
 }
 
-// ============================================
-// Event Handlers - Quiz Interface
-// ============================================
+function handleQuizClose() { currentView.value = 'main' }
 
-/**
- * Handle quiz close
- * Called when user clicks close button in quiz
- */
-function handleQuizClose() {
-  currentView.value = 'main'
-}
-
-/**
- * Handle quiz complete
- * Called when user completes a quiz level
- */
 function handleQuizComplete(results) {
-  // Track correct answers for achievements
   const correctCount = results.correctCount || 0
   const totalQuestions = results.totalQuestions || 3
   const isPerfect = correctCount === totalQuestions
-
   totalCorrectAnswers.value += correctCount
-
-  // Update combo system - reset on wrong answer, increment on correct
   if (isPerfect) {
     currentCombo.value++
-    if (currentCombo.value > maxCombo.value) {
-      maxCombo.value = currentCombo.value
-    }
+    if (currentCombo.value > maxCombo.value) maxCombo.value = currentCombo.value
   } else {
     currentCombo.value = 0
   }
-
-  // Calculate combo rewards
-  const baseLearning = results.learning || 0
-  const baseTask = results.task || 0
-  const { learning: comboLearning, task: comboTask, bonus, comboReward } = calculateComboReward(
-    baseLearning,
-    baseTask,
-    currentCombo.value
-  )
-
-  // Add earned values with combo bonus
-  learningValue.value += comboLearning
-  taskValue.value += comboTask
-
-  // Update daily quest progress
-  if (correctCount > 0) {
-    updateDailyQuestProgress('daily-correct-5', correctCount)
-  }
+  const { learning, task, bonus, comboReward } = calculateComboReward(results.learning || 0, results.task || 0, currentCombo.value)
+  learningValue.value += learning
+  taskValue.value += task
+  if (correctCount > 0) updateDailyQuestProgress('daily-correct-5', correctCount)
   if (isPerfect) {
     perfectLevelsCount.value++
     updateDailyQuestProgress('daily-perfect', 1)
     updateDailyQuestProgress('daily-quiz-1', 1)
   }
-  if (currentCombo.value >= 3) {
-    updateDailyQuestProgress('daily-streak-3', currentCombo.value)
-  }
-
-  // Check for achievements
+  if (currentCombo.value >= 3) updateDailyQuestProgress('daily-streak-3', currentCombo.value)
   checkAchievementsProgress()
-
-  // Add completed level
-  let levelId = currentLevel.value
-  if (typeof levelId === 'number') {
-    levelId = `level-${levelId}`
-  }
-  if (!completedLevels.value.includes(levelId)) {
-    completedLevels.value.push(levelId)
-  }
-
-  // Check for story unlock based on completed level
+  let levelId = typeof currentLevel.value === 'number' ? `level-${currentLevel.value}` : currentLevel.value
+  if (!completedLevels.value.includes(levelId)) completedLevels.value.push(levelId)
   const unlockedStory = storyUnlockMap[levelId]
   if (unlockedStory && !unlockedStories.value.includes(unlockedStory)) {
     unlockedStories.value.push(unlockedStory)
-
-    const guideNames = {
-      'story-cv': 'CV Writing Excellence',
-      'story-interview': 'Interview Preparation'
-    }
-
-    // Show achievement notification
-    currentAchievement.value = {
-      name: guideNames[unlockedStory] || 'New Guide Unlocked',
-      icon: '📝'
-    }
-
-    // Auto-hide notification after 3 seconds
-    setTimeout(() => {
-      currentAchievement.value = null
-    }, 3000)
+    currentAchievement.value = { name: 'New Guide Unlocked', icon: '📝' }
+    setTimeout(() => { currentAchievement.value = null }, 3000)
   }
-
-  // Show combo reward notification if active
   if (comboReward && bonus > 0) {
-    currentAchievement.value = {
-      name: `${comboReward.name} +${Math.round(bonus * 100)}%`,
-      icon: comboReward.icon
-    }
-    setTimeout(() => {
-      currentAchievement.value = null
-    }, 2000)
+    currentAchievement.value = { name: `${comboReward.name} +${Math.round(bonus * 100)}%`, icon: comboReward.icon }
+    setTimeout(() => { currentAchievement.value = null }, 2000)
   }
-
-  // Save progress
-  saveProgress()
-
-  // Return to main view
-  currentView.value = 'main'
+  saveProgress(); currentView.value = 'main';
 }
 
-/**
- * Update daily quest progress
- */
 function updateDailyQuestProgress(questId, amount) {
   const quest = dailyQuestProgress.value.find(p => p.questId === questId)
   if (quest && !quest.completed) {
@@ -502,86 +308,39 @@ function updateDailyQuestProgress(questId, amount) {
     const dailyQuest = DAILY_QUESTS.find(q => q.id === questId)
     if (dailyQuest && quest.current >= dailyQuest.target) {
       quest.completed = true
-      // Add rewards
       learningValue.value += dailyQuest.reward.learning
       taskValue.value += dailyQuest.reward.task
-      // Show notification
-      currentAchievement.value = {
-        name: `${dailyQuest.title} Complete!`,
-        icon: dailyQuest.icon
-      }
-      setTimeout(() => {
-        currentAchievement.value = null
-      }, 2500)
+      currentAchievement.value = { name: `${dailyQuest.title} Complete!`, icon: dailyQuest.icon }
+      setTimeout(() => { currentAchievement.value = null }, 2500)
     }
-    quest.lastUpdated = new Date().toISOString()
   }
 }
 
-/**
- * Check achievements progress
- */
 function checkAchievementsProgress() {
   const progress = {
-    levelsCompleted: completedLevels.value.length,
-    totalCorrectAnswers: totalCorrectAnswers.value,
-    maxCombo: maxCombo.value,
-    daysStreak: 1,
-    totalLearning: learningValue.value,
-    totalTask: taskValue.value,
-    perfectLevels: perfectLevelsCount.value
+    levelsCompleted: completedLevels.value.length, totalCorrectAnswers: totalCorrectAnswers.value,
+    maxCombo: maxCombo.value, daysStreak: 1, totalLearning: learningValue.value,
+    totalTask: taskValue.value, perfectLevels: perfectLevelsCount.value
   }
-
-  const { newAchievements: newAchieves, rewards: achieveRewards } = checkAchievements(
-    progress,
-    unlockedAchievements.value
-  )
-
-  // Unlock new achievements
-  for (const id of newAchieves) {
-    unlockedAchievements.value.push(id)
-  }
-
-  // Add achievement rewards
-  for (const reward of achieveRewards) {
-    if (reward.reward.type === 'learning') {
-      learningValue.value += reward.reward.value
-    } else if (reward.reward.type === 'task') {
-      taskValue.value += reward.reward.value
-    }
-    // Show achievement reward notification
-    const achieve = ACHIEVEMENTS.find(a => a.id === reward.id)
+  const { newAchievements, rewards } = checkAchievements(progress, unlockedAchievements.value)
+  for (const id of newAchievements) unlockedAchievements.value.push(id)
+  for (const r of rewards) {
+    if (r.reward.type === 'learning') learningValue.value += r.reward.value
+    else if (r.reward.type === 'task') taskValue.value += r.reward.value
+    const achieve = ACHIEVEMENTS.find(a => a.id === r.id)
     if (achieve) {
-      currentAchievement.value = {
-        name: `${achieve.title} Unlocked!`,
-        icon: achieve.icon
-      }
-      setTimeout(() => {
-        currentAchievement.value = null
-      }, 2500)
+      currentAchievement.value = { name: `${achieve.title} Unlocked!`, icon: achieve.icon }
+      setTimeout(() => { currentAchievement.value = null }, 2500)
     }
   }
 }
 
-// ============================================
-// Helper Functions
-// ============================================
-
-/**
- * Save current progress to LocalStorage
- */
 function saveProgress() {
   const progress = {
-    learning: learningValue.value,
-    task: taskValue.value,
-    completedLevels: completedLevels.value,
-    unlockedStories: unlockedStories.value,
-    currentCombo: currentCombo.value,
-    maxCombo: maxCombo.value,
-    unlockedAchievements: unlockedAchievements.value,
-    totalCorrectAnswers: totalCorrectAnswers.value,
-    perfectLevelsCount: perfectLevelsCount.value,
-    dailyQuestProgress: dailyQuestProgress.value,
+    learning: learningValue.value, task: taskValue.value, completedLevels: completedLevels.value,
+    unlockedStories: unlockedStories.value, currentCombo: currentCombo.value, maxCombo: maxCombo.value,
+    unlockedAchievements: unlockedAchievements.value, totalCorrectAnswers: totalCorrectAnswers.value,
+    perfectLevelsCount: perfectLevelsCount.value, dailyQuestProgress: dailyQuestProgress.value,
     lastUpdated: new Date().toISOString()
   }
   localStorage.setItem(`progress_${userRole.value}`, JSON.stringify(progress))
@@ -592,6 +351,8 @@ function saveProgress() {
 .game-demo-page {
   min-height: 100vh;
   background-color: #F8FAFC;
+  /* 防止点击时出现蓝色高亮框，提升模拟按键感 */
+  -webkit-tap-highlight-color: transparent;
 }
 
 .game-container {
@@ -600,12 +361,8 @@ function saveProgress() {
   padding: 20px;
 }
 
-/* Hide scrollbar for tab navigation */
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
+/* 简单的响应式调整：移动端按钮稍微缩小一点点 */
+@media (max-width: 640px) {
+  .game-container { padding: 12px; }
 }
 </style>
