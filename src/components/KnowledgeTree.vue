@@ -6,7 +6,7 @@
           🌳 {{ isZh ? '你的申硕知识树' : 'Your Knowledge Tree' }}
         </h2>
         <p class="text-sm text-slate-500 font-medium mt-1">
-          {{ isZh ? '完成关卡让树成长，收集蓝叶(LV)、橙叶(TV)、绿叶(特殊)' : 'Complete levels to grow your tree, collect Blue(LV), Orange(TV), Green(special) leaves' }}
+          {{ isZh ? '完成关卡让树成长，收集蓝叶(LV)、橙叶(TV)、金叶(特殊)' : 'Complete levels to grow your tree, collect Blue(LV), Orange(TV), Gold(special) leaves' }}
         </p>
       </div>
       <div class="px-3 py-1.5 bg-blue-100 rounded-lg text-xs font-bold text-blue-600">
@@ -62,7 +62,7 @@
             <stop offset="100%" style="stop-color:#F59E0B"/>
           </linearGradient>
           <filter id="softGlow">
-            <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+            <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
             <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
           </filter>
         </defs>
@@ -93,8 +93,8 @@
         </g>
 
         <g v-for="(leaf, idx) in displayedLeaves" :key="`leaf-${idx}`" class="leaf-group">
-          <g :transform="`translate(${leaf.x - 12}, ${leaf.y - 12})`" @click="handleLeafClick(leaf)" class="cursor-pointer">
-            <path :d="leafPath" :fill="leaf.color" filter="url(#softGlow)" class="leaf-icon transition-all duration-300 hover:scale-125"/>
+          <g :transform="`translate(${leaf.x}, ${leaf.y}) rotate(${leaf.rotation}) scale(1.5)`" @click="handleLeafClick(leaf)" class="cursor-pointer">
+            <path :d="leafPath" transform="translate(-12, -12)" :fill="leaf.color" stroke="rgba(255,255,255,0.4)" stroke-width="0.8" filter="url(#softGlow)" class="leaf-icon transition-all duration-300 hover:scale-125"/>
           </g>
         </g>
 
@@ -147,7 +147,7 @@
         <div class="text-xs text-slate-500 mt-2 flex gap-3">
           <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-[#7FA1ED]"></span>{{ isZh ? '蓝' : 'Blue' }} {{ leafCounts.blue }}</span>
           <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400"></span>{{ isZh ? '橙' : 'Orange' }} {{ leafCounts.orange }}</span>
-          <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-green-500"></span>{{ isZh ? '绿' : 'Green' }} {{ leafCounts.green }}</span>
+          <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400"></span>{{ isZh ? '金' : 'Gold' }} {{ leafCounts.green }}</span>
         </div>
       </div>
       <div class="bg-white rounded-xl shadow-sm p-4 border-l-4 border-green-500 hover:-translate-y-1 transition-transform">
@@ -177,7 +177,7 @@ const props = defineProps({
 
 const emit = defineEmits(['select-stage'])
 
-const leafPath = "M12 2C7 2 3 7 3 12c0 5 4 10 9 10s9-5 9-10c0-5-4-10-9-10z M12 6v12 M8 10s2-2 4-2 4 2 4 2 M8 14s2 2 4 2 4-2 4-2"
+const leafPath = "M12 22C7 18 3 13 3 8C3 4 6 2 10 3C11 3.5 12 5 12 5C12 5 13 3.5 14 3C18 2 21 4 21 8C21 13 17 18 12 22Z M12 7V19 M8 11S10 9 12 9 16 11 16 11 M8 15S10 17 12 17 16 15 16 15"
 
 const currentStage = computed(() => {
   const completed = props.completedLevels.length
@@ -211,37 +211,52 @@ const stageNodes = computed(() => {
   })
 })
 
+const LEAF_POSITIONS = {
+  blue: [
+    { x: 335, y: 374, r: -20 }, { x: 330, y: 345, r: -15 }, { x: 325, y: 318, r: -10 },
+    { x: 305, y: 350, r: -45 }, { x: 265, y: 332, r: -60 }, { x: 228, y: 312, r: -50 },
+    { x: 310, y: 260, r: -40 }, { x: 273, y: 236, r: -55 }, { x: 237, y: 212, r: -45 },
+    { x: 315, y: 370, r: -35 }, { x: 280, y: 340, r: -50 }, { x: 220, y: 290, r: -65 },
+    { x: 290, y: 280, r: -30 }, { x: 250, y: 180, r: -25 }
+  ],
+  orange: [
+    { x: 365, y: 374, r: 20 }, { x: 370, y: 345, r: 15 }, { x: 375, y: 318, r: 10 },
+    { x: 395, y: 310, r: 45 }, { x: 435, y: 292, r: 60 }, { x: 472, y: 272, r: 50 },
+    { x: 390, y: 220, r: 40 }, { x: 427, y: 196, r: 55 }, { x: 463, y: 172, r: 45 },
+    { x: 355, y: 390, r: 25 }, { x: 410, y: 280, r: 35 }
+  ],
+  green: [
+    { x: 340, y: 168, r: -15 }, { x: 360, y: 168, r: 15 },
+    { x: 350, y: 132, r: 0 }, { x: 335, y: 96, r: -10 }, { x: 365, y: 96, r: 10 },
+    { x: 320, y: 130, r: -30 }, { x: 380, y: 130, r: 30 }
+  ]
+}
+
 const displayedLeaves = computed(() => {
-  const leaves = []
   const blueCount = Math.min(Math.floor(props.totalLearning / 30), 15)
   const orangeCount = Math.min(Math.floor(props.totalTask / 20), 10)
   const greenCount = Math.min(props.completedLevels.length, 5)
 
+  const leaves = []
   for (let i = 0; i < blueCount; i++) {
-    leaves.push({
-      x: 150 + Math.random() * 100,
-      y: 100 + Math.random() * 250,
-      color: 'url(#leafBlueGrad)',
-      type: 'blue'
-    })
+    if (i < LEAF_POSITIONS.blue.length) {
+      const pos = LEAF_POSITIONS.blue[i]
+      leaves.push({ x: pos.x, y: pos.y, rotation: pos.r, color: 'url(#leafBlueGrad)', type: 'blue' })
+    }
   }
   for (let i = 0; i < orangeCount; i++) {
-    leaves.push({
-      x: 450 + Math.random() * 100,
-      y: 100 + Math.random() * 250,
-      color: 'url(#leafOrangeGrad)',
-      type: 'orange'
-    })
+    if (i < LEAF_POSITIONS.orange.length) {
+      const pos = LEAF_POSITIONS.orange[i]
+      leaves.push({ x: pos.x, y: pos.y, rotation: pos.r, color: 'url(#leafOrangeGrad)', type: 'orange' })
+    }
   }
   for (let i = 0; i < greenCount; i++) {
-    leaves.push({
-      x: 320 + Math.random() * 60,
-      y: 80 + Math.random() * 100,
-      color: 'url(#leafGreenGrad)',
-      type: 'green'
-    })
+    if (i < LEAF_POSITIONS.green.length) {
+      const pos = LEAF_POSITIONS.green[i]
+      leaves.push({ x: pos.x, y: pos.y, rotation: pos.r, color: 'url(#leafGreenGrad)', type: 'green' })
+    }
   }
-  return leaves.slice(0, 30)
+  return leaves
 })
 
 const totalLeaves = computed(() => displayedLeaves.value.length)

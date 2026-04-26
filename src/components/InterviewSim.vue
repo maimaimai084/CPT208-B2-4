@@ -60,12 +60,17 @@
 
     <div v-else-if="currentQuestionIndex < currentSimulation.questions.length" class="bg-white rounded-2xl border border-slate-200 p-6 mb-6">
       <div class="flex items-center justify-between mb-4">
-        <span class="text-sm font-bold text-slate-400">
-          {{ isZh ? '问题' : 'Question' }} {{ currentQuestionIndex + 1 }} / {{ currentSimulation.questions.length }}
-        </span>
-        <span class="text-sm font-bold text-[#7FA1ED] bg-[#7FA1ED]/20 px-3 py-1 rounded-full">
-          +{{ totalPossibleTV }} TV
-        </span>
+        <button @click="exitSimulation" class="text-sm text-slate-400 hover:text-slate-600 transition-colors flex items-center gap-1">
+          ← {{ isZh ? '退出模拟' : 'Exit Sim' }}
+        </button>
+        <div class="flex items-center gap-3">
+          <span class="text-sm font-bold text-slate-400">
+            {{ isZh ? '问题' : 'Question' }} {{ currentQuestionIndex + 1 }} / {{ currentSimulation.questions.length }}
+          </span>
+          <span class="text-sm font-bold text-[#7FA1ED] bg-[#7FA1ED]/20 px-3 py-1 rounded-full">
+            +{{ totalPossibleTV }} TV
+          </span>
+        </div>
       </div>
 
       <div class="bg-gradient-to-r from-[#7FA1ED]/10 to-[#E88EAF]/10 rounded-xl p-5 mb-6">

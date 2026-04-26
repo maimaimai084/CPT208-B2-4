@@ -12,6 +12,15 @@
       </div>
 
       <div v-if="!activeQuest" class="space-y-4">
+        <div class="flex items-center justify-between bg-slate-50 rounded-lg px-3 py-2">
+          <span class="text-xs text-slate-500">
+            🎮 {{ isZh ? '演示模式：可随时重置限制' : 'Demo Mode: Reset limits anytime' }}
+          </span>
+          <button @click="resetDemoLimits" class="text-xs bg-white hover:bg-amber-50 border border-amber-200 text-amber-600 px-2.5 py-1 rounded-lg transition-colors font-medium">
+            🔄 {{ isZh ? '重置限制' : 'Reset Limits' }}
+          </button>
+        </div>
+
         <div class="bg-amber-50 rounded-xl p-4 border border-amber-200">
           <h3 class="font-bold text-sm mb-3 text-amber-700">
             {{ isZh ? '📋 选择任务类型' : '📋 Select Quest Type' }}
@@ -85,6 +94,7 @@
 import { ref } from 'vue'
 import InterviewSim from './InterviewSim.vue'
 import PSWorkshop from './PSWorkshop.vue'
+import { resetAllCooldowns } from '../utils/CooldownManager'
 
 const props = defineProps({
   gearState: { type: Object, default: () => ({}) },
@@ -102,5 +112,10 @@ function startQuest(type) {
 function handleComplete(data) {
   emit('complete', data)
   activeQuest.value = null
+}
+
+function resetDemoLimits() {
+  resetAllCooldowns()
+  alert(isZh ? '演示限制已重置！现在可以再次体验所有任务。' : 'Demo limits reset! You can now try all quests again.')
 }
 </script>

@@ -81,6 +81,11 @@
 
       <div v-else class="space-y-4">
         <div v-if="!isCompleted" class="space-y-4">
+          <div class="flex items-center justify-between">
+            <button @click="exitWorkshop" class="text-sm text-slate-400 hover:text-slate-600 transition-colors flex items-center gap-1">
+              ← {{ isZh ? '返回任务中心' : 'Back to Hub' }}
+            </button>
+          </div>
           <div class="bg-slate-50 rounded-xl p-4">
             <div class="flex items-center justify-between mb-3">
               <span class="text-sm font-bold text-slate-600">{{ isZh ? '当前题目' : 'Current Topic' }}</span>
@@ -162,7 +167,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['complete'])
+const emit = defineEmits(['complete', 'exit'])
 
 const isStarted = ref(false)
 const isCompleted = ref(false)
@@ -302,6 +307,15 @@ function handleComplete() {
   currentQuestion.value = 0
   selectedOption.value = null
   earnedLV.value = 0
+}
+
+function exitWorkshop() {
+  isStarted.value = false
+  isCompleted.value = false
+  currentQuestion.value = 0
+  selectedOption.value = null
+  earnedLV.value = 0
+  emit('exit')
 }
 </script>
 
