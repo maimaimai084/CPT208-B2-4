@@ -6,7 +6,7 @@
            :class="{ 'scale-[1.02] -translate-y-1 shadow-[0_8px_30px_rgba(127,161,237,0.4)]': isLearningBumping }">
         <div class="flex items-center justify-between mb-4">
           <div class="flex items-center gap-3">
-            <div class="p-2.5 bg-blue-50 rounded-xl text-blue-500">
+            <div class="p-2.5 bg-[#7FA1ED]/10 rounded-xl text-[#7FA1ED]">
               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
             </div>
             <span class="font-extrabold text-slate-700 tracking-tight">Learning Value</span>
@@ -54,7 +54,7 @@
     </div>
 
     <div class="flex gap-4 justify-center mb-10 flex-wrap">
-      <button @click="$emit('add-learning')" class="flex items-center gap-2 px-6 py-3 bg-blue-500 shadow-[0_4px_0_#2563eb] text-white rounded-2xl font-bold hover:brightness-105 active:translate-y-[4px] active:shadow-none transition-all">
+      <button @click="$emit('add-learning')" class="flex items-center gap-2 px-6 py-3 bg-[#7FA1ED] shadow-[0_4px_0_#5B78BA] text-white rounded-2xl font-bold hover:brightness-105 active:translate-y-[4px] active:shadow-none transition-all">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
         <span>+10 Learning</span>
       </button>
@@ -97,71 +97,16 @@
       </div>
     </div>
 
-    <div class="bg-[#FCFBF8] rounded-[2rem] border border-[#E5E7EB] p-6 shadow-[0_8px_30px_rgba(0,0,0,0.04)] mb-8 relative overflow-hidden">
-      <div class="absolute inset-0 pointer-events-none opacity-40" 
-           style="background-image: radial-gradient(circle at center, #374151 1.5px, transparent 1.5px); background-size: 20px 20px;"></div>
-      
-      <div class="relative z-10 flex items-center justify-between mb-8">
-        <div>
-          <h2 class="text-2xl font-black text-slate-700 tracking-tight drop-shadow-sm">Journey Map</h2>
-          <p class="text-sm text-slate-500 font-medium mt-1">Navigate the steps of your application</p>
-        </div>
-        <div class="text-sm font-bold text-[#B38A3B] bg-[#E3B75C]/15 px-4 py-2 rounded-xl border border-[#E3B75C]/30 backdrop-blur-sm">
-          ⭐ Progress: {{ completedLevels.length }}/5
-        </div>
-      </div>
-
-      <div class="relative w-full h-80 rounded-3xl overflow-hidden mb-4">
-        
-        <svg viewBox="0 0 100 100" preserveAspectRatio="none" class="absolute inset-0 w-full h-full pointer-events-none z-0">
-          <defs>
-            <linearGradient id="morandiGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#7FA1ED" /> 
-              <stop offset="33%" stop-color="#B495E6" /> 
-              <stop offset="66%" stop-color="#E88EAF" /> 
-              <stop offset="100%" stop-color="#E3B75C" /> 
-            </linearGradient>
-            <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="1.5" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
-          <path d="M 10 50 C 30 10, 40 10, 50 50 C 60 90, 70 90, 90 50" fill="none" stroke="#E2E8F0" stroke-width="4" stroke-linecap="round" />
-          <path d="M 10 50 C 30 10, 40 10, 50 50 C 60 90, 70 90, 90 50" 
-                fill="none" stroke="url(#morandiGradient)" stroke-width="3" stroke-linecap="round" stroke-dasharray="8 8" filter="url(#softGlow)" class="animate-flow-dash" />
-        </svg>
-
-        <div v-for="(level, index) in levels" :key="level.id"
-             class="absolute z-20 flex flex-col items-center -translate-x-1/2 -translate-y-1/2"
-             :style="{ left: `${level.mapPosition.x}%`, top: `${level.mapPosition.y}%` }">
-          <button 
-            @click="openLevelModal(level)"
-            class="w-14 h-14 rounded-2xl flex items-center justify-center text-xl font-black transition-all duration-300"
-            :class="getGameNodeClass(level)"
-          >
-            <span v-if="isLocked(level.id)" class="text-slate-400 opacity-50">🔒</span>
-            <span v-else-if="completedLevels.includes(level.id)" class="text-[#4D9C71] text-2xl font-bold">✓</span>
-            <span v-else class="text-2xl drop-shadow-sm">{{ level.icon }}</span>
-          </button>
-          <span class="mt-2 text-[11px] font-bold tracking-wider uppercase bg-white/70 px-2 py-0.5 rounded-md backdrop-blur-sm shadow-sm"
-                :class="completedLevels.includes(level.id) ? 'text-[#4D9C71]' : isLocked(level.id) ? 'text-slate-400' : 'text-[#B38A3B]'">
-            {{ index + 1 }}. {{ level.title }}
-          </span>
-        </div>
-
-        <div class="absolute z-30 transition-all duration-1000 ease-in-out pointer-events-none -translate-x-1/2 -translate-y-1/2"
-          :style="{ left: `${currentLevelPos.x}%`, top: `${currentLevelPos.y}%` }">
-          <div class="absolute inset-0 bg-[#E3B75C]/20 rounded-full blur-xl animate-pulse" style="width: 80px; height: 80px; margin-left: -40px; margin-top: -40px;"></div>
-          <div class="relative w-14 h-14 flex items-center justify-center text-4xl drop-shadow-[0_4px_8px_rgba(227,183,92,0.4)] animate-bounce" style="animation-duration: 2s;">
-            🧑‍🎓
-            <span class="absolute -top-2 -right-4 text-2xl animate-pulse">✨</span>
-          </div>
-        </div>
-      </div>
-    </div>
+    <KnowledgeTree 
+      :completed-levels="completedLevels"
+      :current-level="currentLevelIndex >= 0 ? levels[currentLevelIndex]?.id : ''"
+      :total-learning="learningValue"
+      :total-task="taskValue"
+      :max-combo="maxCombo"
+      :days-streak="daysStreak"
+      :is-zh="isZh"
+      @select-stage="handleStageSelect"
+    />
 
     <div v-if="selectedLevel" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm transition-opacity" @click.self="selectedLevel = null">
       <div class="bg-white rounded-[2rem] w-full max-w-md shadow-2xl overflow-hidden animate-fade-in-up border border-slate-100">
@@ -203,7 +148,7 @@
             <button v-else-if="isLocked(selectedLevel.id)" class="flex-1 py-3 bg-slate-100 text-slate-400 rounded-xl font-bold cursor-not-allowed">
               Locked 🔒
             </button>
-            <button v-else @click="handleStartLevel" class="flex-1 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-xl font-bold shadow-[0_4px_0_#2563eb] active:translate-y-[4px] active:shadow-none transition-all">
+            <button v-else @click="handleStartLevel" class="flex-1 py-3 bg-[#7FA1ED] hover:bg-[#5B78BA] text-white rounded-xl font-bold shadow-[0_4px_0_#5B78BA] active:translate-y-[4px] active:shadow-none transition-all">
               Start Challenge
             </button>
           </div>
@@ -248,6 +193,7 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { getGuideById } from '../data/guides'
+import KnowledgeTree from './KnowledgeTree.vue'
 
 const props = defineProps({
   userName: String,
@@ -257,10 +203,12 @@ const props = defineProps({
   completedLevels: Array,
   unlockedStories: Array,
   currentCombo: { type: Number, default: 0 },
-  maxCombo: { type: Number, default: 0 }
+  maxCombo: { type: Number, default: 0 },
+  daysStreak: { type: Number, default: 0 },
+  isZh: { type: Boolean, default: false }
 })
 
-const emit = defineEmits(['start-level', 'add-learning', 'add-task', 'view-story', 'reset-progress', 'switch-role', 'show-advisor'])
+const emit = defineEmits(['start-level', 'add-learning', 'add-task', 'view-story', 'reset-progress', 'switch-role', 'show-advisor', 'select-stage'])
 
 const animatedLearning = ref(props.learningValue)
 const animatedTask = ref(props.taskValue)
@@ -296,11 +244,11 @@ function animateValue(target, start, end, duration) {
 }
 
 const levels = [
-  { id: 'level-1', order: 1, title: 'Identity', description: 'School Selection & Profiles', icon: '🌍', unlockCondition: {}, rewards: { learningValue: 20, taskValue: 10 }, mapPosition: { x: 10, y: 50 } },
-  { id: 'level-2', order: 2, title: 'Region', description: 'Document Prep & Region Choices', icon: '🏛️', unlockCondition: { requiredLevel: 'level-1' }, rewards: { learningValue: 20, taskValue: 15 }, mapPosition: { x: 28, y: 20 } },
-  { id: 'level-3', order: 3, title: 'Cases', description: 'Essay Writing & Case Studies', icon: '🧪', unlockCondition: { requiredLevel: 'level-2' }, rewards: { learningValue: 30, taskValue: 20 }, mapPosition: { x: 50, y: 50 } },
-  { id: 'level-4', order: 4, title: 'Action', description: 'Application Submission', icon: '⏱️', unlockCondition: { requiredLevel: 'level-3' }, rewards: { learningValue: 20, taskValue: 15 }, mapPosition: { x: 72, y: 80 } },
-  { id: 'level-5', order: 5, title: 'Trial', description: 'Interview Preparation', icon: '⚔️', unlockCondition: { requiredLevel: 'level-4' }, rewards: { learningValue: 30, taskValue: 20 }, mapPosition: { x: 90, y: 50 } }
+  { id: 'level-1', order: 1, title: 'School Selection', description: 'Explore programs and find your best fit', icon: '🎓', unlockCondition: {}, rewards: { learningValue: 20, taskValue: 10 }, mapPosition: { x: 10, y: 50 } },
+  { id: 'level-2', order: 2, title: 'Document Preparation', description: 'Transcripts, WES, recommendation letters', icon: '📄', unlockCondition: { requiredLevel: 'level-1' }, rewards: { learningValue: 20, taskValue: 15 }, mapPosition: { x: 28, y: 20 } },
+  { id: 'level-3', order: 3, title: 'Essay Writing', description: 'Craft your Personal Statement', icon: '✍️', unlockCondition: { requiredLevel: 'level-2' }, rewards: { learningValue: 30, taskValue: 20 }, mapPosition: { x: 50, y: 50 } },
+  { id: 'level-4', order: 4, title: 'Application Submission', description: 'Submit applications and track progress', icon: '📨', unlockCondition: { requiredLevel: 'level-3' }, rewards: { learningValue: 20, taskValue: 15 }, mapPosition: { x: 72, y: 80 } },
+  { id: 'level-5', order: 5, title: 'Interview Preparation', description: 'Ace your admissions interview', icon: '🎤', unlockCondition: { requiredLevel: 'level-4' }, rewards: { learningValue: 30, taskValue: 20 }, mapPosition: { x: 90, y: 50 } }
 ]
 
 const selectedLevel = ref(null)
@@ -316,6 +264,13 @@ function openLevelModal(level) { selectedLevel.value = level }
 function handleStartLevel() {
   emit('start-level', selectedLevel.value)
   selectedLevel.value = null
+}
+
+function handleStageSelect(stageId) {
+  const level = levels.find(l => l.id === stageId)
+  if (level) {
+    openLevelModal(level)
+  }
 }
 
 function getGameNodeClass(level) {

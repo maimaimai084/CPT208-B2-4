@@ -4,11 +4,19 @@
       <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
         <div class="flex items-center gap-2">
           <img src="/images/logo.png" alt="MasterApply Quest" class="h-8 w-8">
-          <span class="font-bold text-gray-900">MasterApply Quest - Live Demo</span>
+          <span class="font-bold text-gray-900">{{ isZh ? '硕士申请大师' : 'MasterApply Quest' }} - {{ isZh ? '现场演示' : 'Live Demo' }}</span>
         </div>
         <div class="flex items-center gap-2">
+          <button @click="toggleGlobalLanguage" class="flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-slate-200 rounded-lg text-sm font-medium text-slate-600 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            {{ isZh ? 'EN' : '中' }}
+          </button>
+          <button @click="showOnboardingGuide" class="flex items-center gap-1.5 px-3 py-2 bg-green-50 hover:bg-green-100 rounded-lg text-sm font-medium text-green-600 transition-colors">
+            <span>❓</span>
+            {{ isZh ? '新手指南' : 'Help' }}
+          </button>
           <router-link to="/" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-700 text-sm transition-colors">
-            ← Exit Demo
+            ← {{ isZh ? '退出演示' : 'Exit Demo' }}
           </router-link>
         </div>
       </div>
@@ -23,7 +31,7 @@
       <div class="bg-white rounded-[1.5rem] p-4 shadow-[0_4px_0_#E2E8F0] mb-6">
         <div class="flex flex-wrap items-center justify-between gap-4">
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-white flex items-center justify-center font-bold">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#E88EAF] to-[#B86281] text-white flex items-center justify-center font-bold">
               {{ userName ? userName.charAt(0).toUpperCase() : '?' }}
             </div>
             <div>
@@ -36,7 +44,7 @@
 
           <div class="flex items-center gap-4">
             <div class="flex items-center gap-2 text-sm">
-              <span class="text-indigo-600 font-bold">{{ learningValue }}</span>
+              <span class="text-[#7FA1ED] font-bold">{{ learningValue }}</span>
               <span class="text-slate-400 text-xs">LV</span>
             </div>
             <div class="flex items-center gap-2 text-sm">
@@ -54,27 +62,53 @@
         </div>
       </div>
 
-      <div class="flex flex-wrap justify-center gap-4 sm:gap-5 mb-10 py-4">
-        <button
-          v-for="tab in tabs"
-          :key="tab.id"
-          @click="activeTab = tab.id"
-          class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-[1.5rem] flex flex-col items-center justify-center p-2 text-center transition-all duration-150 z-10"
-          :class="[
-            tab.theme,
-            activeTab === tab.id 
-              ? 'translate-y-[4px] shadow-none brightness-110' 
-              : 'hover:-translate-y-1 hover:brightness-105 active:translate-y-[4px] active:shadow-none'
-          ]"
-        >
-          <span class="text-2xl sm:text-3xl mb-1 drop-shadow-md select-none transition-transform duration-300"
-                :class="activeTab === tab.id ? 'scale-110' : ''">
-            {{ tab.icon }}
-          </span>
-          <span class="text-[10px] sm:text-[11px] font-black leading-none uppercase tracking-wider drop-shadow-sm select-none" 
-                v-html="tab.label">
-          </span>
-        </button>
+      <div class="flex flex-wrap justify-center gap-3 sm:gap-4 mb-8 py-4">
+        <div class="w-full flex flex-wrap justify-center gap-3 sm:gap-4 mb-4">
+          <button
+            v-for="tab in gameTabs"
+            :key="tab.id"
+            :data-tour="tab.id"
+            @click="activeTab = tab.id"
+            class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-[1.5rem] flex flex-col items-center justify-center p-2 text-center transition-all duration-150 z-10"
+            :class="[
+              tab.theme,
+              activeTab === tab.id 
+                ? 'translate-y-[4px] shadow-none brightness-110' 
+                : 'hover:-translate-y-1 hover:brightness-105 active:translate-y-[4px] active:shadow-none'
+            ]"
+          >
+            <span class="text-2xl sm:text-3xl mb-1 drop-shadow-md select-none transition-transform duration-300"
+                  :class="activeTab === tab.id ? 'scale-110' : ''">
+              {{ tab.icon }}
+            </span>
+            <span class="text-[10px] sm:text-[11px] font-black leading-none uppercase tracking-wider drop-shadow-sm select-none" 
+                  v-html="tab.label">
+            </span>
+          </button>
+        </div>
+
+        <div class="w-full flex flex-wrap justify-center gap-2 sm:gap-3">
+          <button
+            v-for="tab in otherTabs"
+            :key="tab.id"
+            :data-tour="tab.id"
+            @click="activeTab = tab.id"
+            class="relative w-16 h-16 sm:w-20 sm:h-20 rounded-[1.2rem] flex flex-col items-center justify-center p-2 text-center transition-all duration-150"
+            :class="[
+              tab.theme,
+              activeTab === tab.id 
+                ? 'translate-y-[4px] shadow-none brightness-110' 
+                : 'hover:-translate-y-1 hover:brightness-105 active:translate-y-[4px] active:shadow-none'
+            ]"
+          >
+            <span class="text-xl sm:text-2xl mb-1 drop-shadow-md select-none">
+              {{ tab.icon }}
+            </span>
+            <span class="text-[9px] sm:text-[10px] font-black leading-none uppercase tracking-wider drop-shadow-sm select-none" 
+                  v-html="tab.label">
+            </span>
+          </button>
+        </div>
       </div>
 
       <div class="tab-content">
@@ -88,6 +122,8 @@
           :unlocked-stories="unlockedStories"
           :current-combo="currentCombo"
           :max-combo="maxCombo"
+          :days-streak="daysStreak"
+          :is-zh="isZh"
           @start-level="handleStartLevel"
           @switch-role="handleSwitchRole"
           @show-advisor="activeTab = 'advisor-view'"
@@ -95,9 +131,45 @@
           @add-task="handleAddTask"
           @reset-progress="handleResetProgress"
           @view-story="handleViewStory"
+          @select-stage="handleStartLevel"
         />
 
         <ProfilePanel v-if="activeTab === 'profile'" v-bind="profileProps" />
+        <GearShop 
+          v-if="activeTab === 'gear-shop'"
+          :learning-value="learningValue"
+          :gear-state="gearState"
+          :is-zh="isZh"
+          @update-gear="(newState) => gearState = newState"
+        />
+        <InterviewSim 
+          v-if="activeTab === 'interview-sim'"
+          :gear-state="gearState"
+          :is-zh="isZh"
+          @complete="handleTVEarned"
+        />
+        <PSWorkshop 
+          v-if="activeTab === 'ps-workshop'"
+          :gear-state="gearState"
+          :is-zh="isZh"
+          @complete="handleLearningEarned"
+        />
+        <QuestHub 
+          v-if="activeTab === 'quest-hub'"
+          :gear-state="gearState"
+          :is-zh="isZh"
+          @complete="handleTVEarned"
+        />
+        <DailyWeeklyCycle 
+          v-if="activeTab === 'cycle-quests'"
+          :is-zh="isZh"
+          :task-value="taskValue"
+          @add-task="handleAddTask"
+        />
+        <FriendTree 
+          v-if="activeTab === 'friend-tree'"
+          :is-zh="isZh"
+        />
         <AIChat v-if="activeTab === 'ai-advisor'" />
         <QuestionForm v-if="activeTab === 'qa'" :user-name="userName" />
         <DemoAdmissionData v-if="activeTab === 'admission'" />
@@ -110,6 +182,7 @@
       v-if="currentView === 'quiz'"
       :level="currentLevel"
       :user-type="userRole"
+      :is-zh="isZh"
       @close="handleQuizClose"
       @complete="handleQuizComplete"
     />
@@ -118,6 +191,7 @@
     <GuideModal :is-open="showGuide" :title="currentGuide?.title || 'Guide'" :subtitle="currentGuide?.icon || ''" @close="showGuide = false">
       <div v-if="currentGuide" v-html="currentGuide.content"></div>
     </GuideModal>
+    <OnboardingTour :is-open="showOnboarding" @close="showOnboarding = false" @complete="handleOnboardingComplete" />
   </div>
 </template>
 
@@ -126,10 +200,17 @@ import { ref, computed } from 'vue'
 // ... (保持原有的 import 不变)
 import RoleSelect from '../components/RoleSelect.vue'
 import GameDashboard from '../components/GameDashboard.vue'
+import QuestHub from '../components/QuestHub.vue'
+import FriendTree from '../components/FriendTree.vue'
+import DailyWeeklyCycle from '../components/DailyWeeklyCycle.vue'
 import QuizInterface from '../components/QuizInterface.vue'
+import GearShop from '../components/GearShop.vue'
+import InterviewSim from '../components/InterviewSim.vue'
+import PSWorkshop from '../components/PSWorkshop.vue'
 import AdvisorDashboard from '../components/AdvisorDashboard.vue'
 import AchievementNotification from '../components/AchievementNotification.vue'
 import GuideModal from '../components/GuideModal.vue'
+import OnboardingTour from '../components/OnboardingTour.vue'
 import ProfilePanel from '../components/ProfilePanel.vue'
 import AIChat from '../components/AIChat.vue'
 import QuestionForm from '../components/QuestionForm.vue'
@@ -146,17 +227,44 @@ import { ACHIEVEMENTS, checkAchievements } from '../data/achievements'
 // ============================================
 // 3D 调色盘配置 (Morandi Soft Clay / 莫兰迪轻黏土风)
 // ============================================
-const tabs = [
-  { id: 'journey', label: 'Journey', icon: '🗺️', theme: 'bg-[#7FA1ED] shadow-[0_5px_0_#5B78BA] text-white' }, // 柔雾蓝
-  { id: 'profile', label: 'Profile', icon: '👤', theme: 'bg-[#E88EAF] shadow-[0_5px_0_#B86281] text-white' }, // 烟灰粉
-  { id: 'ai-advisor', label: 'Advisor', icon: '🤖', theme: 'bg-[#73C5E6] shadow-[0_5px_0_#4E95B3] text-white' }, // 晴空蓝
-  { id: 'qa', label: 'Q & A', icon: '💬', theme: 'bg-[#E3B75C] shadow-[0_5px_0_#B38A3B] text-white' }, // 燕麦黄
-  { id: 'admission', label: 'Data', icon: '📊', theme: 'bg-[#a9eee6] shadow-[0_5px_0_#4D9C71] text-white' }, // 薄荷绿
-  { id: 'activities', label: 'Events', icon: '📅', theme: 'bg-[#EBA173] shadow-[0_5px_0_#B8764B] text-white' }, // 珊瑚橘
-  { id: 'advisor-view', label: 'Adv<br>View', icon: '🎓', theme: 'bg-[#bfcfff] shadow-[0_5px_0_#8667B3] text-white' }  // 丁香紫
+const tabsBase = [
+  { id: 'journey', labelEn: 'Journey', labelZh: '旅程', icon: '🗺️', theme: 'bg-[#10B981] shadow-[0_5px_0_#0D8A66] text-white', category: 'game' },
+  { id: 'gear-shop', labelEn: 'Gear', labelZh: '装备', icon: '🎒', theme: 'bg-[#14B8A6] shadow-[0_5px_0_#0D9488] text-white', category: 'game' },
+  { id: 'quest-hub', labelEn: 'TV Quest', labelZh: 'TV任务', icon: '🎯', theme: 'bg-[#F59E0B] shadow-[0_5px_0_#C47E08] text-white', category: 'game' },
+  { id: 'cycle-quests', labelEn: 'Daily', labelZh: '周期', icon: '📅', theme: 'bg-[#E88EAF] shadow-[0_5px_0_#B86281] text-white', category: 'game' },
+  { id: 'friend-tree', labelEn: 'Friends', labelZh: '好友', icon: '🌳', theme: 'bg-[#22C55E] shadow-[0_5px_0_#16A34A] text-white', category: 'game' },
+  { id: 'profile', labelEn: 'Profile', labelZh: '档案', icon: '👤', theme: 'bg-[#E88EAF] shadow-[0_5px_0_#B86281] text-white', category: 'other' },
+  { id: 'ai-advisor', labelEn: 'Advisor', labelZh: '顾问', icon: '🤖', theme: 'bg-[#73C5E6] shadow-[0_5px_0_#4E95B3] text-white', category: 'other' },
+  { id: 'qa', labelEn: 'Q & A', labelZh: '问答', icon: '💬', theme: 'bg-[#E3B75C] shadow-[0_5px_0_#B38A3B] text-white', category: 'other' },
+  { id: 'admission', labelEn: 'Data', labelZh: '数据', icon: '📊', theme: 'bg-[#a9eee6] shadow-[0_5px_0_#4D9C71] text-white', category: 'other' },
+  { id: 'activities', labelEn: 'Events', labelZh: '活动', icon: '🎉', theme: 'bg-[#EBA173] shadow-[0_5px_0_#B8764B] text-white', category: 'other' },
+  { id: 'advisor-view', labelEn: 'Adv<br>View', labelZh: '顾问<br>视角', icon: '🎓', theme: 'bg-[#E0C3CC] shadow-[0_5px_0_#B86281] text-white', category: 'other' }
 ]
 
 const activeTab = ref('journey')
+const isZh = ref(false)
+
+const gameTabs = computed(() => tabs.value.filter(t => t.category === 'game'))
+const otherTabs = computed(() => tabs.value.filter(t => t.category === 'other'))
+
+const tabs = computed(() => tabsBase.map(t => ({
+  ...t,
+  label: isZh.value ? t.labelZh : t.labelEn
+})))
+
+function toggleGlobalLanguage() {
+  isZh.value = !isZh.value
+}
+
+function showOnboardingGuide() {
+  showOnboarding.value = true
+}
+
+function handleOnboardingComplete() {
+  showOnboarding.value = false
+  localStorage.setItem('hasSeenOnboarding', 'true')
+  activeTab.value = 'journey'
+}
 
 // ============================================
 // 后续逻辑保持不变
@@ -172,8 +280,11 @@ const unlockedStories = ref([])
 const currentAchievement = ref(null)
 const currentGuide = ref(null)
 const showGuide = ref(false)
+const showOnboarding = ref(false)
 const currentCombo = ref(0)
 const maxCombo = ref(0)
+const daysStreak = ref(0)
+const gearState = ref({ ielts: 0, gpa: 0, internship: 0, research: 0 })
 const dailyQuestProgress = ref(initializeDailyProgress())
 const unlockedAchievements = ref([])
 const totalCorrectAnswers = ref(0)
@@ -201,6 +312,10 @@ function handleRoleConfirmed(data) {
   userName.value = data.name
   currentView.value = 'main'
   activeTab.value = 'journey'
+  const hasSeen = localStorage.getItem('hasSeenOnboarding')
+  if (!hasSeen) {
+    setTimeout(() => { showOnboarding.value = true }, 800)
+  }
   const saved = localStorage.getItem(`progress_${data.role}`)
   if (saved) {
     const progress = JSON.parse(saved)
@@ -248,6 +363,16 @@ function handleSwitchRole() {
 
 function handleAddLearning() { learningValue.value += 10; saveProgress(); }
 function handleAddTask() { taskValue.value += 10; saveProgress(); }
+
+function handleTVEarned(data) {
+  taskValue.value += data.tv
+  saveProgress()
+}
+
+function handleLearningEarned(data) {
+  learningValue.value += data.lv
+  saveProgress()
+}
 
 function handleResetProgress() {
   learningValue.value = 0; taskValue.value = 0; completedLevels.value = ['level-1'];

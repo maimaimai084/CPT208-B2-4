@@ -23,7 +23,7 @@
           <div class="flex items-center gap-2">
             <div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden">
               <div class="h-full rounded-full transition-all duration-500"
-                   :class="quest.completed ? 'bg-emerald-500' : 'bg-blue-500'"
+                   :class="quest.completed ? 'bg-emerald-500' : 'bg-[#7FA1ED]'"
                    :style="{ width: Math.min((quest.current / quest.target) * 100, 100) + '%' }"></div>
             </div>
             <span class="text-xs font-medium text-slate-600 w-16 text-right">
@@ -34,7 +34,7 @@
           <!-- Rewards -->
           <div class="flex gap-2 mt-2 text-[11px]">
             <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-blue-50 text-blue-700">
-              <span class="w-1 h-1 rounded-full bg-blue-500"></span>
+              <span class="w-1 h-1 rounded-full bg-[#7FA1ED]"></span>
               +{{ quest.reward.learning }} LV
             </span>
             <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-amber-50 text-amber-700">

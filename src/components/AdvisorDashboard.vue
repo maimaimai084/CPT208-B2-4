@@ -68,7 +68,7 @@
             <div v-for="stage in selectedStudent.stages" :key="stage.id" class="flex items-center gap-4">
               <span class="text-sm w-36 truncate text-slate-700">{{ stage.name }}</span>
               <div class="flex-1 h-2.5 bg-slate-100 rounded-full overflow-hidden">
-                <div class="h-full bg-blue-500 rounded-full transition-all duration-700" :style="{ width: stage.progress + '%' }"></div>
+                <div class="h-full bg-[#7FA1ED] rounded-full transition-all duration-700" :style="{ width: stage.progress + '%' }"></div>
               </div>
               <span class="text-sm font-semibold w-12 text-right text-slate-800">{{ stage.progress }}%</span>
             </div>

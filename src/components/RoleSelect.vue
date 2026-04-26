@@ -1,7 +1,7 @@
 <template>
   <div class="role-select-container">
     <!-- 角色选择界面 -->
-    <div v-if="!confirmed" class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 flex items-center justify-center p-4">
+    <div v-if="!confirmed" class="min-h-screen bg-gradient-to-br from-gray-50 to-[#7FA1ED]/10 flex items-center justify-center p-4">
       <div class="max-w-4xl w-full">
         
         <!-- 标题区 -->
@@ -16,24 +16,24 @@
           <!-- Explorer (迷茫型) - 蓝色主题 -->
           <div 
             @click="selectRole('confused')"
-            class="role-card group cursor-pointer bg-white rounded-3xl p-8 border-4 border-blue-200 hover:border-blue-500 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-200 hover:-translate-y-2"
-            :class="{ 'ring-4 ring-blue-400 scale-105': selectedRole === 'confused' }"
+            class="role-card group cursor-pointer bg-white rounded-3xl p-8 border-4 border-[#7FA1ED]/30 hover:border-[#7FA1ED] transition-all duration-300 hover:shadow-2xl hover:shadow-[#7FA1ED]/20 hover:-translate-y-2"
+            :class="{ 'ring-4 ring-[#7FA1ED] scale-105': selectedRole === 'confused' }"
           >
             <div class="flex flex-col items-center text-center">
               <!-- 头像 -->
-              <div class="w-24 h-24 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full flex items-center justify-center text-5xl mb-6 group-hover:scale-110 transition-transform">
+              <div class="w-24 h-24 bg-gradient-to-br from-[#7FA1ED]/20 to-[#7FA1ED]/30 rounded-full flex items-center justify-center text-5xl mb-6 group-hover:scale-110 transition-transform">
                 🤔
               </div>
               
               <!-- 角色名 -->
-              <h2 class="text-2xl font-bold text-blue-900 mb-2">The Explorer</h2>
-              <p class="text-blue-600 font-medium mb-4">For Sophomores (Year 2)</p>
+              <h2 class="text-2xl font-bold text-[#5B78BA] mb-2">The Explorer</h2>
+              <p class="text-[#7FA1ED] font-medium mb-4">For Sophomores (Year 2)</p>
               
               <!-- 特征标签 -->
               <div class="flex flex-wrap justify-center gap-2 mb-6">
-                <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm border border-blue-200">No Clear Target</span>
-                <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm border border-blue-200">Fragmented Time</span>
-                <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm border border-blue-200">Process Novice</span>
+                <span class="px-3 py-1 bg-[#7FA1ED]/10 text-[#5B78BA] rounded-full text-sm border border-[#7FA1ED]/20">No Clear Target</span>
+                <span class="px-3 py-1 bg-[#7FA1ED]/10 text-[#5B78BA] rounded-full text-sm border border-[#7FA1ED]/20">Fragmented Time</span>
+                <span class="px-3 py-1 bg-[#7FA1ED]/10 text-[#5B78BA] rounded-full text-sm border border-[#7FA1ED]/20">Process Novice</span>
               </div>
               
               <!-- 描述 -->
@@ -44,7 +44,7 @@
               
               <!-- 选择指示器 -->
               <div class="w-8 h-8 rounded-full border-3 flex items-center justify-center transition-colors"
-                   :class="selectedRole === 'confused' ? 'bg-blue-500 border-blue-500' : 'border-gray-300'">
+                   :class="selectedRole === 'confused' ? 'bg-[#7FA1ED] border-[#7FA1ED]' : 'border-gray-300'">
                 <span v-if="selectedRole === 'confused'" class="text-white text-lg">✓</span>
               </div>
             </div>
@@ -95,7 +95,7 @@
             v-model="userName"
             type="text"
             placeholder="Your Name"
-            class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:outline-none transition-colors mb-4 text-lg"
+            class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-[#7FA1ED] focus:outline-none transition-colors mb-4 text-lg"
             @keyup.enter="confirmSelection"
           />
           <button 
@@ -103,7 +103,7 @@
             :disabled="!userName.trim()"
             class="w-full py-3 rounded-xl font-bold text-lg transition-all duration-200"
             :class="selectedRole === 'confused' 
-              ? 'bg-blue-500 hover:bg-blue-600 text-white disabled:bg-blue-300' 
+              ? 'bg-[#7FA1ED] hover:bg-[#5B78BA] text-white disabled:bg-[#7FA1ED]/50' 
               : 'bg-orange-500 hover:bg-orange-600 text-white disabled:bg-orange-300'"
           >
             Start My Journey →

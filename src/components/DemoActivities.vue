@@ -16,7 +16,7 @@
       <div class="space-y-8">
         <!-- Year 2 -->
         <div class="relative">
-          <div class="absolute left-6 md:left-8 -translate-x-1/2 w-4 h-4 rounded-full bg-blue-500 border-4 border-white shadow"></div>
+          <div class="absolute left-6 md:left-8 -translate-x-1/2 w-4 h-4 rounded-full bg-[#7FA1ED] border-4 border-white shadow"></div>
           <div class="pl-14 md:pl-20">
             <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
               <div class="flex items-center gap-3 mb-4">

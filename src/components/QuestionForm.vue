@@ -9,13 +9,13 @@
         <div>
           <label class="block text-sm font-medium text-slate-700 mb-1">Your Name</label>
           <input v-model="form.name" type="text" placeholder="Enter your name"
-                 class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-blue-500 focus:outline-none text-sm" />
+                 class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-[#7FA1ED] focus:outline-none text-sm" />
         </div>
 
         <div>
           <label class="block text-sm font-medium text-slate-700 mb-1">Category</label>
           <select v-model="form.category"
-                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-blue-500 focus:outline-none text-sm bg-white">
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-[#7FA1ED] focus:outline-none text-sm bg-white">
             <option value="school-selection">School Selection</option>
             <option value="document-prep">Document Preparation</option>
             <option value="essay-writing">Essay / PS Writing</option>
@@ -29,7 +29,7 @@
         <div>
           <label class="block text-sm font-medium text-slate-700 mb-1">Your Question</label>
           <textarea v-model="form.question" rows="4" placeholder="Describe your question in detail..."
-                    class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-blue-500 focus:outline-none text-sm resize-none"></textarea>
+                    class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-[#7FA1ED] focus:outline-none text-sm resize-none"></textarea>
         </div>
 
         <button type="submit"

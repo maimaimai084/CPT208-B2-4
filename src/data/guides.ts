@@ -6,6 +6,72 @@ export interface Guide {
 }
 
 export const GUIDES: Record<string, Guide> = {
+  'onboarding': {
+    id: 'onboarding',
+    title: 'Welcome to MasterApply Quest',
+    icon: '🎮',
+    content: `
+      <div class="space-y-6">
+        <div class="bg-gradient-to-r from-[#E88EAF] to-[#B86281] text-white rounded-xl p-4">
+          <h4 class="font-bold text-lg mb-2">Welcome to MasterApply Quest! 🎓</h4>
+          <p class="text-white/90 text-sm">This game simulates the graduate school application journey. Complete quests, earn LV (Learning Value) and TV (Task Value), and prepare for your dream offer!</p>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-gray-900 mb-3 text-lg">🎯 Game Objectives</h4>
+          <ul class="space-y-3 text-gray-700">
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 text-xl">🗺️</span>
+              <div><strong>Complete 5 Stages:</strong> School Selection → Documents → Personal Statement → Application → Interview</div>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 text-xl">📈</span>
+              <div><strong>Earn LV (Learning Value):</strong> By answering questions correctly in quizzes</div>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-amber-500 text-xl">⚡</span>
+              <div><strong>Earn TV (Task Value):</strong> By completing simulations like interviews</div>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 text-xl">🎒</span>
+              <div><strong>Upgrade Gear:</strong> Use LV to buy IELTS, GPA, Internship, Research to boost simulation rewards</div>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-purple-500 text-xl">🌳</span>
+              <div><strong>Grow Your Knowledge Tree:</strong> Watch it flourish as you progress!</div>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-gray-900 mb-3 text-lg">💡 Quick Tips</h4>
+          <div class="space-y-2">
+            <div class="bg-green-50 rounded-lg p-3 flex items-start gap-2">
+              <span class="text-green-600 text-lg">✓</span>
+              <span class="text-gray-700">Use the language toggle (EN/中) to switch between English and Chinese</span>
+            </div>
+            <div class="bg-green-50 rounded-lg p-3 flex items-start gap-2">
+              <span class="text-green-600 text-lg">✓</span>
+              <span class="text-gray-700">Complete daily quests for bonus rewards!</span>
+            </div>
+            <div class="bg-green-50 rounded-lg p-3 flex items-start gap-2">
+              <span class="text-green-600 text-lg">✓</span>
+              <span class="text-gray-700">Build combos by answering correctly in a row for multiplier rewards</span>
+            </div>
+            <div class="bg-green-50 rounded-lg p-3 flex items-start gap-2">
+              <span class="text-green-600 text-lg">✓</span>
+              <span class="text-gray-700">Visit the AI Advisor for tips and guidance</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-amber-50 rounded-xl p-4 border-l-4 border-amber-500">
+          <h4 class="font-bold text-amber-900 mb-2">🚀 Ready to Start?</h4>
+          <p class="text-gray-700">Click on the Knowledge Tree to begin your first stage - School Selection!</p>
+        </div>
+      </div>
+    `
+  },
   'story-cv': {
     id: 'story-cv',
     title: 'CV Writing Excellence',

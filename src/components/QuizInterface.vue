@@ -17,7 +17,7 @@
       </div>
 
       <div class="text-lg md:text-xl font-bold tracking-tight text-slate-800">
-        <span class="text-[#4F8CFF]">{{ isZh ? '探索' : 'Discovery' }}</span> - {{ isZh ? '关卡' : 'Level' }} {{ String(levelId).replace('level-', '') }}
+        <span class="text-[#7FA1ED]">{{ isZh ? '探索' : 'Discovery' }}</span> - {{ isZh ? '关卡' : 'Level' }} {{ String(levelId).replace('level-', '') }}
       </div>
     </header>
 
@@ -45,7 +45,7 @@
 
       <div class="space-y-3 mb-6">
         <div v-for="(opt, index) in currentQuestion.options" :key="index"
-             class="option-btn w-full bg-white rounded-xl p-4 shadow-soft border-2 border-transparent hover:border-[#4F8CFF] hover:shadow-card text-left flex items-center gap-4 group transition-all cursor-pointer"
+             class="option-btn w-full bg-white rounded-xl p-4 shadow-soft border-2 border-transparent hover:border-[#7FA1ED] hover:shadow-card text-left flex items-center gap-4 group transition-all cursor-pointer"
              :class="{ 'opacity-40 grayscale': selectedIndex !== null && selectedIndex !== index }"
              @click="handleSelect(opt, index)">
           <div class="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm shrink-0 transition-colors"
@@ -91,7 +91,7 @@
               </p>
 
               <div class="flex gap-2 mt-3">
-                <span class="bg-[#4F8CFF] text-white px-2 py-1 text-[10px] font-bold rounded-md">+{{ opt.learning || 0 }} LV</span>
+                <span class="bg-[#7FA1ED] text-white px-2 py-1 text-[10px] font-bold rounded-md">+{{ opt.learning || 0 }} LV</span>
                 <span class="bg-[#FF9F43] text-white px-2 py-1 text-[10px] font-bold rounded-md">+{{ opt.task || 0 }} TV</span>
               </div>
 
@@ -112,16 +112,17 @@ import { getQuestionsByLevel } from '@/data/questions'
 
 const props = defineProps({
   level: { type: [Object, String], required: true },
-  userType: { type: String, default: 'confused' }
+  userType: { type: String, default: 'confused' },
+  isZh: { type: Boolean, default: false }
 })
 
-const emit = defineEmits(['close', 'complete'])
+const emit = defineEmits(['close', 'complete', 'update:isZh'])
 
 const questions = ref([])
 const currentQuestionIndex = ref(0)
 const selectedIndex = ref(null)
 const isShaking = ref(false)
-const isZh = ref(false)
+const isZh = computed(() => props.isZh)
 const sessionResults = { correctCount: 0, learning: 0, task: 0 }
 
 const levelId = computed(() => (typeof props.level === 'object' ? props.level.id : props.level))
@@ -222,7 +223,7 @@ function getOptionDotClass(index) {
 }
 
 function toggleLanguage() {
-  isZh.value = !isZh.value
+  emit('update:isZh', !props.isZh)
 }
 
 onMounted(() => {

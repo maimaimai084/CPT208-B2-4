@@ -34,8 +34,8 @@
 
     <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
       <div class="bg-white rounded-2xl border-2 border-[#E0C3CC] p-5 text-center shadow-[0_4px_0_#F0D8E0] relative overflow-hidden group hover:-translate-y-1 transition-transform">
-        <div class="absolute top-0 right-0 w-16 h-16 bg-blue-50 rounded-full blur-xl group-hover:bg-blue-100 transition-colors"></div>
-        <div class="text-3xl font-black text-blue-500 relative z-10">{{ learningValue }}</div>
+        <div class="absolute top-0 right-0 w-16 h-16 bg-[#7FA1ED]/10 rounded-full blur-xl group-hover:bg-[#7FA1ED]/20 transition-colors"></div>
+        <div class="text-3xl font-black text-[#7FA1ED] relative z-10">{{ learningValue }}</div>
         <div class="text-xs font-bold text-slate-400 mt-2 uppercase tracking-wider relative z-10">Learning</div>
       </div>
       
@@ -46,8 +46,8 @@
       </div>
 
       <div class="bg-white rounded-2xl border-2 border-[#E0C3CC] p-5 text-center shadow-[0_4px_0_#F0D8E0] relative overflow-hidden group hover:-translate-y-1 transition-transform">
-        <div class="absolute top-0 right-0 w-16 h-16 bg-purple-50 rounded-full blur-xl group-hover:bg-purple-100 transition-colors"></div>
-        <div class="text-3xl font-black text-purple-500 relative z-10">{{ maxCombo }}</div>
+        <div class="absolute top-0 right-0 w-16 h-16 bg-[#E88EAF]/10 rounded-full blur-xl group-hover:bg-[#E88EAF]/20 transition-colors"></div>
+        <div class="text-3xl font-black text-[#E88EAF] relative z-10">{{ maxCombo }}</div>
         <div class="text-xs font-bold text-slate-400 mt-2 uppercase tracking-wider relative z-10">Max Combo</div>
       </div>
 
@@ -123,17 +123,17 @@
         </div>
         
         <div class="flex flex-col items-center group cursor-default">
-          <div class="w-16 h-16 rounded-full border-4 border-blue-100 flex items-center justify-center bg-white shadow-[0_4px_10px_rgba(59,130,246,0.1)] group-hover:bg-blue-50 group-hover:scale-110 transition-all duration-300">
-            <span class="text-2xl font-black text-blue-500 drop-shadow-sm group-hover:text-blue-600 transition-colors">{{ unlockedStories.length }}</span>
+          <div class="w-16 h-16 rounded-full border-4 border-[#7FA1ED]/20 flex items-center justify-center bg-white shadow-[0_4px_10px_rgba(127,161,237,0.1)] group-hover:bg-[#7FA1ED]/10 group-hover:scale-110 transition-all duration-300">
+            <span class="text-2xl font-black text-[#7FA1ED] drop-shadow-sm group-hover:text-[#5B78BA] transition-colors">{{ unlockedStories.length }}</span>
           </div>
-          <div class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-3 text-center group-hover:text-blue-500 transition-colors">Lore Found</div>
+          <div class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-3 text-center group-hover:text-[#7FA1ED] transition-colors">Lore Found</div>
         </div>
         
         <div class="flex flex-col items-center group cursor-default">
-          <div class="w-16 h-16 rounded-full border-4 border-purple-100 flex items-center justify-center bg-white shadow-[0_4px_10px_rgba(168,85,247,0.1)] group-hover:bg-purple-50 group-hover:scale-110 transition-all duration-300">
-            <span class="text-2xl font-black text-purple-500 drop-shadow-sm group-hover:text-purple-600 transition-colors">{{ currentCombo }}</span>
+          <div class="w-16 h-16 rounded-full border-4 border-[#E3B75C]/20 flex items-center justify-center bg-white shadow-[0_4px_10px_rgba(227,183,92,0.1)] group-hover:bg-[#E3B75C]/10 group-hover:scale-110 transition-all duration-300">
+            <span class="text-2xl font-black text-[#E3B75C] drop-shadow-sm group-hover:text-[#C49A3D] transition-colors">{{ currentCombo }}</span>
           </div>
-          <div class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-3 text-center group-hover:text-purple-500 transition-colors">Active Streak</div>
+          <div class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-3 text-center group-hover:text-[#E3B75C] transition-colors">Active Streak</div>
         </div>
       </div>
     </div>

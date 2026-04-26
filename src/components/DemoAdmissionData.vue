@@ -37,7 +37,7 @@
         <div v-for="dest in overallStats.destinations" :key="dest.region" class="flex items-center gap-4">
           <span class="text-sm w-28 font-medium text-slate-700">{{ dest.region }}</span>
           <div class="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden">
-            <div class="h-full bg-blue-500 rounded-full transition-all duration-1000" :style="{ width: dest.share + '%' }"></div>
+            <div class="h-full bg-[#7FA1ED] rounded-full transition-all duration-1000" :style="{ width: dest.share + '%' }"></div>
           </div>
           <span class="text-sm font-bold text-slate-800 w-10 text-right">{{ dest.share }}%</span>
           <span class="text-xs text-slate-500 hidden sm:inline">{{ dest.note }}</span>
