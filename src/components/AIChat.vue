@@ -59,15 +59,16 @@
           Send
         </button>
       </div>
-      <p class="text-[10px] text-slate-400 mt-3 text-center font-medium">
-        AI backend not connected. Configure an API key in settings to enable live AI responses.
-      </p>
+      
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref, nextTick } from 'vue'
+
+// ⚠️ 在这里填入你在 DeepSeek 平台创建的 API Key (通常以 sk- 开头)
+const API_KEY = 'sk-65ec8b3aec5f4bf48ba50b7b7f06e629' 
 
 const messages = ref([
   { role: 'assistant', content: 'Hello! I am your AI Application Advisor. I can answer common questions about postgraduate applications. What would you like to know?' }
@@ -77,74 +78,70 @@ const isTyping = ref(false)
 const messagesContainer = ref(null)
 
 const presetQuestions = [
-  {
-    id: 1,
-    short: 'UK vs US?',
-    question: 'How do I choose between UK and US master\'s programs?',
-    answer: 'It depends on your goals: UK programs are typically 1 year, focused, and cost less overall; US programs are 2 years, offer more flexibility, and often include funding or assistantships. Consider your budget, career timeline, and whether you want research experience or internship opportunities (CPT/OPT).'
-  },
-  {
-    id: 2,
-    short: 'GPA requirements?',
-    question: 'What GPA do I need for top universities?',
-    answer: 'For G5 / Top 20 schools, a First Class (82+) or strong 2:1 (75+) is ideal. However, strong soft backgrounds (research, internships, publications) can compensate. US schools often use holistic review, so a lower GPA with outstanding experience can still be competitive.'
-  },
-  {
-    id: 3,
-    short: 'Timeline?',
-    question: 'When should I start preparing my application?',
-    answer: 'Ideally 12–18 months before intake.\n• Year 2: Explore options, maintain GPA, and build relationships with professors.\n• Year 3: Take standardized tests, secure recommenders, and draft documents.\n• Year 4: Finalize submissions, attend interviews, and decide on offers.'
-  },
-  {
-    id: 4,
-    short: 'Recommendation letters?',
-    question: 'How important are recommendation letters?',
-    answer: 'Very important. Admissions committees value detailed, specific endorsements from professors who know your academic work well. Choose recommenders who can speak to your research ability, intellectual curiosity, and specific projects — not just someone with a famous title.'
-  },
-  {
-    id: 5,
-    short: 'GRE / IELTS?',
-    question: 'Do I need GRE and IELTS for every program?',
-    answer: 'Most US programs require GRE (320+ for Top 30), though some have made it optional. UK programs usually do not require GRE. IELTS 7.0 (6.5) is standard for G5; US Top 30 typically expects 7.0+ or TOEFL 100+. Always check each program\'s official requirements.'
-  }
+  { id: 1, short: 'UK vs US?', question: 'How do I choose between UK and US master\'s programs?' },
+  { id: 2, short: 'GPA requirements?', question: 'What GPA do I need for top universities?' },
+  { id: 3, short: 'Timeline?', question: 'When should I start preparing my application?' },
+  { id: 4, short: 'Recommendation letters?', question: 'How important are recommendation letters?' },
+  { id: 5, short: 'GRE / IELTS?', question: 'Do I need GRE and IELTS for every program?' }
 ]
 
 function sendPreset(q) {
-  addMessage('user', q.question)
-  simulateReply(q.answer)
+  inputText.value = q.question
+  sendMessage()
 }
 
-function sendMessage() {
+async function sendMessage() {
   const text = inputText.value.trim()
   if (!text) return
+
   addMessage('user', text)
   inputText.value = ''
+  isTyping.value = true
+  scrollToBottom()
 
-  const lower = text.toLowerCase()
-  const match = presetQuestions.find(q =>
-    lower.includes(q.short.toLowerCase().replace('?', '')) ||
-    lower.includes(q.question.toLowerCase().slice(0, 15))
-  )
+  try {
+    // 构建历史消息数组
+    const apiHistory = messages.value.map(msg => ({
+      role: msg.role,
+      content: msg.content
+    }))
 
-  if (match) {
-    simulateReply(match.answer)
-  } else {
-    simulateReply('I don\'t have a preset answer for that yet. This demo uses fixed responses only — please configure an AI API key in settings to enable live, intelligent replies.')
+    // 发送请求到 DeepSeek 接口
+    const response = await fetch('https://api.deepseek.com/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${API_KEY}` 
+      },
+      body: JSON.stringify({
+        model: 'deepseek-chat', // DeepSeek 标准对话模型 V3
+        messages: apiHistory,
+        stream: false 
+      })
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const data = await response.json()
+    
+    // 解析返回的文本并上屏
+    const aiReply = data.choices[0].message.content
+    
+    isTyping.value = false
+    addMessage('assistant', aiReply)
+
+  } catch (error) {
+    console.error("API Request Failed:", error)
+    isTyping.value = false
+    addMessage('assistant', 'Sorry, I encountered an error connecting to the DeepSeek AI backend. Please check your network or API key.')
   }
 }
 
 function addMessage(role, content) {
   messages.value.push({ role, content })
   scrollToBottom()
-}
-
-function simulateReply(text) {
-  isTyping.value = true
-  scrollToBottom()
-  setTimeout(() => {
-    isTyping.value = false
-    addMessage('assistant', text)
-  }, 800 + Math.random() * 600)
 }
 
 function scrollToBottom() {

@@ -15,7 +15,7 @@
     <!-- Student List + Analytics -->
     <div class="grid lg:grid-cols-3 gap-6">
       <!-- Student List Sidebar -->
-      <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+      <div class="bg-white rounded-2xl border border-[#D8A0C1] p-5 shadow-sm">
         <h3 class="font-bold text-slate-900 mb-4">Students</h3>
         <div class="space-y-2">
           <div v-for="student in allStudents" :key="student.id"
@@ -49,12 +49,12 @@
       <div class="lg:col-span-2 space-y-6" v-if="selectedStudent">
         <!-- Value Cards -->
         <div class="grid grid-cols-2 gap-4">
-          <div class="bg-white rounded-xl p-5 shadow-sm border border-slate-200 border-l-4 !border-l-blue-500">
+          <div class="bg-white rounded-xl p-5 shadow-sm border border-[#D8A0C1] border-l-4 !border-l-[#D8A0C1]">
             <p class="text-sm text-slate-600 mb-1">Learning Value</p>
             <p class="text-3xl font-bold text-blue-600">{{ selectedStudent.learning }}</p>
             <p class="text-xs text-slate-500 mt-1">Next unlock: 100</p>
           </div>
-          <div class="bg-white rounded-xl p-5 shadow-sm border border-slate-200 border-l-4 !border-l-amber-500">
+          <div class="bg-white rounded-xl p-5 shadow-sm border border-[#D8A0C1] border-l-4 !border-l-[#D8A0C1]">
             <p class="text-sm text-slate-600 mb-1">Task Value</p>
             <p class="text-3xl font-bold text-amber-500">{{ selectedStudent.task }}</p>
             <p class="text-xs text-slate-500 mt-1">Next unlock: 200</p>
@@ -62,13 +62,13 @@
         </div>
 
         <!-- Completion Chart -->
-        <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+        <div class="bg-white rounded-xl p-6 shadow-sm border border-[#D8A0C1]">
           <h4 class="font-bold text-slate-900 mb-4">Stage Completion</h4>
           <div class="space-y-3">
             <div v-for="stage in selectedStudent.stages" :key="stage.id" class="flex items-center gap-4">
               <span class="text-sm w-36 truncate text-slate-700">{{ stage.name }}</span>
               <div class="flex-1 h-2.5 bg-slate-100 rounded-full overflow-hidden">
-                <div class="h-full bg-[#7FA1ED] rounded-full transition-all duration-700" :style="{ width: stage.progress + '%' }"></div>
+                <div class="h-full bg-[#D8A0C1] rounded-full transition-all duration-700" :style="{ width: stage.progress + '%' }"></div>
               </div>
               <span class="text-sm font-semibold w-12 text-right text-slate-800">{{ stage.progress }}%</span>
             </div>
@@ -76,7 +76,7 @@
         </div>
 
         <!-- Knowledge Gaps -->
-        <div class="bg-white rounded-xl p-6 shadow-sm border border-red-100">
+        <div class="bg-white rounded-xl p-6 shadow-sm border border-[#D8A0C1]">
           <h4 class="font-bold text-slate-900 mb-3 flex items-center gap-2">
             <span class="text-red-500">⚠️</span> Knowledge Gaps
           </h4>
@@ -91,7 +91,7 @@
     </div>
 
     <!-- Sample Q&A Panel -->
-    <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+    <div class="bg-white rounded-2xl border border-[#D8A0C1] p-6 shadow-sm">
       <h3 class="text-lg font-bold text-slate-900 mb-4">Recent Student Questions</h3>
       <div class="grid md:grid-cols-2 gap-4">
         <div v-for="q in sampleQuestions" :key="q.id" class="p-4 bg-slate-50 rounded-xl border border-slate-100">

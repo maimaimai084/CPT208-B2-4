@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-8">
     <!-- Header -->
-    <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+    <div class="bg-white rounded-2xl border border-[#FC8D95] p-6 shadow-sm">
       <h2 class="text-2xl font-bold text-slate-900 mb-2">SAT Student Activities Timeline</h2>
       <p class="text-sm text-slate-600">
         A structured roadmap of activities and milestones designed to guide SAT students through their postgraduate preparation journey.
@@ -18,7 +18,7 @@
         <div class="relative">
           <div class="absolute left-6 md:left-8 -translate-x-1/2 w-4 h-4 rounded-full bg-[#7FA1ED] border-4 border-white shadow"></div>
           <div class="pl-14 md:pl-20">
-            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+            <div class="bg-white rounded-2xl border border-[#FC8D95] p-6 shadow-sm">
               <div class="flex items-center gap-3 mb-4">
                 <span class="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded-full">YEAR 2</span>
                 <h3 class="text-lg font-bold text-slate-900">Exploration & Foundation</h3>
@@ -42,7 +42,7 @@
         <div class="relative">
           <div class="absolute left-6 md:left-8 -translate-x-1/2 w-4 h-4 rounded-full bg-violet-500 border-4 border-white shadow"></div>
           <div class="pl-14 md:pl-20">
-            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+            <div class="bg-white rounded-2xl border border-[#FC8D95] p-6 shadow-sm">
               <div class="flex items-center gap-3 mb-4">
                 <span class="px-3 py-1 bg-violet-100 text-violet-700 text-xs font-bold rounded-full">YEAR 3</span>
                 <h3 class="text-lg font-bold text-slate-900">Skill Building & Applications</h3>
@@ -66,7 +66,7 @@
         <div class="relative">
           <div class="absolute left-6 md:left-8 -translate-x-1/2 w-4 h-4 rounded-full bg-emerald-500 border-4 border-white shadow"></div>
           <div class="pl-14 md:pl-20">
-            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+            <div class="bg-white rounded-2xl border border-[#FC8D95] p-6 shadow-sm">
               <div class="flex items-center gap-3 mb-4">
                 <span class="px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-full">YEAR 4</span>
                 <h3 class="text-lg font-bold text-slate-900">Final Push & Decisions</h3>

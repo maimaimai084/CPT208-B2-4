@@ -1,7 +1,7 @@
 <template>
   <div class="grid lg:grid-cols-2 gap-6">
     <!-- Submit Form -->
-    <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+    <div class="bg-white rounded-2xl border-2 border-[#DEB956] p-6 shadow-sm">
       <h3 class="text-lg font-bold text-slate-900 mb-1">Ask a Question</h3>
       <p class="text-sm text-slate-500 mb-5">Submit your application questions. An advisor will respond in the Q&A section.</p>
 
@@ -33,7 +33,7 @@
         </div>
 
         <button type="submit"
-                class="w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-medium text-sm transition-colors">
+            class="w-full px-4 py-3 bg-[#DEB956] hover:bg-[#C2A771] text-white rounded-xl font-medium text-sm transition-colors shadow-sm">
           Submit Question
         </button>
       </form>
@@ -47,7 +47,7 @@
     </div>
 
     <!-- Question History -->
-    <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+    <div class="bg-white rounded-2xl border-2 border-[#DEB956] p-6 shadow-sm">
       <div class="flex items-center justify-between mb-5">
         <h3 class="text-lg font-bold text-slate-900">Recent Questions</h3>
         <span class="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded-full">{{ questions.length }} total</span>
