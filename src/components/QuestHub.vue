@@ -72,7 +72,7 @@
             </div>
             <div class="bg-amber-50 rounded-lg p-2">
               <div class="text-lg">💼</div>
-              <div class="font-bold text-amber-600">{{ gearState.experience || 1 }}</div>
+              <div class="font-bold text-amber-600">{{ gearState.internship || 1 }}</div>
             </div>
           </div>
         </div>

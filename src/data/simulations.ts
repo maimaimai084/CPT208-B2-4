@@ -244,14 +244,49 @@ export function getAvailableSimulations(gearState: { ielts?: number; internship?
   })
 }
 
-export function canSelectOption(option: SimulationOption, gearState: { ielts?: number; internship?: number }): boolean {
-  if (!option.requiredGear) return true
+// export function canSelectOption(option: SimulationOption, gearState: { ielts?: number; internship?: number }): boolean {
+//   if (!option.requiredGear) return true
   
-  if (option.requiredGear.ielts && (!gearState.ielts || gearState.ielts < option.requiredGear.ielts)) {
-    return false
+//   if (option.requiredGear.ielts && (!gearState.ielts || gearState.ielts < option.requiredGear.ielts)) {
+//     return false
+//   }
+//   if (option.requiredGear.internship && (!gearState.internship || gearState.internship < option.requiredGear.internship)) {
+//     return false
+//   }
+//   return true
+// }
+export function canSelectOption(option: SimulationOption, gearState: { ielts?: number; internship?: number }): boolean {
+  // 1. 如果该选项没有装备要求，直接解锁
+  if (!option.requiredGear) return true;
+
+  // 2. 雅思等级转换表：明确规定每个 Level 对应的真实分数
+  const ieltsScoreMap: Record<number, number> = {
+    0: 5.5, // 0 级初始状态
+    1: 6.0, // Level 1
+    2: 6.5, // Level 2
+    3: 7.0, // Level 3
+    4: 7.5, // Level 4
+    5: 8.0  // Level 5
+  };
+
+  // 3. 验证雅思
+  if (option.requiredGear.ielts) {
+    const ieltsLevel = gearState.ielts || 0;
+    const actualIeltsScore = ieltsScoreMap[ieltsLevel] || 5.5; // 查表得出实际分数
+    
+    if (actualIeltsScore < option.requiredGear.ielts) {
+      return false; // 实际分数小于要求分数，锁定
+    }
   }
-  if (option.requiredGear.internship && (!gearState.internship || gearState.internship < option.requiredGear.internship)) {
-    return false
+
+  // 4. 验证实习（假设等级与段数 1:1 对应）
+  if (option.requiredGear.internship) {
+    const internshipLevel = gearState.internship || 0;
+    
+    if (internshipLevel < option.requiredGear.internship) {
+      return false; // 实习段数不够，锁定
+    }
   }
-  return true
+
+  return true; // 所有检查都通过，解锁！
 }
