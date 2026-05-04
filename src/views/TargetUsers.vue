@@ -89,15 +89,15 @@
                 <ul class="space-y-1.5">
                   <li class="flex items-start gap-2 text-sm text-gray-700">
                     <span class="text-red-500 mt-0.5">•</span>
-                    <span>Unclear about application timeline <span class="text-red-600 font-semibold">(75%)</span></span>
+                    <span>Unclear about application timeline <span class="text-red-600 font-semibold"></span></span>
                   </li>
                   <li class="flex items-start gap-2 text-sm text-gray-700">
                     <span class="text-red-500 mt-0.5">•</span>
-                    <span>Information overload from various sources <span class="text-red-600 font-semibold">(67%)</span></span>
+                    <span>Information overload from various sources <span class="text-red-600 font-semibold"></span></span>
                   </li>
                   <li class="flex items-start gap-2 text-sm text-gray-700">
                     <span class="text-red-500 mt-0.5">•</span>
-                    <span>Wants campus workshops but no time <span class="text-red-600 font-semibold">(85%)</span></span>
+                    <span>Wants campus workshops but no time <span class="text-red-600 font-semibold"></span></span>
                   </li>
                 </ul>
               </div>
@@ -179,15 +179,15 @@
                 <ul class="space-y-1.5">
                   <li class="flex items-start gap-2 text-sm text-gray-700">
                     <span class="text-red-500 mt-0.5">•</span>
-                    <span>Struggling with essay writing <span class="text-red-600 font-semibold">(60%)</span></span>
+                    <span>Struggling with essay writing <span class="text-red-600 font-semibold"></span></span>
                   </li>
                   <li class="flex items-start gap-2 text-sm text-gray-700">
                     <span class="text-red-500 mt-0.5">•</span>
-                    <span>Uncertain about school selection <span class="text-red-600 font-semibold">(52%)</span></span>
+                    <span>Uncertain about school selection <span class="text-red-600 font-semibold"></span></span>
                   </li>
                   <li class="flex items-start gap-2 text-sm text-gray-700">
                     <span class="text-red-500 mt-0.5">•</span>
-                    <span>Nervous about interview preparation <span class="text-red-600 font-semibold">(40%)</span></span>
+                    <span>Nervous about interview preparation <span class="text-red-600 font-semibold"></span></span>
                   </li>
                 </ul>
               </div>
