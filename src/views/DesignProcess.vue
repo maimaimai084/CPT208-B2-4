@@ -37,6 +37,54 @@
         </div>
       </section>
 
+      <!-- Requirement Alignment Matrix -->
+      <section id="requirement-alignment" class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+          <span>🎯</span> Design Alignment Matrix
+        </h2>
+        <p class="text-gray-600 mb-6">
+          To ensure our system directly addresses user pain points, we mapped our core Requirements (R) to Design Goals (DG) and finally to tangible System Features (SF), iterating on feedback to introduce new features.
+        </p>
+        
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm border-collapse">
+            <thead>
+              <tr class="bg-gray-100">
+                <th class="p-3 text-left font-bold border w-1/4">User Requirement (R)</th>
+                <th class="p-3 text-left font-bold border w-1/4">Design Goal (DG)</th>
+                <th class="p-3 text-left font-bold border w-1/2">System Feature (SF) & Rationale</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="p-3 border"><strong>R1:</strong> Need for flexible, fragmented learning without fixed schedules.</td>
+                <td class="p-3 border"><strong>DG1:</strong> Micro-learning format.</td>
+                <td class="p-3 border"><strong>SF1: 5-10 min Text Adventure Stages.</strong> Allows students to play during commutes.</td>
+              </tr>
+              <tr>
+                <td class="p-3 border"><strong>R2:</strong> Lack of intrinsic motivation and application anxiety.</td>
+                <td class="p-3 border"><strong>DG2:</strong> Gamified incentive system.</td>
+                <td class="p-3 border"><strong>SF2: Dual-Value (LV/TV) & Story Unlock.</strong> Rewards progress and satisfies psychological needs.</td>
+              </tr>
+              <!-- 新功能 1 & 3 的体现 -->
+              <tr>
+                <td class="p-3 border bg-blue-50"><strong>R3:</strong> Year 2 and Year 3 students have vastly different readiness levels and practical needs (found in evaluation).</td>
+                <td class="p-3 border bg-blue-50"><strong>DG3:</strong> Personalized and practical learning paths.</td>
+                <td class="p-3 border bg-blue-50"><strong>SF3: Role Differentiation & 6 TV Quests.</strong> <br><em>Explorer (Year 2)</em>: Blue theme, focuses on self-discovery (Document Rush, Timeline Puzzle). <br><em>Sprint (Year 3)</em>: Orange theme, focuses on execution (School Matcher, Email Scramble).</td>
+              </tr>
+              <!-- 新功能 2 的体现 -->
+              <tr>
+                <td class="p-3 border bg-green-50"><strong>R4:</strong> Diverse language preferences among international and domestic students.</td>
+                <td class="p-3 border bg-green-50"><strong>DG4:</strong> Inclusive accessibility.</td>
+                <td class="p-3 border bg-green-50"><strong>SF4: Full Bilingual Toggle.</strong> Complete EN/ZH translation for all questions and UI elements to eliminate language barriers.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+
+
       <!-- Design Process -->
       <section id="design-process" class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         <h2 class="text-2xl font-bold text-gray-900 mb-6">🔄 Design Process</h2>
@@ -226,6 +274,7 @@ import TableOfContents from '../components/portfolio/TableOfContents.vue'
 
 const tocItems = [
   { id: 'project-objectives', title: '🎯 Project Objectives' },
+  { id: 'requirement-alignment', title: '🎯 Design Alignment Matrix' },
   { id: 'design-process', title: '🔄 Design Process' },
   { id: 'core-design-concept', title: '💡 Core Design Concept' },
   { id: 'double-diamond', title: '💎 Double Diamond' },

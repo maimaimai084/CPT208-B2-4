@@ -30,6 +30,9 @@
           understanding of the application process, with vague goals and lack of detailed planning, 
           and are accustomed to mobile-based learning in fragmented sessions of 5 to 10 minutes.
         </p>
+        <p class="text-gray-800 leading-relaxed mb-6 font-medium bg-yellow-50 p-4 border-l-4 border-yellow-400 rounded-r-lg">
+          <strong>🛡️ Ethical Considerations & Informed Consent:</strong> Prior to any data collection, informed consent was explicitly obtained from all 90 survey participants and 3 interviewed advisors. Participants were thoroughly briefed on the study's purpose. All collected data was strictly anonymized, stored securely, and used exclusively for academic design purposes in compliance with university ethical guidelines.
+        </p>
         <div class="flex flex-col-reverse lg:flex-row items-center gap-8 justify-center bg-gray-50 rounded-xl p-8">
           <div class="flex-1 max-w-md">
             <div class="text-base font-semibold text-gray-700 mb-3">Sample Distribution</div>
