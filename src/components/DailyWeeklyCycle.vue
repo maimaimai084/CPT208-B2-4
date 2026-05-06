@@ -27,7 +27,7 @@
 
           <div class="space-y-2">
             <div 
-              v-for="quest in dailyQuests" 
+              v-for="quest in dailyQuestsWithProgress" 
               :key="quest.id"
               class="flex items-center justify-between bg-white rounded-lg p-3 shadow-sm"
               :class="{ 'opacity-50': quest.completed }"
@@ -38,19 +38,22 @@
                   {{ quest.completed ? '✅' : quest.icon }}
                 </div>
                 <div>
-                  <div class="font-medium text-slate-700 text-sm">{{ isZh ? quest.titleZh : quest.titleEn }}</div>
-                  <div class="text-xs text-slate-500">{{ isZh ? quest.descZh : quest.descEn }}</div>
+                  <div class="font-medium text-slate-700 text-sm">{{ quest.title[isZh ? 'zh' : 'en'] }}</div>
+                  <div class="text-xs text-slate-500">{{ quest.description[isZh ? 'zh' : 'en'] }}</div>
                 </div>
               </div>
               <div class="text-right">
-                <div class="text-sm font-bold text-amber-500">+{{ quest.reward }} TV</div>
-                <button 
-                  v-if="!quest.completed"
-                  @click="completeQuest(quest)"
-                  class="mt-1 px-3 py-1 bg-blue-500 text-white text-xs font-bold rounded-lg hover:bg-blue-600 transition-colors"
-                >
-                  {{ isZh ? '完成' : 'Done' }}
-                </button>
+                <div class="flex gap-1 text-xs font-bold">
+                  <span v-if="quest.reward.learning > 0" class="text-blue-500">+{{ quest.reward.learning }} LV</span>
+                  <span v-if="quest.reward.task > 0" class="text-amber-500">+{{ quest.reward.task }} TV</span>
+                </div>
+                <div class="flex items-center gap-2 mt-1">
+                  <div class="w-16 h-1.5 bg-blue-100 rounded-full overflow-hidden">
+                    <div class="h-full bg-blue-500 rounded-full transition-all"
+                         :style="{ width: Math.min((quest.current / quest.target) * 100, 100) + '%' }"></div>
+                  </div>
+                  <span class="text-[10px] text-slate-400">{{ quest.current }}/{{ quest.target }}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -58,10 +61,10 @@
           <div class="mt-4 pt-3 border-t border-blue-100">
             <div class="flex justify-between items-center">
               <span class="text-sm text-blue-600">{{ isZh ? '今日进度' : 'Daily Progress' }}</span>
-              <span class="text-sm font-bold text-blue-600">{{ dailyCompleted }}/{{ dailyQuests.length }}</span>
+              <span class="text-sm font-bold text-blue-600">{{ dailyCompleted }}/{{ dailyQuestsWithProgress.length }}</span>
             </div>
             <div class="w-full bg-blue-100 rounded-full h-2 mt-1">
-              <div class="h-full bg-blue-500 rounded-full transition-all" :style="{ width: (dailyCompleted / dailyQuests.length * 100) + '%' }"></div>
+              <div class="h-full bg-blue-500 rounded-full transition-all" :style="{ width: dailyProgressPercent + '%' }"></div>
             </div>
           </div>
         </div>
@@ -81,7 +84,7 @@
 
           <div class="space-y-2">
             <div 
-              v-for="quest in weeklyQuests" 
+              v-for="quest in weeklyQuestsWithProgress" 
               :key="quest.id"
               class="flex items-center justify-between bg-white rounded-lg p-3 shadow-sm"
               :class="{ 'opacity-50': quest.completed }"
@@ -92,19 +95,22 @@
                   {{ quest.completed ? '✅' : quest.icon }}
                 </div>
                 <div>
-                  <div class="font-medium text-slate-700 text-sm">{{ isZh ? quest.titleZh : quest.titleEn }}</div>
-                  <div class="text-xs text-slate-500">{{ isZh ? quest.descZh : quest.descEn }}</div>
+                  <div class="font-medium text-slate-700 text-sm">{{ quest.title[isZh ? 'zh' : 'en'] }}</div>
+                  <div class="text-xs text-slate-500">{{ quest.description[isZh ? 'zh' : 'en'] }}</div>
                 </div>
               </div>
               <div class="text-right">
-                <div class="text-sm font-bold text-purple-500">+{{ quest.reward }} TV</div>
-                <button 
-                  v-if="!quest.completed"
-                  @click="completeQuest(quest)"
-                  class="mt-1 px-3 py-1 bg-purple-500 text-white text-xs font-bold rounded-lg hover:bg-purple-600 transition-colors"
-                >
-                  {{ isZh ? '完成' : 'Done' }}
-                </button>
+                <div class="flex gap-1 text-xs font-bold">
+                  <span v-if="quest.reward.learning > 0" class="text-blue-500">+{{ quest.reward.learning }} LV</span>
+                  <span v-if="quest.reward.task > 0" class="text-purple-500">+{{ quest.reward.task }} TV</span>
+                </div>
+                <div class="flex items-center gap-2 mt-1">
+                  <div class="w-16 h-1.5 bg-purple-100 rounded-full overflow-hidden">
+                    <div class="h-full bg-purple-500 rounded-full transition-all"
+                         :style="{ width: Math.min((quest.current / quest.target) * 100, 100) + '%' }"></div>
+                  </div>
+                  <span class="text-[10px] text-slate-400">{{ quest.current }}/{{ quest.target }}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -112,10 +118,10 @@
           <div class="mt-4 pt-3 border-t border-purple-100">
             <div class="flex justify-between items-center">
               <span class="text-sm text-purple-600">{{ isZh ? '本周进度' : 'Weekly Progress' }}</span>
-              <span class="text-sm font-bold text-purple-600">{{ weeklyCompleted }}/{{ weeklyQuests.length }}</span>
+              <span class="text-sm font-bold text-purple-600">{{ weeklyCompleted }}/{{ weeklyQuestsWithProgress.length }}</span>
             </div>
             <div class="w-full bg-purple-100 rounded-full h-2 mt-1">
-              <div class="h-full bg-purple-500 rounded-full transition-all" :style="{ width: (weeklyCompleted / weeklyQuests.length * 100) + '%' }"></div>
+              <div class="h-full bg-purple-500 rounded-full transition-all" :style="{ width: weeklyProgressPercent + '%' }"></div>
             </div>
           </div>
         </div>
@@ -125,35 +131,64 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import { getDailyQuests, getWeeklyQuests } from '../data/dailyquests'
 
 const props = defineProps({
   isZh: { type: Boolean, default: false },
-  taskValue: { type: Number, default: 0 }
+  taskValue: { type: Number, default: 0 },
+  dailyQuestProgress: { type: Array, default: () => [] }
 })
 
 const emit = defineEmits(['add-task'])
 
-const timeUntilReset = ref('12:00:00')
+const timeUntilReset = ref('')
 const weekNum = ref(1)
 
-const dailyQuests = ref([
-  { id: 1, icon: '📚', titleZh: '完成1个关卡', titleEn: 'Complete 1 level', descZh: '在Journey中完成任意关卡', descEn: 'Complete any level', reward: 20, completed: true },
-  { id: 2, icon: '🎤', titleZh: '面试模拟1次', titleEn: 'Interview once', descZh: '进行1次面试模拟', descEn: 'Do 1 interview sim', reward: 30, completed: false },
-  { id: 3, icon: '✍️', titleZh: '文书润色', titleEn: 'Edit essay', descZh: '完成文书润色任务', descEn: 'Complete essay editing', reward: 25, completed: false }
-])
+onMounted(() => {
+  updateResetTime()
+  setInterval(updateResetTime, 60000)
+  const now = new Date()
+  const startOfYear = new Date(now.getFullYear(), 0, 1)
+  weekNum.value = Math.ceil(((now - startOfYear) / 86400000 + startOfYear.getDay() + 1) / 7)
+})
 
-const weeklyQuests = ref([
-  { id: 1, icon: '🎯', titleZh: '获得100 TV', titleEn: 'Earn 100 TV', descZh: '累计获得100 Task Value', descEn: 'Earn 100 total TV', reward: 100, completed: false },
-  { id: 2, icon: '🔥', titleZh: '连续登录3天', titleEn: 'Login 3 days', descZh: '保持3天连续登录', descEn: 'Login for 3 days', reward: 50, completed: false },
-  { id: 3, icon: '📖', titleZh: '完成5个关卡', titleEn: 'Complete 5 levels', descZh: '在Journey中完成5个关卡', descEn: 'Complete 5 levels', reward: 80, completed: false }
-])
-
-const dailyCompleted = computed(() => dailyQuests.value.filter(q => q.completed).length)
-const weeklyCompleted = computed(() => weeklyQuests.value.filter(q => q.completed).length)
-
-function completeQuest(quest) {
-  quest.completed = true
-  emit('add-task', { tv: quest.reward })
+function updateResetTime() {
+  const now = new Date()
+  const tomorrow = new Date(now)
+  tomorrow.setDate(tomorrow.getDate() + 1)
+  tomorrow.setHours(0, 0, 0, 0)
+  const diff = tomorrow - now
+  const hours = Math.floor(diff / 3600000)
+  const minutes = Math.floor((diff % 3600000) / 60000)
+  const seconds = Math.floor((diff % 60000) / 1000)
+  timeUntilReset.value = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
 }
+
+const dailyQuestsWithProgress = computed(() => {
+  return getDailyQuests().map(quest => {
+    const progress = props.dailyQuestProgress.find(p => p.questId === quest.id)
+    return {
+      ...quest,
+      current: progress?.current || 0,
+      completed: progress?.completed || false
+    }
+  })
+})
+
+const weeklyQuestsWithProgress = computed(() => {
+  return getWeeklyQuests().map(quest => {
+    const progress = props.dailyQuestProgress.find(p => p.questId === quest.id)
+    return {
+      ...quest,
+      current: progress?.current || 0,
+      completed: progress?.completed || false
+    }
+  })
+})
+
+const dailyCompleted = computed(() => dailyQuestsWithProgress.value.filter(q => q.completed).length)
+const weeklyCompleted = computed(() => weeklyQuestsWithProgress.value.filter(q => q.completed).length)
+const dailyProgressPercent = computed(() => dailyQuestsWithProgress.value.length > 0 ? (dailyCompleted.value / dailyQuestsWithProgress.value.length * 100) : 0)
+const weeklyProgressPercent = computed(() => weeklyQuestsWithProgress.value.length > 0 ? (weeklyCompleted.value / weeklyQuestsWithProgress.value.length * 100) : 0)
 </script>

@@ -1,6 +1,6 @@
 export interface ComboReward {
   id: string;
-  name: string;
+  name: { en: string; zh: string };
   comboRequired: number;
   bonusMultiplier: number;
   icon: string;
@@ -9,21 +9,21 @@ export interface ComboReward {
 export const COMBO_REWARDS: ComboReward[] = [
   {
     id: 'combo-3',
-    name: 'Triple Threat',
+    name: { en: 'Triple Threat', zh: '三连击' },
     comboRequired: 3,
     bonusMultiplier: 0.15,
     icon: '⚡'
   },
   {
     id: 'combo-5',
-    name: 'On Fire!',
+    name: { en: 'On Fire!', zh: '五连击！' },
     comboRequired: 5,
     bonusMultiplier: 0.25,
     icon: '🔥'
   },
   {
     id: 'combo-10',
-    name: 'Unstoppable',
+    name: { en: 'Unstoppable', zh: '势不可挡' },
     comboRequired: 10,
     bonusMultiplier: 0.5,
     icon: '🌟'

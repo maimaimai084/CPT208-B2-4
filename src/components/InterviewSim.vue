@@ -332,7 +332,7 @@ function handleSelect(idx) {
 }
 
 function finishSimulation() {
-  emit('complete', { tv: totalEarnedTV.value })
+  emit('complete', { tv: totalEarnedTV.value, type: 'interview' })
   exitSimulation()
 }
 

@@ -125,7 +125,7 @@
         </g>
 
         <text x="350" y="445" text-anchor="middle" font-size="11" fill="#9CA3AF" opacity="0.7">
-          ← {{ isZh ? '按顺序解锁：选校 → 材料 → 文书 → 网申 → 面试' : 'Unlock in order: School → Docs → Essay → Apply → Interview' }} →
+          ← {{ isExplorerRole ? (isZh ? '按顺序解锁：自我 → 调研 → 文书 → 抉择 → 规划' : 'Unlock in order: Identity → Research → Essays → Decide → Plan') : (isZh ? '按顺序解锁：目标 → 材料 → 提交 → 面试 → 成功' : 'Unlock in order: Goals → Materials → Submit → Interview → Success') }} →
         </text>
       </svg>
     </div>
@@ -187,6 +187,11 @@ const currentStage = computed(() => {
 
 const totalTV = computed(() => props.totalTask)
 
+const isExplorerRole = computed(() => {
+  const role = props.userRole || 'explorer'
+  return role === 'explorer' || role === 'confused'
+})
+
 const stages = [
   { path: 'M350 360 Q280 340 220 300', width: 8, order: 1 },
   { path: 'M350 320 Q420 300 480 260', width: 8, order: 2 },
@@ -221,51 +226,116 @@ const stageNodes = computed(() => {
   })
 })
 
-const LEAF_POSITIONS = {
-  blue: [
-    { x: 335, y: 374, r: -20 }, { x: 330, y: 345, r: -15 }, { x: 325, y: 318, r: -10 },
-    { x: 305, y: 350, r: -45 }, { x: 265, y: 332, r: -60 }, { x: 228, y: 312, r: -50 },
-    { x: 310, y: 260, r: -40 }, { x: 273, y: 236, r: -55 }, { x: 237, y: 212, r: -45 },
-    { x: 315, y: 370, r: -35 }, { x: 280, y: 340, r: -50 }, { x: 220, y: 290, r: -65 },
-    { x: 290, y: 280, r: -30 }, { x: 250, y: 180, r: -25 }
-  ],
-  orange: [
-    { x: 365, y: 374, r: 20 }, { x: 370, y: 345, r: 15 }, { x: 375, y: 318, r: 10 },
-    { x: 395, y: 310, r: 45 }, { x: 435, y: 292, r: 60 }, { x: 472, y: 272, r: 50 },
-    { x: 390, y: 220, r: 40 }, { x: 427, y: 196, r: 55 }, { x: 463, y: 172, r: 45 },
-    { x: 355, y: 390, r: 25 }, { x: 410, y: 280, r: 35 }
-  ],
-  green: [
-    { x: 340, y: 168, r: -15 }, { x: 360, y: 168, r: 15 },
-    { x: 350, y: 132, r: 0 }, { x: 335, y: 96, r: -10 }, { x: 365, y: 96, r: 10 },
-    { x: 320, y: 130, r: -30 }, { x: 380, y: 130, r: 30 }
-  ]
+function getPointOnQuadraticBezier(t, p0, p1, p2) {
+  const u = 1 - t
+  return {
+    x: u * u * p0.x + 2 * u * t * p1.x + t * t * p2.x,
+    y: u * u * p0.y + 2 * u * t * p1.y + t * t * p2.y
+  }
+}
+
+function pseudoRandom(seed) {
+  const x = Math.sin(seed * 12.9898 + 78.233) * 43758.5453
+  return x - Math.floor(x)
+}
+
+function getLeafPositionsOnPath(pathStr, count, sideOffset = 12, seedOffset = 0) {
+  const coords = pathStr.match(/[\d.]+/g).map(Number)
+  const p0 = { x: coords[0], y: coords[1] }
+  const p1 = { x: coords[2], y: coords[3] }
+  const p2 = { x: coords[4], y: coords[5] }
+  
+  const positions = []
+  const segmentCount = count + 1
+  
+  for (let i = 1; i <= count; i++) {
+    const t = i / segmentCount
+    const point = getPointOnQuadraticBezier(t, p0, p1, p2)
+    
+    const tangentX = 2 * (1 - t) * (p1.x - p0.x) + 2 * t * (p2.x - p1.x)
+    const tangentY = 2 * (1 - t) * (p1.y - p0.y) + 2 * t * (p2.y - p1.y)
+    const angle = Math.atan2(tangentY, tangentX) * 180 / Math.PI
+    
+    const offsetX = -Math.sin(angle * Math.PI / 180) * sideOffset
+    const offsetY = Math.cos(angle * Math.PI / 180) * sideOffset
+    
+    const seed = (seedOffset + i) * 7.31
+    const jitterX = (pseudoRandom(seed) - 0.5) * 8
+    const jitterY = (pseudoRandom(seed + 3.7) - 0.5) * 8
+    
+    positions.push({
+      x: point.x + offsetX + jitterX,
+      y: point.y + offsetY + jitterY,
+      rotation: angle + (sideOffset > 0 ? -90 : 90)
+    })
+  }
+  
+  return positions
 }
 
 const displayedLeaves = computed(() => {
-  const blueCount = Math.min(Math.floor(props.totalLearning / 30), 15)
-  const orangeCount = Math.min(Math.floor(props.totalTask / 20), 10)
-  const greenCount = Math.min(props.completedLevels.length, 5)
+  const blueCount = Math.min(Math.floor(props.totalLearning / 30), 14)
+  const orangeCount = Math.min(Math.floor(props.totalTask / 20), 11)
+  const greenCount = Math.min(props.completedLevels.length, 7)
 
   const leaves = []
-  for (let i = 0; i < blueCount; i++) {
-    if (i < LEAF_POSITIONS.blue.length) {
-      const pos = LEAF_POSITIONS.blue[i]
-      leaves.push({ x: pos.x, y: pos.y, rotation: pos.r, color: 'url(#leafBlueGrad)', type: 'blue' })
-    }
-  }
-  for (let i = 0; i < orangeCount; i++) {
-    if (i < LEAF_POSITIONS.orange.length) {
-      const pos = LEAF_POSITIONS.orange[i]
-      leaves.push({ x: pos.x, y: pos.y, rotation: pos.r, color: 'url(#leafOrangeGrad)', type: 'orange' })
-    }
-  }
+  
+  const trunkPath = 'M350 420 Q350 340 350 280'
+  
+  // 分支定义：path, side, maxCapacity, levelId
+  const branches = [
+    { path: 'M350 360 Q280 340 220 300', side: 'left', max: 5, level: 'level-1', offset: -12 },
+    { path: 'M350 320 Q420 300 480 260', side: 'right', max: 5, level: 'level-2', offset: 12 },
+    { path: 'M350 280 Q290 240 230 200', side: 'left', max: 6, level: 'level-3', offset: -10 },
+    { path: 'M350 240 Q410 200 470 160', side: 'right', max: 6, level: 'level-4', offset: 10 },
+    { path: 'M350 200 Q350 140 350 80', side: 'top', max: 5, level: 'level-5', offset: 8 }
+  ]
+  
+  // 判断分支是否已 grown（已激活）
+  // branch index i 对应 stage order i+1；grown 条件是 currentStage > i
+  const isBranchGrown = (idx) => currentStage.value > idx
+  
+  // === 金叶：跟随已完成关卡，长在对应分支上 ===
   for (let i = 0; i < greenCount; i++) {
-    if (i < LEAF_POSITIONS.green.length) {
-      const pos = LEAF_POSITIONS.green[i]
-      leaves.push({ x: pos.x, y: pos.y, rotation: pos.r, color: 'url(#leafGreenGrad)', type: 'green' })
+    if (i < props.completedLevels.length) {
+      const levelId = props.completedLevels[i]
+      const branch = branches.find(b => b.level === levelId)
+      if (branch) {
+        const positions = getLeafPositionsOnPath(branch.path, 1, branch.offset, i * 50 + 400)
+        positions.forEach(pos => leaves.push({ ...pos, color: 'url(#leafGreenGrad)', type: 'green' }))
+      }
     }
   }
+  
+  // === 蓝叶：只长在 trunk + 已 grown 的左侧分支 ===
+  let remainingBlue = blueCount
+  if (remainingBlue > 0) {
+    const trunkNum = Math.min(3, remainingBlue)
+    const trunkPositions = getLeafPositionsOnPath(trunkPath, trunkNum, -15, 0)
+    trunkPositions.forEach(pos => leaves.push({ ...pos, color: 'url(#leafBlueGrad)', type: 'blue' }))
+    remainingBlue -= trunkNum
+  }
+  
+  const leftBranches = branches.filter((b, idx) => b.side === 'left' && isBranchGrown(idx))
+  for (const branch of leftBranches) {
+    if (remainingBlue <= 0) break
+    const num = Math.min(branch.max, remainingBlue)
+    const positions = getLeafPositionsOnPath(branch.path, num, branch.offset, 100 + leftBranches.indexOf(branch) * 100)
+    positions.forEach(pos => leaves.push({ ...pos, color: 'url(#leafBlueGrad)', type: 'blue' }))
+    remainingBlue -= num
+  }
+  
+  // === 橙叶：只长在已 grown 的右侧分支 ===
+  let remainingOrange = orangeCount
+  const rightBranches = branches.filter((b, idx) => b.side === 'right' && isBranchGrown(idx))
+  for (const branch of rightBranches) {
+    if (remainingOrange <= 0) break
+    const num = Math.min(branch.max, remainingOrange)
+    const positions = getLeafPositionsOnPath(branch.path, num, branch.offset, 300 + rightBranches.indexOf(branch) * 100)
+    positions.forEach(pos => leaves.push({ ...pos, color: 'url(#leafOrangeGrad)', type: 'orange' }))
+    remainingOrange -= num
+  }
+  
   return leaves
 })
 
@@ -283,20 +353,40 @@ const growthPercent = computed(() => {
 })
 
 const stageInfo = computed(() => {
-  const stages = props.isZh ? [
-    { name: '🌱 种子期', desc: '完成选校关卡解锁第一分支' },
-    { name: '🌿 萌芽期', desc: '完成材料关卡解锁文书分支' },
-    { name: '🪴 成长期', desc: '完成文书关卡解锁网申分支' },
-    { name: '🌳 开花期', desc: '完成网申关卡解锁面试分支' },
-    { name: '🍎 结果期', desc: '完成面试关卡，恭喜通关！' }
-  ] : [
-    { name: '1. School Selection', desc: 'Complete school selection to unlock the next branch' },
-    { name: '2. Document Preparation', desc: 'Complete document prep to unlock essay branch' },
-    { name: '3. Essay Writing', desc: 'Complete essay writing to unlock application branch' },
-    { name: '4. Application Submission', desc: 'Complete application to unlock interview branch' },
-    { name: '5. Interview Preparation', desc: 'Complete interview prep, congratulations!' }
-  ]
-  return stages[currentStage.value - 1] || stages[0]
+  const role = props.userRole || 'explorer'
+  const isExplorer = role === 'explorer' || role === 'confused'
+  
+  if (isExplorer) {
+    const explorerStages = props.isZh ? [
+      { name: '🧭 自我认知', desc: '探索自我兴趣与优势，明确升学方向' },
+      { name: '🔍 调研探索', desc: '调研目标院校与专业，收集关键信息' },
+      { name: '✍️ 文书创作', desc: '撰写个人陈述与申请文书，展现独特性' },
+      { name: '⚖️ 抉择权衡', desc: '权衡不同选择，做出明智的申请决策' },
+      { name: '🗺️ 规划未来', desc: '制定详细申请计划，稳步迈向目标' }
+    ] : [
+      { name: '🧭 Identity', desc: 'Explore your interests and strengths, define your direction' },
+      { name: '🔍 Research', desc: 'Investigate target schools and programs, gather key information' },
+      { name: '✍️ Essays', desc: 'Write personal statements and application essays, showcase uniqueness' },
+      { name: '⚖️ Decide', desc: 'Weigh different options, make wise application decisions' },
+      { name: '🗺️ Plan', desc: 'Create detailed application plan, steadily move toward your goal' }
+    ]
+    return explorerStages[currentStage.value - 1] || explorerStages[0]
+  } else {
+    const sprintStages = props.isZh ? [
+      { name: '🎯 目标设定', desc: '明确申请目标，锁定理想院校' },
+      { name: '📋 材料准备', desc: '高效准备申请材料，确保完整无误' },
+      { name: '🚀 提交申请', desc: '快速提交申请，抢占先机' },
+      { name: '💬 面试冲刺', desc: '全力准备面试，展现最佳状态' },
+      { name: '🏆 成功录取', desc: '收获录取通知，开启新征程！' }
+    ] : [
+      { name: '🎯 Goal Setting', desc: 'Define clear application goals, target ideal schools' },
+      { name: '📋 Materials', desc: 'Efficiently prepare application materials, ensure completeness' },
+      { name: '🚀 Submit', desc: 'Submit applications quickly, seize the opportunity' },
+      { name: '💬 Interview', desc: 'Prepare intensively for interviews, show your best self' },
+      { name: '🏆 Success', desc: 'Receive admission offers, start your new journey!' }
+    ]
+    return sprintStages[currentStage.value - 1] || sprintStages[0]
+  }
 })
 
 function handleNodeClick(node) {

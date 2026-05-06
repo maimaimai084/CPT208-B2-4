@@ -80,6 +80,42 @@ export const GEAR_CONFIG: Gear[] = [
       { en: 'Course Project', zh: '课程项目' },
       { en: 'formal Research', zh: '正式科研' }
     ]
+  },
+  {
+    id: 'award',
+    name: { en: 'Award', zh: '竞赛奖项' },
+    description: {
+      en: 'Competition awards boost your profile',
+      zh: '竞赛奖项提升你的申请背景'
+    },
+    icon: '🏆',
+    maxLevel: 3,
+    prices: [0, 60, 150],
+    tvBonus: [0.1, 0.2, 0.35],
+    levels: [
+      { en: 'None', zh: '无' },
+      { en: 'University Level', zh: '校级' },
+      { en: 'Provincial Level', zh: '省级' },
+      { en: 'National Level', zh: '国家级' }
+    ]
+  },
+  {
+    id: 'recommendation',
+    name: { en: 'Recommendation', zh: '推荐信' },
+    description: {
+      en: 'Strong recommendation letters open doors',
+      zh: '强力推荐信为你打开更多机会'
+    },
+    icon: '✉️',
+    maxLevel: 3,
+    prices: [0, 40, 100],
+    tvBonus: [0.1, 0.2, 0.3],
+    levels: [
+      { en: 'None', zh: '无' },
+      { en: 'TA Letter', zh: 'TA推荐' },
+      { en: 'Professor Letter', zh: '教授推荐' },
+      { en: 'Distinguished Letter', zh: '知名教授推荐' }
+    ]
   }
 ]
 
