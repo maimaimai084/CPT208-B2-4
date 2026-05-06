@@ -2,27 +2,24 @@
 
 A gamified web application for XJTLU students to learn about postgraduate application processes.
 
-## 🎮 Project Overview
+## Project Overview
 
 **MasterApply Quest** is an interactive text-based adventure game designed to help students navigate the postgraduate application journey through engaging gameplay and structured learning.
 
 ### Key Features
 
-### Key Features
+- 5 Application Stages: School Selection -> Document Preparation -> Essay Writing -> Application Submission -> Interview Preparation
+- Dual Role System: Explorer (Year 2) and Sprint (Year 3) with tailored content for each
+- Dual Value System: Learning Value (theoretical knowledge) + Task Value (practical skills)
+- Achievement System: Unlock badges and rewards as you progress
+- Responsive Design: Optimized for both mobile and desktop experiences
+- Story Unlock Mechanism: Reach value thresholds to unlock exclusive strategy guides
+- Role Switch: Experience both user personas with independent progress tracking
+- Prototype Showcase: Module 5 poster content integrated into the application
+- Daily Quests: Refreshable daily challenges for consistent engagement
+- Combo System: Streak rewards for consecutive correct answers
 
-- 🎯 **5 Role-Specific Application Stages**: Tailored paths for Explorers (Identity → Research → Essays → Decide → Plan) and Sprinters (Goals → Materials → Submit → Interview → Success)
-- 👥 **Dual Role System**: Explorer (Year 2) and Sprint (Year 3) with customized content and visuals for each
-- 🎮 **Mini-Games (TV Quests)**: Role-specific interactive challenges (e.g., Timeline Puzzle, School Matcher) to test practical skills
-- 📊 **Dual Value & Gear System**: Spend Learning Value (theory) to upgrade gears for Task Value (practice) multipliers
-- 🏆 **Achievement System**: Unlock badges and rewards as you progress
-- 📱 **Responsive Design**: Optimized for both mobile and desktop experiences
-- 📖 **Story Unlock Mechanism**: Reach value thresholds to unlock exclusive strategy guides
-- 🔄 **Role Switch**: Experience both user personas with independent progress tracking
-- 📋 **Prototype Showcase**: Module 5 poster content integrated into the application
-- ⚡ **Daily Quests**: Refreshable daily challenges for consistent engagement
-- 🔥 **Combo System**: Streak rewards for consecutive correct answers
-
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Category | Technology |
 |----------|------------|
@@ -32,7 +29,7 @@ A gamified web application for XJTLU students to learn about postgraduate applic
 | State Management | LocalStorage |
 | Icons | Emoji + Lucide Vue |
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -78,9 +75,13 @@ npm run build
 
 Output will be in the `dist/` directory.
 
-## 📁 Project Structure
+## Project Structure
 
 ```
+CPT208-B2-4/
+├── ailogs/                         # AI usage retrospective (non-verbatim)
+│   ├── README.md
+│   └── retrospective.md
 ├── src/
 │   ├── components/                 # Vue components (game + portfolio)
 │   │   ├── RoleSelect.vue          # Role selection (Explorer/Sprint)
@@ -141,7 +142,7 @@ Output will be in the `dist/` directory.
 └── README.md
 ```
 
-## 🎮 Game Mechanics
+## Game Mechanics
 
 ### User Roles
 
@@ -152,31 +153,21 @@ Output will be in the `dist/` directory.
 
 ### Value System
 
-- **📚 Learning Value**: Earned by answering quiz questions correctly
+- Learning Value: Earned by answering quiz questions correctly
   - Unlock PS Writing Guide at 100 points
   - Unlock CV Guide at 80 points
-  
-- **✅ Task Value**: Earned by completing practical tasks
+
+- Task Value: Earned by completing practical tasks
   - Unlock School Selection Guide at 200 points
   - Unlock Interview Guide at 150 points (requires both values)
 
-### 5 Role-Specific Application Stages
+### 5 Application Stages
 
-To provide a highly personalized experience, the system abandons the "one-size-fits-all" approach and offers two distinct 5-stage learning paths tailored to the specific needs of each user persona:
-
-**🧭 The Explorer Path (Year 2 Focus)**
-1. **Identity** - Understand personal interests, strengths, and initial directions.
-2. **Research** - Deep dive into target countries, universities, and academic programs.
-3. **Essays** - Build the foundational narrative for a compelling Personal Statement (PS) and CV.
-4. **Decide** - Evaluate different postgraduate paths and career options.
-5. **Plan** - Formulate an actionable long-term background improvement plan.
-
-**🚀 The Sprint Path (Year 3 Focus)**
-1. **Goals** - Lock in specific target (reach, match, and safety) universities.
-2. **Materials** - Efficiently prepare transcripts, language certificates, and recommendation letters.
-3. **Submit** - Navigate and conquer various university online application systems.
-4. **Interview** - Master high-frequency questions and practical interview techniques.
-5. **Success** - Track application status, accept offers, and prepare for departure.
+1. School Selection - Choose the right university and major
+2. Document Preparation - Prepare transcripts and certificates
+3. Essay Writing - Craft compelling PS, CV, and recommendations
+4. Application Submission - Navigate online application systems
+5. Interview Preparation - Master interview techniques
 
 ### Daily Quests
 
@@ -205,15 +196,15 @@ Unlock badges through gameplay achievements:
 - Daily Quest Hero
 - Guide Collector
 
-## 🎓 Course Information
+## Course Information
 
-- **Course**: CPT208 Human-Centric Computing
-- **Module Leaders**: Dr Yue Li and Dr Teng Ma
-- **Group**: B2-4
-- **Theme**: Postgraduate Application Gamification (Theme B2)
-- **Project Type**: Web-based Interactive Application
+- Course: CPT208 Human-Centric Computing
+- Module Leaders: Dr Yue Li and Dr Teng Ma
+- Group: B2-4
+- Theme: Postgraduate Application Gamification (Theme B2)
+- Project Type: Web-based Interactive Application
 
-## 🤖 AI Usage Declaration
+## AI Usage Declaration
 
 This project uses AI tools as permitted by course guidelines:
 
@@ -221,19 +212,19 @@ This project uses AI tools as permitted by course guidelines:
 |------|-------|----------|
 | Gemini 2.0 | Non-substantive tasks: visual assets generation (Core Design Concept diagram, Double Diamond Design Process diagram, system architecture diagrams, data-flow visualizations), grammatical polishing | [1] |
 
-**Core design logic**—including the Dual-Value system, narrative unlocking mechanics, five-stage application structure, user research methodology, and evaluation design—was developed entirely by the team. No AI was used to generate user personas, survey questions, or heuristic evaluation results.
+Core design logic (Dual-Value system, narrative unlocking mechanics, five-stage application structure, user research methodology, and evaluation design) was developed entirely by the team. No AI was used to generate user personas, survey questions, or heuristic evaluation results.
 
-For coding, the project was built with **Vue 3 and Tailwind CSS** written directly by team members. If AI coding assistance was used for debugging or component scaffolding, all prompts are documented in the `/ailogs` folder in our GitHub repository.
+For coding, the project was built with Vue 3 and Tailwind CSS written directly by team members. During the main development period, we did not keep a prompt-by-prompt AI coding log; `ailogs/` contains retrospective (non-verbatim) notes only.
 
 ### Citation
 
 [1] Gemini 2.0, Google, accessed on 2026-04-07, available at https://gemini.google.com/.
 
-## 📄 License
+## License
 
 This project is for academic purposes only - XJTLU CPT208 Coursework (2026).
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - XJTLU Student Affairs Office for project requirements and guidance
 - Course instructors Dr Yue Li and Dr Teng Ma for supervision
@@ -241,5 +232,5 @@ This project is for academic purposes only - XJTLU CPT208 Coursework (2026).
 
 ---
 
-*Last Updated: May 2026*
-*Project Status: Active Development*
+Last Updated: May 2026
+Project Status: Active Development

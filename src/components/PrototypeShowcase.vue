@@ -563,6 +563,7 @@ const tocItems = [
   { id: 'user-journey', title: '👤 User Journey' },
   { id: 'application-stages', title: '🎮 Dual-Path Application Stages' },
   { id: 'dual-value', title: '📊 Dual Value System' },
+  { id: 'gamification-loops', title: '🌳Growth Visualization & Loop' },
   { id: 'system-architecture', title: '🏗️ System Architecture' },
   { id: 'data-flow', title: '🔄 Data Flow & Processing' },
   { id: 'prototype-evolution', title: '📈 Prototype Evolution' },
