@@ -142,6 +142,7 @@
           :learning-value="learningValue"
           :gear-state="gearState"
           :is-zh="isZh"
+          @upgrade-gear="handleUpgradeGear"
           @update-gear="(newState) => gearState = newState"
         />
         <InterviewSim 
@@ -156,18 +157,26 @@
           :is-zh="isZh"
           @complete="handleLearningEarned"
         />
+        <TVStore
+          v-if="activeTab === 'tv-store'"
+          :task-value="taskValue"
+          :is-zh="isZh"
+          :inventory="inventory"
+          @purchase="handlePurchaseItem"
+        />
         <QuestHub 
           v-if="activeTab === 'quest-hub'"
           :gear-state="gearState"
           :is-zh="isZh"
           :user-role="userRole"
+          :inventory="inventory"
           @complete="handleTVEarned"
         />
         <DailyWeeklyCycle 
           v-if="activeTab === 'cycle-quests'"
           :is-zh="isZh"
           :task-value="taskValue"
-          @add-task="handleAddTask"
+          :daily-quest-progress="dailyQuestProgress"
         />
         <AIChat v-if="activeTab === 'ai-advisor'" />
         <QuestionForm v-if="activeTab === 'qa'" :user-name="userName" />
@@ -204,6 +213,7 @@ import QuestHub from '../components/QuestHub.vue'
 import DailyWeeklyCycle from '../components/DailyWeeklyCycle.vue'
 import QuizInterface from '../components/QuizInterface.vue'
 import GearShop from '../components/GearShop.vue'
+import TVStore from '../components/TVStore.vue'
 import InterviewSim from '../components/InterviewSim.vue'
 import PSWorkshop from '../components/PSWorkshop.vue'
 import AdvisorDashboard from '../components/AdvisorDashboard.vue'
@@ -230,10 +240,11 @@ const tabsBase = [
   { id: 'journey', labelEn: 'Journey', labelZh: '旅程', icon: '🗺️', theme: 'bg-[#10B981] shadow-[0_5px_0_#0D8A66] text-white', category: 'game' },
   { id: 'gear-shop', labelEn: 'Gear', labelZh: '装备', icon: '🎒', theme: 'bg-[#14B8A6] shadow-[0_5px_0_#0D9488] text-white', category: 'game' },
   { id: 'quest-hub', labelEn: 'TV Quest', labelZh: 'TV任务', icon: '🎯', theme: 'bg-[#F59E0B] shadow-[0_5px_0_#C47E08] text-white', category: 'game' },
+  { id: 'tv-store', labelEn: 'TV Shop', labelZh: 'TV商店', icon: '🏪', theme: 'bg-[#D97757] shadow-[0_5px_0_#A85C3F] text-white', category: 'game' },
   { id: 'cycle-quests', labelEn: 'Daily', labelZh: '周期', icon: '📅', theme: 'bg-[#6366F1] shadow-[0_5px_0_#4F46E5] text-white', category: 'game' },
 
   { id: 'profile', labelEn: 'Profile', labelZh: '档案', icon: '👤', theme: 'bg-[#E88EAF] shadow-[0_5px_0_#B86281] text-white', category: 'other' },
-  { id: 'ai-advisor', labelEn: 'Advisor', labelZh: '顾问', icon: '🤖', theme: 'bg-[#73C5E6] shadow-[0_5px_0_#4E95B3] text-white', category: 'other' },
+  { id: 'ai-advisor', labelEn: 'Ask AI', labelZh: '问AI', icon: '🤖', theme: 'bg-[#73C5E6] shadow-[0_5px_0_#4E95B3] text-white', category: 'other' },
   { id: 'qa', labelEn: 'Q & A', labelZh: '问答', icon: '💬', theme: 'bg-[#E3B75C] shadow-[0_5px_0_#B38A3B] text-white', category: 'other' },
   { id: 'admission', labelEn: 'Data', labelZh: '数据', icon: '📊', theme: 'bg-[#a9eee6] shadow-[0_5px_0_#4D9C71] text-white', category: 'other' },
   { id: 'activities', labelEn: 'Events', labelZh: '活动', icon: '🎉', theme: 'bg-[#EBA173] shadow-[0_5px_0_#B8764B] text-white', category: 'other' }
@@ -281,11 +292,17 @@ const showGuide = ref(false)
 const currentCombo = ref(0)
 const maxCombo = ref(0)
 const daysStreak = ref(0)
-const gearState = ref({ ielts: 0, gpa: 0, internship: 0, research: 0 })
+const gearState = ref({ ielts: 0, gpa: 0, internship: 0, research: 0, award: 0, recommendation: 0 })
+const inventory = ref({ heartRefills: 0, hintTokens: 0, xpBoostCount: 0, timeFreezes: 0, xpBoostExpiry: null })
+const totalTVSpent = ref(0)
 const dailyQuestProgress = ref(initializeDailyProgress())
 const unlockedAchievements = ref([])
 const totalCorrectAnswers = ref(0)
 const perfectLevelsCount = ref(0)
+const weeklyTV = ref(0)
+const weeklyLevelsCompleted = ref(0)
+const loginDaysThisWeek = ref([])
+const weeklyAllDailyDays = ref([])
 
 const storyUnlockMap = { 'level-3': 'story-cv', 'level-5': 'story-interview' }
 
@@ -295,7 +312,7 @@ const profileProps = computed(() => ({
   taskValue: taskValue.value, completedLevels: completedLevels.value, unlockedStories: unlockedStories.value,
   currentCombo: currentCombo.value, maxCombo: maxCombo.value, dailyQuestProgress: dailyQuestProgress.value,
   unlockedAchievements: unlockedAchievements.value, totalCorrectAnswers: totalCorrectAnswers.value,
-  perfectLevelsCount: perfectLevelsCount.value
+  perfectLevelsCount: perfectLevelsCount.value, isZh: isZh.value
 }))
 
 const advisorProps = computed(() => ({
@@ -343,6 +360,12 @@ function handleRoleConfirmed(data) {
     } else {
       dailyQuestProgress.value = initializeDailyProgress()
     }
+    weeklyTV.value = progress.weeklyTV || 0
+    weeklyLevelsCompleted.value = progress.weeklyLevelsCompleted || 0
+    loginDaysThisWeek.value = progress.loginDaysThisWeek || []
+    weeklyAllDailyDays.value = progress.weeklyAllDailyDays || []
+    inventory.value = progress.inventory || { heartRefills: 0, hintTokens: 0, xpBoostCount: 0, timeFreezes: 0, xpBoostExpiry: null }
+    totalTVSpent.value = progress.totalTVSpent || 0
   } else {
     learningValue.value = 60
     taskValue.value = 40
@@ -354,6 +377,19 @@ function handleRoleConfirmed(data) {
     totalCorrectAnswers.value = 0
     perfectLevelsCount.value = 0
     dailyQuestProgress.value = initializeDailyProgress()
+    weeklyTV.value = 0
+    weeklyLevelsCompleted.value = 0
+    loginDaysThisWeek.value = []
+    weeklyAllDailyDays.value = []
+    inventory.value = { heartRefills: 0, hintTokens: 0, xpBoostCount: 0, timeFreezes: 0, xpBoostExpiry: null }
+    totalTVSpent.value = 0
+  }
+
+  const today = new Date().toDateString()
+  if (!loginDaysThisWeek.value.includes(today)) {
+    loginDaysThisWeek.value.push(today)
+    updateDailyQuestProgress('weekly-login-3', 1)
+    saveProgress()
   }
 }
 
@@ -372,11 +408,50 @@ function handleAddTask() { taskValue.value += 10; saveProgress(); }
 
 function handleTVEarned(data) {
   taskValue.value += data.tv
+  if (data.type === 'interview') {
+    updateDailyQuestProgress('daily-interview', 1)
+  } else if (data.type === 'minigame') {
+    updateDailyQuestProgress('daily-minigame', 1)
+  }
+  weeklyTV.value += data.tv
+  updateDailyQuestProgress('weekly-tv-100', data.tv)
   saveProgress()
 }
 
 function handleLearningEarned(data) {
   learningValue.value += data.lv
+  if (data.type === 'ps') {
+    updateDailyQuestProgress('daily-ps', 1)
+  }
+  saveProgress()
+}
+
+function handleUpgradeGear(data) {
+  if (data.cost && data.cost > 0) {
+    learningValue.value -= data.cost
+  }
+  saveProgress()
+}
+
+function handlePurchaseItem(data) {
+  if (data.price && data.price > 0) {
+    taskValue.value -= data.price
+    totalTVSpent.value += data.price
+  }
+  const itemId = data.itemId
+  if (itemId === 'heart-refill') {
+    inventory.value.heartRefills++
+  } else if (itemId === 'hint-token') {
+    inventory.value.hintTokens++
+  } else if (itemId === 'xp-boost-24h') {
+    inventory.value.xpBoostCount++
+    const expiry = new Date()
+    expiry.setHours(expiry.getHours() + 24)
+    inventory.value.xpBoostExpiry = expiry.toISOString()
+  } else if (itemId === 'time-freeze') {
+    inventory.value.timeFreezes++
+  }
+  checkAchievementsProgress()
   saveProgress()
 }
 
@@ -385,6 +460,10 @@ function handleResetProgress() {
   unlockedStories.value = []; currentAchievement.value = null; currentCombo.value = 0;
   maxCombo.value = 0; dailyQuestProgress.value = initializeDailyProgress();
   unlockedAchievements.value = []; totalCorrectAnswers.value = 0; perfectLevelsCount.value = 0;
+  weeklyTV.value = 0; weeklyLevelsCompleted.value = 0;
+  loginDaysThisWeek.value = []; weeklyAllDailyDays.value = [];
+  inventory.value = { heartRefills: 0, hintTokens: 0, xpBoostCount: 0, timeFreezes: 0, xpBoostExpiry: null }
+  totalTVSpent.value = 0;
   saveProgress();
 }
 
@@ -407,8 +486,12 @@ function handleQuizComplete(results) {
     currentCombo.value = 0
   }
   const { learning, task, bonus, comboReward } = calculateComboReward(results.learning || 0, results.task || 0, currentCombo.value)
-  learningValue.value += learning
+  // Apply XP Boost if active
+  const boostMultiplier = (inventory.value.xpBoostExpiry && new Date(inventory.value.xpBoostExpiry) > new Date()) ? 1.5 : 1
+  learningValue.value += Math.round(learning * boostMultiplier)
   taskValue.value += task
+  weeklyTV.value += task
+  updateDailyQuestProgress('weekly-tv-100', task)
   if (correctCount > 0) updateDailyQuestProgress('daily-correct-5', correctCount)
   if (isPerfect) {
     perfectLevelsCount.value++
@@ -418,7 +501,11 @@ function handleQuizComplete(results) {
   if (currentCombo.value >= 3) updateDailyQuestProgress('daily-streak-3', currentCombo.value)
   checkAchievementsProgress()
   let levelId = typeof currentLevel.value === 'number' ? `level-${currentLevel.value}` : currentLevel.value
-  if (!completedLevels.value.includes(levelId)) completedLevels.value.push(levelId)
+  if (!completedLevels.value.includes(levelId)) {
+    completedLevels.value.push(levelId)
+    weeklyLevelsCompleted.value++
+    updateDailyQuestProgress('weekly-level-5', 1)
+  }
   const unlockedStory = storyUnlockMap[levelId]
   if (unlockedStory && !unlockedStories.value.includes(unlockedStory)) {
     unlockedStories.value.push(unlockedStory)
@@ -441,8 +528,35 @@ function updateDailyQuestProgress(questId, amount) {
       quest.completed = true
       learningValue.value += dailyQuest.reward.learning
       taskValue.value += dailyQuest.reward.task
-      currentAchievement.value = { name: `${dailyQuest.title} Complete!`, icon: dailyQuest.icon }
+      const questTitle = dailyQuest.title[isZh.value ? 'zh' : 'en']
+      currentAchievement.value = { name: `${questTitle} ${isZh.value ? '完成！' : 'Complete!'}`, icon: dailyQuest.icon }
       setTimeout(() => { currentAchievement.value = null }, 2500)
+
+      if (dailyQuest.period === 'daily' && questId !== 'daily-3-quest') {
+        const completedDailyCount = dailyQuestProgress.value.filter(p => {
+          const q = DAILY_QUESTS.find(d => d.id === p.questId)
+          return q && q.period === 'daily' && q.id !== 'daily-3-quest' && p.completed
+        }).length
+        const metaQuest = dailyQuestProgress.value.find(p => p.questId === 'daily-3-quest')
+        const metaQuestDef = DAILY_QUESTS.find(q => q.id === 'daily-3-quest')
+        if (metaQuest && metaQuestDef) {
+          metaQuest.current = completedDailyCount
+          if (!metaQuest.completed && completedDailyCount >= metaQuestDef.target) {
+            metaQuest.completed = true
+            learningValue.value += metaQuestDef.reward.learning
+            taskValue.value += metaQuestDef.reward.task
+          }
+        }
+
+        const totalNonMetaDaily = DAILY_QUESTS.filter(q => q.period === 'daily' && q.id !== 'daily-3-quest').length
+        if (completedDailyCount >= totalNonMetaDaily) {
+          const today = new Date().toDateString()
+          if (!weeklyAllDailyDays.value.includes(today)) {
+            weeklyAllDailyDays.value.push(today)
+            updateDailyQuestProgress('weekly-all-daily', 1)
+          }
+        }
+      }
     }
   }
 }
@@ -472,6 +586,9 @@ function saveProgress() {
     unlockedStories: unlockedStories.value, currentCombo: currentCombo.value, maxCombo: maxCombo.value,
     unlockedAchievements: unlockedAchievements.value, totalCorrectAnswers: totalCorrectAnswers.value,
     perfectLevelsCount: perfectLevelsCount.value, dailyQuestProgress: dailyQuestProgress.value,
+    weeklyTV: weeklyTV.value, weeklyLevelsCompleted: weeklyLevelsCompleted.value,
+    loginDaysThisWeek: loginDaysThisWeek.value, weeklyAllDailyDays: weeklyAllDailyDays.value,
+    inventory: inventory.value, totalTVSpent: totalTVSpent.value,
     lastUpdated: new Date().toISOString()
   }
   localStorage.setItem(`progress_${userRole.value}`, JSON.stringify(progress))

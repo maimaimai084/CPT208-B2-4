@@ -6,7 +6,7 @@
         🤖
       </div>
       <div>
-        <h3 class="font-black text-slate-700 text-lg tracking-tight">AI Advisor</h3>
+        <h3 class="font-black text-slate-700 text-lg tracking-tight">Ask AI</h3>
         <p class="text-xs font-medium text-slate-400">Preset answers only — AI API not yet configured</p>
       </div>
     </div>

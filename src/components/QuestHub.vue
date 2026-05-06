@@ -154,8 +154,18 @@ function startQuest(type) {
   activeQuest.value = type
 }
 
+const questTypeMap = {
+  'interview': 'interview',
+  'essay': 'ps',
+  'document-rush': 'minigame',
+  'school-matcher': 'minigame',
+  'timeline-puzzle': 'minigame',
+  'email-scramble': 'minigame'
+}
+
 function handleComplete(data) {
-  emit('complete', data)
+  const questType = questTypeMap[activeQuest.value] || 'minigame'
+  emit('complete', { ...data, type: questType })
   activeQuest.value = null
 }
 

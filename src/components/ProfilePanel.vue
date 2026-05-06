@@ -68,7 +68,7 @@
         </div>
         
         <div class="mt-4">
-          <DailyQuestPanel :daily-quest-progress="dailyQuestProgress" />
+          <DailyQuestPanel :daily-quest-progress="dailyQuestProgress" :is-zh="isZh" />
         </div>
       </div>
 
@@ -158,7 +158,8 @@ const props = defineProps({
   dailyQuestProgress: { type: Array, default: () => [] },
   unlockedAchievements: { type: Array, default: () => [] },
   totalCorrectAnswers: { type: Number, default: 0 },
-  perfectLevelsCount: { type: Number, default: 0 }
+  perfectLevelsCount: { type: Number, default: 0 },
+  isZh: { type: Boolean, default: false }
 })
 
 const roleLabel = computed(() => {

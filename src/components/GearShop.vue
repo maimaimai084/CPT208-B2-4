@@ -185,7 +185,7 @@ function handleUpgrade(gear) {
   const level = gearState.value[gear.id] || 0
   
   if (!canUpgrade(gear)) {
-    showToastMessage(isZh ? '学习养分不足' : 'Not enough Learning Value')
+    showToastMessage(props.isZh ? '学习养分不足' : 'Not enough Learning Value')
     toastClass.value = 'bg-red-500 text-white'
     showToast.value = true
     setTimeout(() => { showToast.value = false }, 2000)
@@ -198,7 +198,7 @@ function handleUpgrade(gear) {
   emit('upgrade-gear', { gearId: gear.id, newLevel: level + 1, cost: price })
   emit('update-gear', newState)
 
-  showToastMessage(isZh ? `升级成功！${gear.name.zh} → ${gear.levels[level][isZh ? 'zh' : 'en']}` : `Upgraded! ${gear.name.en} → ${gear.levels[level].en}`)
+  showToastMessage(props.isZh ? `升级成功！${gear.name.zh} → ${gear.levels[level].zh}` : `Upgraded! ${gear.name.en} → ${gear.levels[level].en}`)
   toastClass.value = 'bg-[#10B981] text-white'
   showToast.value = true
   setTimeout(() => { showToast.value = false }, 2000)

@@ -135,7 +135,7 @@
       <div class="flex items-center justify-between mb-4">
         <h3 class="text-lg font-black text-slate-700 flex items-center gap-2">
           <span class="text-xl">👥</span>
-          <span>{{ isZh ? '朋友与同学' : 'Friends & Classmates' }}</span>
+          <span>{{ isZh ? '社交中心' : 'Social Hub' }}</span>
         </h3>
         <div class="flex items-center gap-2 text-sm text-green-600 font-bold">
           <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>

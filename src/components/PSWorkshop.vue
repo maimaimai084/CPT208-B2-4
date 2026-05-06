@@ -193,9 +193,9 @@
           <h3 class="font-bold text-sm mb-3 text-slate-600">
             {{ isZh ? '📋 当前装备要求' : '📋 Gear Requirements' }}
           </h3>
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
             <div class="bg-blue-50 rounded-lg p-3 text-center">
-              <div class="text-lg">🗣️</div>
+              <div class="text-lg">📝</div>
               <div class="text-xs font-bold text-[#7FA1ED] mt-1">{{ isZh ? '雅思' : 'IELTS' }}</div>
               <div class="text-sm font-bold text-blue-600">{{ gearState.ielts || 6.0 }}</div>
             </div>
@@ -213,6 +213,16 @@
               <div class="text-lg">🔬</div>
               <div class="text-xs font-bold text-amber-500 mt-1">{{ isZh ? '科研' : 'Research' }}</div>
               <div class="text-sm font-bold text-amber-600">{{ gearState.research || 0 }} {{ isZh ? '项' : 'items' }}</div>
+            </div>
+            <div class="bg-yellow-50 rounded-lg p-3 text-center">
+              <div class="text-lg">🏆</div>
+              <div class="text-xs font-bold text-yellow-600 mt-1">{{ isZh ? '奖项' : 'Award' }}</div>
+              <div class="text-sm font-bold text-yellow-600">{{ gearState.award || 0 }} {{ isZh ? '级' : 'Lv' }}</div>
+            </div>
+            <div class="bg-rose-50 rounded-lg p-3 text-center">
+              <div class="text-lg">✉️</div>
+              <div class="text-xs font-bold text-rose-500 mt-1">{{ isZh ? '推荐信' : 'Recom.' }}</div>
+              <div class="text-sm font-bold text-rose-600">{{ gearState.recommendation || 0 }} {{ isZh ? '级' : 'Lv' }}</div>
             </div>
           </div>
         </div>
@@ -433,7 +443,7 @@ function handleSelect(idx) {
 }
 
 function handleComplete() {
-  emit('complete', { lv: finalTotalLV.value })
+  emit('complete', { lv: finalTotalLV.value, type: 'ps' })
   exitWorkshop()
 }
 
