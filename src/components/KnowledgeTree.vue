@@ -94,7 +94,7 @@
 
         <g v-for="(leaf, idx) in displayedLeaves" :key="`leaf-${idx}`" class="leaf-group">
           <g :transform="`translate(${leaf.x}, ${leaf.y}) rotate(${leaf.rotation}) scale(1.5)`" @click="handleLeafClick(leaf)" class="cursor-pointer">
-            <path :d="leafPath" transform="translate(-12, -12)" :fill="leaf.color" stroke="rgba(255,255,255,0.4)" stroke-width="0.8" filter="url(#softGlow)" class="leaf-icon transition-all duration-300 hover:scale-125"/>
+            <path :d="leafPath" transform="translate(-12, -12)" :fill="leaf.color" stroke="rgba(255,255,255,0.4)" stroke-width="0.8" filter="url(#softGlow)" class="leaf-icon"/>
           </g>
         </g>
 
@@ -108,7 +108,7 @@
             stroke-width="3"
             :filter="!node.locked ? 'url(#softGlow)' : ''"
             class="cursor-pointer transition-all duration-300"
-            :class="{ 'hover:scale-110': !node.locked }"
+            :class="!node.locked ? '' : ''"
           />
           <text :x="node.x" :y="node.y + 6" text-anchor="middle" class="text-xl pointer-events-none">
             {{ node.locked ? '🔒' : node.completed ? '✅' : node.icon }}
@@ -120,7 +120,7 @@
         </g>
 
         <g v-if="currentStage >= 5 && totalTV >= 500" class="flower-group">
-          <circle cx="350" cy="60" r="30" fill="#FCD34D" opacity="0.3" class="animate-ping"/>
+          <circle cx="350" cy="60" r="30" fill="#FCD34D" opacity="0.3"/>
           <text x="350" y="65" text-anchor="middle" class="text-3xl">🌸</text>
         </g>
 
@@ -172,7 +172,8 @@ const props = defineProps({
   totalTask: { type: Number, default: 0 },
   maxCombo: { type: Number, default: 0 },
   daysStreak: { type: Number, default: 0 },
-  isZh: { type: Boolean, default: false }
+  isZh: { type: Boolean, default: false },
+  userRole: { type: String, default: '' }
 })
 
 const emit = defineEmits(['select-stage'])
@@ -195,12 +196,21 @@ const stages = [
 ]
 
 const stageNodes = computed(() => {
-  const baseNodes = [
-    { x: 220, y: 300, id: 'level-1', icon: '🎓', label: '1. ' + (props.isZh ? '选校' : 'School Sel.'), order: 1, labelX: 185, labelY: 335 },
-    { x: 480, y: 260, id: 'level-2', icon: '📄', label: '2. ' + (props.isZh ? '材料' : 'Doc Prep.'), order: 2, labelX: 445, labelY: 295 },
-    { x: 230, y: 200, id: 'level-3', icon: '✍️', label: '3. ' + (props.isZh ? '文书' : 'Essay'), order: 3, labelX: 195, labelY: 235 },
-    { x: 470, y: 160, id: 'level-4', icon: '📨', label: '4. ' + (props.isZh ? '网申' : 'Apply Sub.'), order: 4, labelX: 435, labelY: 195 },
-    { x: 350, y: 80, id: 'level-5', icon: '🎤', label: '5. ' + (props.isZh ? '面试' : 'Interview'), order: 5, labelX: 315, labelY: 115 }
+  const role = props.userRole || 'explorer'
+  const isExplorer = role === 'explorer' || role === 'confused'
+  
+  const baseNodes = isExplorer ? [
+    { x: 220, y: 300, id: 'level-1', icon: '🧭', label: '1. ' + (props.isZh ? '自我' : 'Identity'), order: 1, labelX: 185, labelY: 335 },
+    { x: 480, y: 260, id: 'level-2', icon: '�', label: '2. ' + (props.isZh ? '调研' : 'Research'), order: 2, labelX: 445, labelY: 295 },
+    { x: 230, y: 200, id: 'level-3', icon: '✍️', label: '3. ' + (props.isZh ? '文书' : 'Essays'), order: 3, labelX: 195, labelY: 235 },
+    { x: 470, y: 160, id: 'level-4', icon: '⚖️', label: '4. ' + (props.isZh ? '抉择' : 'Decide'), order: 4, labelX: 435, labelY: 195 },
+    { x: 350, y: 80, id: 'level-5', icon: '🧭', label: '5. ' + (props.isZh ? '规划' : 'Plan'), order: 5, labelX: 315, labelY: 115 }
+  ] : [
+    { x: 220, y: 300, id: 'level-1', icon: '🎯', label: '1. ' + (props.isZh ? '目标' : 'Goals'), order: 1, labelX: 185, labelY: 335 },
+    { x: 480, y: 260, id: 'level-2', icon: '📋', label: '2. ' + (props.isZh ? '材料' : 'Materials'), order: 2, labelX: 445, labelY: 295 },
+    { x: 230, y: 200, id: 'level-3', icon: '🚀', label: '3. ' + (props.isZh ? '提交' : 'Submit'), order: 3, labelX: 195, labelY: 235 },
+    { x: 470, y: 160, id: 'level-4', icon: '💬', label: '4. ' + (props.isZh ? '面试' : 'Interview'), order: 4, labelX: 435, labelY: 195 },
+    { x: 350, y: 80, id: 'level-5', icon: '🏆', label: '5. ' + (props.isZh ? '成功' : 'Success'), order: 5, labelX: 315, labelY: 115 }
   ]
 
   return baseNodes.map(node => {
@@ -301,12 +311,11 @@ function handleLeafClick(leaf) {
 </script>
 
 <style scoped>
-.leaf-icon { 
-  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); 
-  transform-origin: center; 
+.leaf-icon {
+  transition: opacity 0.3s ease;
 }
-.leaf-icon:hover { 
-  transform: scale(1.4) rotate(-5deg); 
+.leaf-icon:hover {
+  opacity: 0.8;
 }
 .branch-path {
   stroke-dasharray: 300;

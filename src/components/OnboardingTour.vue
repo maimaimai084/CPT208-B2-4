@@ -11,7 +11,7 @@
           class="absolute transition-all duration-500 ease-out pointer-events-none"
           :style="highlightBoxStyle"
         >
-          <div class="w-full h-full rounded-[1.5rem] ring-4 ring-white shadow-[0_0_40px_rgba(232,142,175,0.6)] animate-pulse-slow"></div>
+          <div class="w-full h-full rounded-[1.5rem] ring-4 ring-gray-300 shadow-[0_0_40px_rgba(100,116,139,0.5)] animate-pulse-slow"></div>
         </div>
 
         <!-- 提示卡片 -->
@@ -19,14 +19,14 @@
           class="absolute transition-all duration-500 ease-out pointer-events-auto"
           :style="cardPositionStyle"
         >
-          <div class="bg-white rounded-2xl shadow-2xl p-6 w-[320px] border-2 border-[#E88EAF]/20">
+          <div class="bg-white rounded-2xl shadow-2xl p-6 w-[320px] border-2 border-gray-200">
             <!-- 步骤指示器 -->
             <div class="flex gap-2 mb-5 justify-center">
               <div
                 v-for="i in totalSteps"
                 :key="i"
                 class="h-1.5 rounded-full transition-all duration-300"
-                :class="i <= currentStep ? 'w-6 bg-[#E88EAF]' : 'w-1.5 bg-slate-200'"
+                :class="i <= currentStep ? 'w-6 bg-gray-400' : 'w-1.5 bg-slate-200'">
               ></div>
             </div>
 
@@ -35,7 +35,7 @@
               <div class="text-5xl mb-3 animate-bounce-slow">{{ currentStepData.icon }}</div>
               <h3 class="font-black text-lg text-slate-800 mb-2 tracking-tight">{{ currentStepData.title }}</h3>
               <p class="text-sm text-slate-500 mb-1 leading-relaxed">{{ currentStepData.desc }}</p>
-              <p v-if="currentStepData.hint" class="text-xs text-[#E88EAF] font-bold mt-2">{{ currentStepData.hint }}</p>
+              <p v-if="currentStepData.hint" class="text-xs text-gray-500 font-bold mt-2">{{ currentStepData.hint }}</p>
             </div>
 
             <!-- 按钮 -->
@@ -50,14 +50,14 @@
               <button
                 v-if="currentStep < totalSteps"
                 @click="next"
-                class="flex-1 py-2.5 bg-[#E88EAF] text-white rounded-xl font-bold text-sm hover:bg-[#B86281] transition-colors shadow-[0_4px_0_#B86281] active:translate-y-[4px] active:shadow-none"
+                class="flex-1 py-2.5 bg-gray-500 text-white rounded-xl font-bold text-sm hover:bg-gray-600 transition-colors shadow-[0_4px_0_#4B5563] active:translate-y-[4px] active:shadow-none"
               >
                 Next
               </button>
               <button
                 v-else
                 @click="finish"
-                class="flex-1 py-2.5 bg-[#E88EAF] text-white rounded-xl font-bold text-sm hover:bg-[#B86281] transition-colors shadow-[0_4px_0_#B86281] active:translate-y-[4px] active:shadow-none"
+                class="flex-1 py-2.5 bg-gray-500 text-white rounded-xl font-bold text-sm hover:bg-gray-600 transition-colors shadow-[0_4px_0_#4B5563] active:translate-y-[4px] active:shadow-none"
               >
                 🚀 Start Playing!
               </button>
@@ -73,7 +73,7 @@
           <!-- 箭头 -->
           <div
             v-if="highlightRect && arrowDirection"
-            class="absolute w-4 h-4 bg-white rotate-45 border-2 border-[#E88EAF]/20"
+            class="absolute w-4 h-4 bg-white rotate-45 border-2 border-gray-200"
             :class="arrowClass"
           ></div>
         </div>

@@ -17,7 +17,7 @@
       </div>
 
       <div class="text-lg md:text-xl font-bold tracking-tight text-slate-800">
-        <span class="text-[#7FA1ED]">{{ isZh ? '探索' : 'Discovery' }}</span> - {{ isZh ? '关卡' : 'Level' }} {{ String(levelId).replace('level-', '') }}
+        <span class="text-[#4F8CFF]">{{ getHeaderTitle() }}</span> - {{ isZh ? '关卡' : 'Level' }} {{ String(levelId).replace('level-', '') }}
       </div>
     </header>
 
@@ -45,7 +45,7 @@
 
       <div class="space-y-3 mb-6">
         <div v-for="(opt, index) in currentQuestion.options" :key="index"
-             class="option-btn w-full bg-white rounded-xl p-4 shadow-soft border-2 border-transparent hover:border-[#7FA1ED] hover:shadow-card text-left flex items-center gap-4 group transition-all cursor-pointer"
+             class="option-btn w-full bg-white rounded-xl p-4 shadow-soft border-2 border-transparent hover:border-[#4F8CFF] hover:shadow-card text-left flex items-center gap-4 group transition-all cursor-pointer"
              :class="{ 'opacity-40 grayscale': selectedIndex !== null && selectedIndex !== index }"
              @click="handleSelect(opt, index)">
           <div class="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm shrink-0 transition-colors"
@@ -64,34 +64,34 @@
              class="flip-card group"
              :class="{ 'z-50': selectedIndex === index, 'z-10': selectedIndex !== index }">
           
-          <div class="flip-card-inner w-full aspect-[3/4] max-h-[200px] mx-auto"
+          <div class="flip-card-inner w-full aspect-[3/4] max-h-[280px] mx-auto"
                :class="{ 'flipped': selectedIndex === index }">
             
             <div class="flip-card-front rounded-2xl flex flex-col items-center justify-center transition-transform group-hover:-translate-y-2 shadow-lg cursor-pointer bg-white border border-slate-200"
                  :class="{ 'opacity-30 grayscale': selectedIndex !== null && selectedIndex !== index }"
                  @click="handleSelect(opt, index)">
-              <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-2" :class="getOptionColorClass(index, false)">
-                <svg v-if="index === 0" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 22 22 2 22"/></svg>
-                <svg v-if="index === 1" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
-                <svg v-if="index === 2" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
+              <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-2" :class="getOptionColorClass(index, false)">
+                <svg v-if="index === 0" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 22 22 2 22"/></svg>
+                <svg v-if="index === 1" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                <svg v-if="index === 2" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
               </div>
-              <span class="text-xs font-medium text-slate-500">{{ getOptionLabel(index) }}</span>
+              <span class="text-sm font-medium text-slate-500">{{ getOptionLabel(index) }}</span>
             </div>
 
             <div v-if="selectedIndex === index" 
-                 class="flip-card-back rounded-2xl flex flex-col p-4 shadow-xl bg-gradient-to-br from-[#E8F0FF] to-[#FFF5F0] border border-slate-200">
+                 class="flip-card-back rounded-2xl flex flex-col p-5 shadow-xl bg-gradient-to-br from-[#E8F0FF] to-[#FFF5F0] border border-slate-200">
               
               <div class="text-[10px] font-bold text-slate-500 uppercase mb-1 tracking-wider">{{ isZh ? '路径分析' : 'Path Analysis' }}</div>
               <h4 class="text-sm font-bold text-slate-800 uppercase mb-2 border-b border-slate-200 pb-1">
                 {{ isZh ? '导师笔记' : "Mentor's Note" }}
               </h4>
               
-              <p class="text-xs md:text-sm text-slate-600 flex-1 mt-2 leading-relaxed overflow-y-auto custom-scrollbar">
+              <p class="text-sm text-slate-600 flex-1 mt-2 leading-relaxed overflow-y-auto custom-scrollbar">
                 {{ getOptionHint(opt) }}
               </p>
 
               <div class="flex gap-2 mt-3">
-                <span class="bg-[#7FA1ED] text-white px-2 py-1 text-[10px] font-bold rounded-md">+{{ opt.learning || 0 }} LV</span>
+                <span class="bg-[#4F8CFF] text-white px-2 py-1 text-[10px] font-bold rounded-md">+{{ opt.learning || 0 }} LV</span>
                 <span class="bg-[#FF9F43] text-white px-2 py-1 text-[10px] font-bold rounded-md">+{{ opt.task || 0 }} TV</span>
               </div>
 
@@ -109,6 +109,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { getQuestionsByLevel } from '@/data/questions'
+import { QUESTION_TRANSLATIONS } from '@/data/questionTranslations'
 
 const props = defineProps({
   level: { type: [Object, String], required: true },
@@ -125,6 +126,16 @@ const isShaking = ref(false)
 const isZh = computed(() => props.isZh)
 const sessionResults = { correctCount: 0, learning: 0, task: 0 }
 
+function getHeaderTitle() {
+  const role = props.userType || 'confused'
+  const isExplorer = role === 'explorer' || role === 'confused'
+  if (isExplorer) {
+    return isZh ? '探索' : 'Discovery'
+  } else {
+    return isZh ? '冲刺' : 'Sprint'
+  }
+}
+
 const levelId = computed(() => (typeof props.level === 'object' ? props.level.id : props.level))
 const currentQuestion = computed(() => questions.value[currentQuestionIndex.value] || null)
 
@@ -136,74 +147,31 @@ const optionColors = [
 
 const optionDotColors = ['bg-red-400', 'bg-cyan-400', 'bg-amber-400']
 
-const zhTranslations = {
-  'q1-1': {
-    question: '你是一名大二学生，对研究生申请方向感到迷茫。面对英国、美国、香港等多个选项，你首先应该做什么？',
-    options: [
-      { text: '先确定想要申请的专业，再考虑国家', hint: '正确！迷茫的学生应首先明确专业方向，这是选校的基础。' },
-      { text: '只看QS排名，申请排名最高的学校', hint: '不推荐。只看排名可能会忽略专业匹配度和个人兴趣。' },
-      { text: '跟风申请，跟同学申请同样的地方', hint: '不推荐。研究生申请是基于个人情况的个性化选择。' }
-    ]
-  },
-  'q1-2': {
-    question: '你决定申请CS，但GPA 3.3（非顶尖）。对于英国G5的IC、UCL和美国Top 30，你应该如何制定选校策略？',
-    options: [
-      { text: '主申美国Top 30，英国作为保底', hint: '有风险。英国G5不是"保底学校"，英美申请策略差异大。建议合理分配。' },
-      { text: 'IC和UCL的CS竞争激烈；查看具体课程和录取数据，选择2-3所匹配的学校', hint: '很好！冲刺学生需要精准定位。研究具体项目要求比盲目定位更重要。' },
-      { text: '只申请英国，因为美国要考GRE太麻烦', hint: '太保守。冲刺学生应该挑战更高目标，GRE不是不可逾越的障碍。' }
-    ]
-  },
-  'q2-1': {
-    question: '你需要准备成绩单和在校证明但不知道流程，哪种方式最正确？',
-    options: [
-      { text: '直接找辅导员要证明', hint: '不完全正确。西浦有专门的教务系统申请流程。' },
-      { text: '登录e-Bridge下载电子版，然后去行政楼盖章', hint: '正确！熟悉学校系统是大二生的基本技能。' },
-      { text: '等到申请时再准备，现在还早', hint: '文件需要提前准备，尤其是需要翻译和公证的文件。' }
-    ]
-  },
-  'q2-2': {
-    question: '你的教授很忙但头衔很高；助教很了解你但资历较浅。你的推荐信策略是什么？',
-    options: [
-      { text: '选择教授，因为招生官更看重推荐人的学术地位', hint: '部分正确，但教授写一封模糊的信反而适得其反。' },
-      { text: '选择助教，因为他们能写出具体细节和示例', hint: '具体细节很重要，但在教授指导下或联合署名更好。' },
-      { text: '让教授和助教合作：教授签字，助教提供内容', hint: '最佳策略！冲刺学生应优先考虑推荐信质量而非仅看头衔。' }
-    ]
-  },
-  'q2-3': {
-    question: '关于成绩单认证（WES），以下哪项说法正确？',
-    options: [
-      { text: '英国学校都需要WES认证', hint: '错误。大部分英国学校不需要WES，部分美国学校需要。' },
-      { text: 'WES认证需要2-4周，应提前准备', hint: '正确！文件准备需要时间规划，这是任务完成的关键。' },
-      { text: '可以收到offer后再做认证', hint: '太晚。认证必须在申请前或申请期间完成。' }
-    ]
-  }
-}
-
 function getQuestionText(q) {
   if (!q) return ''
-  if (isZh.value && zhTranslations[q.id]) {
-    return zhTranslations[q.id].question
+  if (isZh.value && QUESTION_TRANSLATIONS[q.id]) {
+    return QUESTION_TRANSLATIONS[q.id].question
   }
   return q.question
 }
 
 function getOptionText(opt) {
-  if (isZh.value && zhTranslations[currentQuestion.value?.id]) {
+  if (isZh.value && currentQuestion.value?.id && QUESTION_TRANSLATIONS[currentQuestion.value.id]) {
     const qid = currentQuestion.value.id
     const idx = currentQuestion.value.options.indexOf(opt)
-    if (zhTranslations[qid]?.options[idx]) {
-      return zhTranslations[qid].options[idx].text
+    if (QUESTION_TRANSLATIONS[qid]?.options[idx]) {
+      return QUESTION_TRANSLATIONS[qid].options[idx].text
     }
   }
   return opt.text
 }
 
 function getOptionHint(opt) {
-  if (isZh.value && zhTranslations[currentQuestion.value?.id]) {
+  if (isZh.value && currentQuestion.value?.id && QUESTION_TRANSLATIONS[currentQuestion.value.id]) {
     const qid = currentQuestion.value.id
     const idx = currentQuestion.value.options.indexOf(opt)
-    if (zhTranslations[qid]?.options[idx]) {
-      return zhTranslations[qid].options[idx].hint
+    if (QUESTION_TRANSLATIONS[qid]?.options[idx]) {
+      return QUESTION_TRANSLATIONS[qid].options[idx].hint
     }
   }
   return opt.hint || 'Refining your application strategy...'
