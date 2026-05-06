@@ -54,7 +54,7 @@
                   </div>
                   <button 
                     @click="waterFriend(friend)"
-                    class="mt-1 px-2 py-1 bg-[#7FA1ED]/10 text-[#7FA1ED] text-xs font-bold rounded hover:bg-[#7FA1ED]/20 transition-colors"
+                    class="mt-1 px-2 py-1 bg-blue-50 text-blue-500 text-xs font-bold rounded hover:bg-blue-100 transition-colors"
                   >
                     💧 {{ isZh ? '浇水' : 'Water' }}
                   </button>

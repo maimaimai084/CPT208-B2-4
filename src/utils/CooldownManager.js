@@ -11,14 +11,14 @@ export const COOLDOWN_CONFIG = {
   },
   interviewSim: {
     type: 'daily',
-    maxAttempts: 1,
+    maxAttempts: 2,
     sharedWith: ['psWorkshop'],
     resetHour: 0,
     rewardRange: [30, 60]
   },
   psWorkshop: {
     type: 'daily',
-    maxAttempts: 1,
+    maxAttempts: 2,
     sharedWith: ['interviewSim'],
     resetHour: 0,
     rewardRange: [40, 80]
@@ -89,6 +89,7 @@ export function recordAttempt(key, metadata = {}) {
 }
 
 export function canAttempt(key) {
+  if (key === 'interviewSim' || key === 'psWorkshop') return true
   const status = getCooldownStatus(key)
   return status ? status.canAttempt : true
 }

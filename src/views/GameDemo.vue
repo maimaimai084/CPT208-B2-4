@@ -11,7 +11,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
             {{ isZh ? 'EN' : '中' }}
           </button>
-          <button @click="showOnboardingGuide" class="flex items-center gap-1.5 px-3 py-2 bg-green-50 hover:bg-green-100 rounded-lg text-sm font-medium text-green-600 transition-colors">
+          <button @click="showOnboardingGuide" class="flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-slate-200 rounded-lg text-sm font-medium text-slate-600 transition-colors">
             <span>❓</span>
             {{ isZh ? '新手指南' : 'Help' }}
           </button>
@@ -30,8 +30,9 @@
     <div v-else-if="currentView === 'main'" class="game-container">
       <div class="bg-white rounded-[1.5rem] p-4 shadow-[0_4px_0_#E2E8F0] mb-6">
         <div class="flex flex-wrap items-center justify-between gap-4">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#E88EAF] to-[#B86281] text-white flex items-center justify-center font-bold">
+          <div class="flex items-center gap-3" data-tour="name-card">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br text-white flex items-center justify-center font-bold"
+              :class="avatarGradient">
               {{ userName ? userName.charAt(0).toUpperCase() : '?' }}
             </div>
             <div>
@@ -44,7 +45,7 @@
 
           <div class="flex items-center gap-4">
             <div class="flex items-center gap-2 text-sm">
-              <span class="text-[#7FA1ED] font-bold">{{ learningValue }}</span>
+              <span class="text-indigo-600 font-bold">{{ learningValue }}</span>
               <span class="text-slate-400 text-xs">LV</span>
             </div>
             <div class="flex items-center gap-2 text-sm">
@@ -67,8 +68,8 @@
           <button
             v-for="tab in gameTabs"
             :key="tab.id"
-            :data-tour="tab.id"
             @click="activeTab = tab.id"
+            :data-tour="tab.id"
             class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-[1.5rem] flex flex-col items-center justify-center p-2 text-center transition-all duration-150 z-10"
             :class="[
               tab.theme,
@@ -91,8 +92,8 @@
           <button
             v-for="tab in otherTabs"
             :key="tab.id"
-            :data-tour="tab.id"
             @click="activeTab = tab.id"
+            :data-tour="tab.id"
             class="relative w-16 h-16 sm:w-20 sm:h-20 rounded-[1.2rem] flex flex-col items-center justify-center p-2 text-center transition-all duration-150"
             :class="[
               tab.theme,
@@ -132,6 +133,7 @@
           @reset-progress="handleResetProgress"
           @view-story="handleViewStory"
           @select-stage="handleStartLevel"
+          @toggle-language="toggleGlobalLanguage"
         />
 
         <ProfilePanel v-if="activeTab === 'profile'" v-bind="profileProps" />
@@ -158,6 +160,7 @@
           v-if="activeTab === 'quest-hub'"
           :gear-state="gearState"
           :is-zh="isZh"
+          :user-role="userRole"
           @complete="handleTVEarned"
         />
         <DailyWeeklyCycle 
@@ -165,10 +168,6 @@
           :is-zh="isZh"
           :task-value="taskValue"
           @add-task="handleAddTask"
-        />
-        <FriendTree 
-          v-if="activeTab === 'friend-tree'"
-          :is-zh="isZh"
         />
         <AIChat v-if="activeTab === 'ai-advisor'" />
         <QuestionForm v-if="activeTab === 'qa'" :user-name="userName" />
@@ -185,6 +184,7 @@
       :is-zh="isZh"
       @close="handleQuizClose"
       @complete="handleQuizComplete"
+      @update:isZh="isZh = $event"
     />
 
     <AchievementNotification :achievement="currentAchievement" @close="currentAchievement = null" />
@@ -196,12 +196,11 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, nextTick } from 'vue'
 // ... (保持原有的 import 不变)
 import RoleSelect from '../components/RoleSelect.vue'
 import GameDashboard from '../components/GameDashboard.vue'
 import QuestHub from '../components/QuestHub.vue'
-import FriendTree from '../components/FriendTree.vue'
 import DailyWeeklyCycle from '../components/DailyWeeklyCycle.vue'
 import QuizInterface from '../components/QuizInterface.vue'
 import GearShop from '../components/GearShop.vue'
@@ -210,8 +209,8 @@ import PSWorkshop from '../components/PSWorkshop.vue'
 import AdvisorDashboard from '../components/AdvisorDashboard.vue'
 import AchievementNotification from '../components/AchievementNotification.vue'
 import GuideModal from '../components/GuideModal.vue'
-import OnboardingTour from '../components/OnboardingTour.vue'
 import ProfilePanel from '../components/ProfilePanel.vue'
+import OnboardingTour from '../components/OnboardingTour.vue'
 import AIChat from '../components/AIChat.vue'
 import QuestionForm from '../components/QuestionForm.vue'
 import DemoAdmissionData from '../components/DemoAdmissionData.vue'
@@ -231,18 +230,18 @@ const tabsBase = [
   { id: 'journey', labelEn: 'Journey', labelZh: '旅程', icon: '🗺️', theme: 'bg-[#10B981] shadow-[0_5px_0_#0D8A66] text-white', category: 'game' },
   { id: 'gear-shop', labelEn: 'Gear', labelZh: '装备', icon: '🎒', theme: 'bg-[#14B8A6] shadow-[0_5px_0_#0D9488] text-white', category: 'game' },
   { id: 'quest-hub', labelEn: 'TV Quest', labelZh: 'TV任务', icon: '🎯', theme: 'bg-[#F59E0B] shadow-[0_5px_0_#C47E08] text-white', category: 'game' },
-  { id: 'cycle-quests', labelEn: 'Daily', labelZh: '周期', icon: '📅', theme: 'bg-[#E88EAF] shadow-[0_5px_0_#B86281] text-white', category: 'game' },
-  { id: 'friend-tree', labelEn: 'Friends', labelZh: '好友', icon: '🌳', theme: 'bg-[#22C55E] shadow-[0_5px_0_#16A34A] text-white', category: 'game' },
+  { id: 'cycle-quests', labelEn: 'Daily', labelZh: '周期', icon: '📅', theme: 'bg-[#6366F1] shadow-[0_5px_0_#4F46E5] text-white', category: 'game' },
+
   { id: 'profile', labelEn: 'Profile', labelZh: '档案', icon: '👤', theme: 'bg-[#E88EAF] shadow-[0_5px_0_#B86281] text-white', category: 'other' },
   { id: 'ai-advisor', labelEn: 'Advisor', labelZh: '顾问', icon: '🤖', theme: 'bg-[#73C5E6] shadow-[0_5px_0_#4E95B3] text-white', category: 'other' },
   { id: 'qa', labelEn: 'Q & A', labelZh: '问答', icon: '💬', theme: 'bg-[#E3B75C] shadow-[0_5px_0_#B38A3B] text-white', category: 'other' },
   { id: 'admission', labelEn: 'Data', labelZh: '数据', icon: '📊', theme: 'bg-[#a9eee6] shadow-[0_5px_0_#4D9C71] text-white', category: 'other' },
-  { id: 'activities', labelEn: 'Events', labelZh: '活动', icon: '🎉', theme: 'bg-[#EBA173] shadow-[0_5px_0_#B8764B] text-white', category: 'other' },
-  { id: 'advisor-view', labelEn: 'Adv<br>View', labelZh: '顾问<br>视角', icon: '🎓', theme: 'bg-[#E0C3CC] shadow-[0_5px_0_#B86281] text-white', category: 'other' }
+  { id: 'activities', labelEn: 'Events', labelZh: '活动', icon: '🎉', theme: 'bg-[#EBA173] shadow-[0_5px_0_#B8764B] text-white', category: 'other' }
 ]
 
 const activeTab = ref('journey')
 const isZh = ref(false)
+const showOnboarding = ref(false)
 
 const gameTabs = computed(() => tabs.value.filter(t => t.category === 'game'))
 const otherTabs = computed(() => tabs.value.filter(t => t.category === 'other'))
@@ -263,7 +262,6 @@ function showOnboardingGuide() {
 function handleOnboardingComplete() {
   showOnboarding.value = false
   localStorage.setItem('hasSeenOnboarding', 'true')
-  activeTab.value = 'journey'
 }
 
 // ============================================
@@ -280,7 +278,6 @@ const unlockedStories = ref([])
 const currentAchievement = ref(null)
 const currentGuide = ref(null)
 const showGuide = ref(false)
-const showOnboarding = ref(false)
 const currentCombo = ref(0)
 const maxCombo = ref(0)
 const daysStreak = ref(0)
@@ -306,15 +303,24 @@ const advisorProps = computed(() => ({
   playerTask: taskValue.value, playerCompletedLevels: completedLevels.value, playerCombo: currentCombo.value
 }))
 
+const avatarGradient = computed(() => {
+  if (userRole.value === 'confused' || userRole.value === 'Explorer') {
+    return 'from-[#7FA1ED] to-[#5B78BA]'
+  }
+  if (userRole.value === 'sprint' || userRole.value === 'Sprint') {
+    return 'from-orange-400 to-orange-600'
+  }
+  return 'from-gray-400 to-gray-600'
+})
+
 // ... (处理函数 handleRoleConfirmed, handleStartLevel 等逻辑与原文件完全一致)
 function handleRoleConfirmed(data) {
   userRole.value = data.role
   userName.value = data.name
   currentView.value = 'main'
   activeTab.value = 'journey'
-  const hasSeen = localStorage.getItem('hasSeenOnboarding')
-  if (!hasSeen) {
-    setTimeout(() => { showOnboarding.value = true }, 800)
+  if (!localStorage.getItem('hasSeenOnboarding')) {
+    nextTick(() => { showOnboarding.value = true })
   }
   const saved = localStorage.getItem(`progress_${data.role}`)
   if (saved) {

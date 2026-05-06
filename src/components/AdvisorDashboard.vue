@@ -26,9 +26,13 @@
                  : 'hover:bg-slate-50 border-transparent'">
             <div class="flex items-center gap-3">
               <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-white text-sm flex-shrink-0"
-                   :class="student.isPlayer 
-                     ? 'bg-gradient-to-br from-emerald-400 to-emerald-600' 
-                     : 'bg-gradient-to-br from-blue-400 to-blue-600'">
+                   :class="student.isPlayer
+                     ? (playerRole === 'sprint' || playerRole === 'Sprint'
+                       ? 'bg-gradient-to-br from-orange-400 to-orange-600'
+                       : 'bg-gradient-to-br from-[#7FA1ED] to-[#5B78BA]')
+                     : (student.role === 'Sprint'
+                       ? 'bg-gradient-to-br from-orange-400 to-orange-600'
+                       : 'bg-gradient-to-br from-[#7FA1ED] to-[#5B78BA]')">
                 {{ student.name.charAt(0) }}
               </div>
               <div class="flex-1 min-w-0">

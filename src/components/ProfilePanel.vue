@@ -7,7 +7,8 @@
       <div class="relative z-10 flex flex-col md:flex-row items-center md:items-start gap-6">
         <div class="relative group">
           <div class="absolute inset-0 bg-[#E88EAF] rounded-full blur-md opacity-30 group-hover:opacity-60 transition-opacity"></div>
-          <div class="relative w-24 h-24 rounded-full border-4 border-white bg-gradient-to-b from-[#E88EAF] to-[#B86281] shadow-md flex items-center justify-center">
+          <div class="relative w-24 h-24 rounded-full border-4 border-white shadow-md flex items-center justify-center"
+               :class="avatarGradientClass">
             <span class="text-4xl font-black text-white drop-shadow-sm">
               {{ userName ? userName.charAt(0).toUpperCase() : '?' }}
             </span>
@@ -164,6 +165,16 @@ const roleLabel = computed(() => {
   if (props.userRole === 'confused') return 'Explorer'
   if (props.userRole === 'sprint') return 'Sprint'
   return 'Unknown'
+})
+
+const avatarGradientClass = computed(() => {
+  if (props.userRole === 'confused' || props.userRole === 'explorer') {
+    return 'bg-gradient-to-br from-[#7FA1ED] to-[#5B78BA]'
+  }
+  if (props.userRole === 'sprint') {
+    return 'bg-gradient-to-br from-orange-400 to-orange-600'
+  }
+  return 'bg-gradient-to-br from-emerald-400 to-emerald-600'
 })
 
 const joinDate = computed(() => {

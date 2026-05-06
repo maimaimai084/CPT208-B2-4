@@ -12,8 +12,8 @@ export const GUIDES: Record<string, Guide> = {
     icon: '🎮',
     content: `
       <div class="space-y-6">
-        <div class="bg-gradient-to-r from-[#E88EAF] to-[#B86281] text-white rounded-xl p-4">
-          <h4 class="font-bold text-lg mb-2">Welcome to MasterApply Quest! 🎓</h4>
+        <div class="bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl p-4">
+          <h4 class="font-bold text-lg mb-2">Welcome, Future Master Student! 🎓</h4>
           <p class="text-white/90 text-sm">This game simulates the graduate school application journey. Complete quests, earn LV (Learning Value) and TV (Task Value), and prepare for your dream offer!</p>
         </div>
 
