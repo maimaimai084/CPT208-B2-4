@@ -333,6 +333,39 @@ const questions = computed(() => props.isZh ? [
       { text: '我的规划是先考研，然后再看有什么工作。', feedback: '短期逃避就业的表现。优秀的申请者往往有清晰且长远的目标。' },
       { text: '我不需要规划，走一步算一步。', feedback: '这种随意的态度会让招生委员会怀疑你能否坚持完成这个高强度的学位。' }
     ]
+  },
+  {
+    question: '如果你的核心项目结果并不“完美”，在PS中最优写法是什么？',
+    hint: '展示问题定义、迭代过程和可迁移能力，不要只写“成功”',
+    correct: 0,
+    options: [
+      { text: '坦诚结果边界，解释你如何定位失败原因、修正方案，并总结可复用方法。', feedback: '非常专业。招生官更看重研究思维与迭代能力，而非“完美叙事”。' },
+      { text: '删掉该项目，避免让招生官看到任何失败。', feedback: '错失展示韧性的机会。过度美化会让材料显得空洞。' },
+      { text: '把结果夸大成SOTA水平，只要没人核验就行。', feedback: '高风险且不诚信，一旦核验将直接损害申请可信度。' },
+      { text: '仅描述你投入了很多时间，不提供方法或结果。', feedback: '缺少证据链，无法证明你的学术能力。' }
+    ]
+  },
+  {
+    question: '针对“Why this program”段落，哪种写法最能体现高质量匹配？',
+    hint: '避免空泛赞美，强调课程-导师-目标的三点闭环',
+    correct: 0,
+    options: [
+      { text: '明确指出2门课程、1位导师方向，并说明它们如何支撑你的具体研究/职业目标。', feedback: '最佳答案。结构化匹配最能体现你做过充分调研。' },
+      { text: '强调学校排名高、城市好、校园漂亮。', feedback: '常见但无竞争力，几乎任何申请者都能写。' },
+      { text: '复制官网介绍，体现你“看过官网”。', feedback: '信息堆砌而非匹配分析，招生官很容易识别。' },
+      { text: '只写“我相信贵校适合我”，不展开原因。', feedback: '结论先行但证据缺失。' }
+    ]
+  },
+  {
+    question: '在PS收尾段，哪种策略最容易提升说服力？',
+    hint: '结尾应回扣主线并给出下一步贡献路径',
+    correct: 0,
+    options: [
+      { text: '用1-2句回扣主线能力，并说明入学后可贡献的具体方向与合作场景。', feedback: '强结尾。既总结价值，也展示了你对项目生态的理解。' },
+      { text: '再次重复“我从小热爱这个专业”。', feedback: '信息重复，无法增加新说服力。' },
+      { text: '请求招生官“务必录取我”，强调你很需要这个机会。', feedback: '情绪化表达过强，降低专业度。' },
+      { text: '直接结束，不需要结尾段。', feedback: '缺少收束会让整篇PS显得结构不完整。' }
+    ]
   }
 ] : [
   {
@@ -366,6 +399,39 @@ const questions = computed(() => props.isZh ? [
       { text: 'After graduation, I want to find a high-paying job, but I have not decided what to do specifically.', feedback: 'Too vague. Everyone wants a high salary; you must be specific to stand out.' },
       { text: 'My plan is to take the graduate exam first, then see what jobs are available.', feedback: 'Shows you might be avoiding the job market. Top applicants always have long-term goals.' },
       { text: 'I do not need a plan, just take it step by step.', feedback: 'This casual attitude will make the committee doubt your ability to complete an intensive degree.' }
+    ]
+  },
+  {
+    question: 'If your core project outcomes are not "perfect", what is the strongest PS strategy?',
+    hint: 'Show problem framing, iteration, and transferable learning instead of pretending only success',
+    correct: 0,
+    options: [
+      { text: 'Acknowledge limitations, explain diagnosis and iteration steps, and summarize transferable methods.', feedback: 'Excellent. Committees value research thinking and iteration, not flawless storytelling.' },
+      { text: 'Remove the project entirely so no weakness is visible.', feedback: 'You lose a chance to demonstrate resilience and analytical maturity.' },
+      { text: 'Inflate results to look state-of-the-art and hope no one checks.', feedback: 'Unethical and high-risk. Credibility loss can be fatal if verified.' },
+      { text: 'Only mention hard work without method details or evidence.', feedback: 'Effort without evidence does not prove capability.' }
+    ]
+  },
+  {
+    question: 'For a "Why this program" paragraph, which approach shows the highest fit quality?',
+    hint: 'Build a course-professor-goal loop; avoid generic praise',
+    correct: 0,
+    options: [
+      { text: 'Name two courses and one faculty direction, then link them to your specific research/career goals.', feedback: 'Best practice. Structured fit signals serious preparation.' },
+      { text: 'Emphasize ranking, city life, and campus aesthetics.', feedback: 'Common but weak. Most applicants can say the same.' },
+      { text: 'Copy website descriptions to prove you read the site.', feedback: 'Information dumping is not fit analysis.' },
+      { text: 'State "I believe this school fits me" without evidence.', feedback: 'Conclusion without proof is unconvincing.' }
+    ]
+  },
+  {
+    question: 'Which ending strategy most improves PS persuasiveness?',
+    hint: 'A strong ending should close the loop and project future contribution',
+    correct: 0,
+    options: [
+      { text: 'Briefly synthesize your core strengths and state how you will contribute in concrete academic settings.', feedback: 'Strong ending: clear value proposition plus forward-looking contribution.' },
+      { text: 'Repeat "I have loved this major since childhood" again.', feedback: 'Repetition adds no new persuasive value.' },
+      { text: 'Directly plead for admission because you need the opportunity.', feedback: 'Overly emotional tone weakens professional credibility.' },
+      { text: 'End abruptly without a conclusion paragraph.', feedback: 'A missing conclusion makes the PS feel structurally incomplete.' }
     ]
   }
 ])

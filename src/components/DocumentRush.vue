@@ -59,6 +59,25 @@
           </div>
           <span class="text-xs bg-green-100 text-green-600 px-3 py-1 rounded-lg font-bold">4 {{ isZh ? '题' : 'Questions' }}</span>
         </button>
+
+        <button @click="startGame('award')"
+                :disabled="!awardUnlocked"
+                class="bg-white rounded-2xl border-2 p-6 text-left transition-all duration-300 group"
+                :class="awardUnlocked
+                  ? 'border-rose-200 hover:border-rose-400 hover:shadow-xl hover:-translate-y-1'
+                  : 'border-slate-200 opacity-60 cursor-not-allowed'">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h3 class="font-bold text-slate-700 text-lg">{{ isZh ? '奖项文档' : 'Award Documents' }}</h3>
+              <p class="text-sm text-slate-500 mt-1">{{ isZh ? '更高难度语法与标点审查' : 'Advanced grammar and punctuation review' }}</p>
+            </div>
+            <span class="text-3xl">🏆</span>
+          </div>
+          <span class="text-xs px-3 py-1 rounded-lg font-bold"
+                :class="awardUnlocked ? 'bg-rose-100 text-rose-600' : 'bg-slate-100 text-slate-500'">
+            {{ awardUnlocked ? (isZh ? '已解锁' : 'Unlocked') : (isZh ? '需 Award Lv1' : 'Need Award Lv1') }}
+          </span>
+        </button>
       </div>
     </div>
   </div>
@@ -77,8 +96,22 @@
         {{ isZh ? '拼写检查' : 'Spelling Check' }}
       </div>
 
-      <div class="text-sm font-bold text-[#E3B75C] bg-[#E3B75C]/15 px-3 py-1.5 rounded-xl border border-[#E3B75C]/30">
-        🎯 +{{ earnedTV }} TV
+      <div class="flex items-center gap-2">
+        <span class="text-xs font-bold px-2 py-1 rounded-lg border"
+              :class="timeLeft <= 15 ? 'text-red-600 bg-red-50 border-red-200' : 'text-slate-600 bg-slate-50 border-slate-200'">
+          ⏳ {{ timeLeft }}s
+        </span>
+        <button
+          v-if="(inventory?.timeFreezes || 0) > 0"
+          @click="activateTimeFreeze"
+          :disabled="freezeActive"
+          class="text-xs font-bold px-2 py-1 rounded-lg border transition-colors"
+          :class="freezeActive ? 'text-slate-400 bg-slate-100 border-slate-200 cursor-not-allowed' : 'text-cyan-700 bg-cyan-50 border-cyan-200 hover:bg-cyan-100'">
+          {{ freezeActive ? (isZh ? `冻结中 ${freezeLeft}s` : `Frozen ${freezeLeft}s`) : (isZh ? `时停 x${inventory.timeFreezes}` : `Freeze x${inventory.timeFreezes}`) }}
+        </button>
+        <div class="text-sm font-bold text-[#E3B75C] bg-[#E3B75C]/15 px-3 py-1.5 rounded-xl border border-[#E3B75C]/30">
+          🎯 +{{ earnedTV }} TV
+        </div>
       </div>
     </header>
 
@@ -140,7 +173,7 @@
     </div>
   </div>
 
-  <div v-else-if="gameStarted && !showResults && (currentMode === 'grammar' || currentMode === 'punctuation')"
+  <div v-else-if="gameStarted && !showResults && (currentMode === 'grammar' || currentMode === 'punctuation' || currentMode === 'award')"
        class="fixed inset-0 z-50 bg-[#F8F9FB] text-slate-900 flex flex-col font-sans overflow-hidden"
        :class="{ 'bg-blue-50/50': isShaking }"
        style="background-image: radial-gradient(#cbd5e1 1px, transparent 1px); background-size: 16px 16px;">
@@ -152,11 +185,29 @@
       </button>
 
       <div class="text-lg md:text-xl font-bold tracking-tight text-slate-800">
-        {{ currentMode === 'grammar' ? (isZh ? '语法挑战' : 'Grammar Challenge') : (isZh ? '标点挑战' : 'Punctuation Challenge') }}
+        {{ currentMode === 'grammar'
+          ? (isZh ? '语法挑战' : 'Grammar Challenge')
+          : currentMode === 'punctuation'
+            ? (isZh ? '标点挑战' : 'Punctuation Challenge')
+            : (isZh ? '奖项文档挑战' : 'Award Document Challenge') }}
       </div>
 
-      <div class="text-sm font-bold text-[#E3B75C] bg-[#E3B75C]/15 px-3 py-1.5 rounded-xl border border-[#E3B75C]/30">
-        🎯 +{{ earnedTV }} TV
+      <div class="flex items-center gap-2">
+        <span class="text-xs font-bold px-2 py-1 rounded-lg border"
+              :class="timeLeft <= 15 ? 'text-red-600 bg-red-50 border-red-200' : 'text-slate-600 bg-slate-50 border-slate-200'">
+          ⏳ {{ timeLeft }}s
+        </span>
+        <button
+          v-if="(inventory?.timeFreezes || 0) > 0"
+          @click="activateTimeFreeze"
+          :disabled="freezeActive"
+          class="text-xs font-bold px-2 py-1 rounded-lg border transition-colors"
+          :class="freezeActive ? 'text-slate-400 bg-slate-100 border-slate-200 cursor-not-allowed' : 'text-cyan-700 bg-cyan-50 border-cyan-200 hover:bg-cyan-100'">
+          {{ freezeActive ? (isZh ? `冻结中 ${freezeLeft}s` : `Frozen ${freezeLeft}s`) : (isZh ? `时停 x${inventory.timeFreezes}` : `Freeze x${inventory.timeFreezes}`) }}
+        </button>
+        <div class="text-sm font-bold text-[#E3B75C] bg-[#E3B75C]/15 px-3 py-1.5 rounded-xl border border-[#E3B75C]/30">
+          🎯 +{{ earnedTV }} TV
+        </div>
       </div>
     </header>
 
@@ -294,16 +345,24 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import { DOCUMENT_ROUNDS, GRAMMAR_CHALLENGES, PUNCTUATION_CHALLENGES } from '../data/documentRush'
+import { ref, computed, onUnmounted } from 'vue'
+import {
+  DOCUMENT_ROUNDS,
+  GRAMMAR_CHALLENGES,
+  PUNCTUATION_CHALLENGES,
+  AWARD_DOCUMENT_ROUNDS,
+  AWARD_GRAMMAR_CHALLENGES,
+  AWARD_PUNCTUATION_CHALLENGES
+} from '../data/documentRush'
 import { calculateTVBonus } from '../data/gearConfig'
 
 const props = defineProps({
   gearState: { type: Object, default: () => ({}) },
-  isZh: { type: Boolean, default: false }
+  isZh: { type: Boolean, default: false },
+  inventory: { type: Object, default: () => ({ timeFreezes: 0 }) }
 })
 
-const emit = defineEmits(['complete', 'exit'])
+const emit = defineEmits(['complete', 'exit', 'use-item'])
 
 const gameStarted = ref(false)
 const currentMode = ref('spelling')
@@ -320,10 +379,21 @@ const showQuizFeedback = ref(false)
 const isQuizCorrect = ref(false)
 const showResults = ref(false)
 const isShaking = ref(false)
+const timeLeft = ref(120)
+const freezeLeft = ref(0)
+const freezeActive = ref(false)
+const awardUnlocked = computed(() => (props.gearState?.award || 0) >= 1)
+let timerInterval = null
+let freezeInterval = null
 
 const spellingRounds = computed(() => {
   const shuffled = [...DOCUMENT_ROUNDS].sort(() => Math.random() - 0.5)
   return shuffled.slice(0, 3)
+})
+
+const awardSpellingRounds = computed(() => {
+  const shuffled = [...AWARD_DOCUMENT_ROUNDS].sort(() => Math.random() - 0.5)
+  return shuffled.slice(0, 2)
 })
 
 const grammarChallenges = computed(() => {
@@ -336,6 +406,16 @@ const punctuationChallenges = computed(() => {
   return shuffled.slice(0, 4)
 })
 
+const awardGrammarChallenges = computed(() => {
+  const shuffled = [...AWARD_GRAMMAR_CHALLENGES].sort(() => Math.random() - 0.5)
+  return shuffled.slice(0, 2)
+})
+
+const awardPunctuationChallenges = computed(() => {
+  const shuffled = [...AWARD_PUNCTUATION_CHALLENGES].sort(() => Math.random() - 0.5)
+  return shuffled.slice(0, 2)
+})
+
 const currentRoundData = computed(() => spellingRounds.value[currentRound.value])
 
 const currentDocument = computed(() => {
@@ -346,6 +426,10 @@ const currentDocument = computed(() => {
 const currentQuizData = computed(() => {
   if (currentMode.value === 'grammar') return grammarChallenges.value[currentRound.value]
   if (currentMode.value === 'punctuation') return punctuationChallenges.value[currentRound.value]
+  if (currentMode.value === 'award') {
+    const merged = [...awardGrammarChallenges.value, ...awardPunctuationChallenges.value]
+    return merged[currentRound.value]
+  }
   return null
 })
 
@@ -353,10 +437,12 @@ const totalRounds = computed(() => {
   if (currentMode.value === 'spelling') return spellingRounds.value.length
   if (currentMode.value === 'grammar') return grammarChallenges.value.length
   if (currentMode.value === 'punctuation') return punctuationChallenges.value.length
+  if (currentMode.value === 'award') return awardGrammarChallenges.value.length + awardPunctuationChallenges.value.length
   return 3
 })
 
 function startGame(mode) {
+  if (mode === 'award' && !awardUnlocked.value) return
   gameStarted.value = true
   currentMode.value = mode
   currentRound.value = 0
@@ -368,6 +454,20 @@ function startGame(mode) {
   showQuizFeedback.value = false
   showResults.value = false
   isShaking.value = false
+  timeLeft.value = mode === 'award' ? 150 : 120
+  freezeLeft.value = 0
+  freezeActive.value = false
+  clearIntervals()
+  timerInterval = setInterval(() => {
+    if (freezeActive.value || !gameStarted.value || showResults.value) return
+    if (timeLeft.value <= 1) {
+      timeLeft.value = 0
+      showResults.value = true
+      clearIntervals()
+      return
+    }
+    timeLeft.value -= 1
+  }, 1000)
 }
 
 function toggleError(index) {
@@ -386,7 +486,7 @@ function handleSelect(idx) {
 
   isQuizCorrect.value = currentQuizData.value.options[idx].correct
   if (isQuizCorrect.value) {
-    earnedTV.value += 15
+    earnedTV.value += currentMode.value === 'award' ? 20 : 15
     score.value += 1
   }
 
@@ -404,6 +504,26 @@ function handleSelect(idx) {
       showResults.value = true
     }
   }, 5000)
+}
+
+function activateTimeFreeze() {
+  if (freezeActive.value || !gameStarted.value || showResults.value) return
+  const available = props.inventory?.timeFreezes || 0
+  if (available <= 0) return
+  freezeActive.value = true
+  freezeLeft.value = 10
+  emit('use-item', { itemId: 'time-freeze', amount: 1 })
+  if (freezeInterval) clearInterval(freezeInterval)
+  freezeInterval = setInterval(() => {
+    if (freezeLeft.value <= 1) {
+      freezeLeft.value = 0
+      freezeActive.value = false
+      clearInterval(freezeInterval)
+      freezeInterval = null
+      return
+    }
+    freezeLeft.value -= 1
+  }, 1000)
 }
 
 const optionColors = [
@@ -478,13 +598,30 @@ function checkSpelling() {
 }
 
 function handleClaim() {
+  clearIntervals()
   emit('complete', { tv: totalEarnedTV.value, score: score.value })
   handleExit()
 }
 
 function handleExit() {
+  clearIntervals()
   emit('exit')
 }
+
+function clearIntervals() {
+  if (timerInterval) {
+    clearInterval(timerInterval)
+    timerInterval = null
+  }
+  if (freezeInterval) {
+    clearInterval(freezeInterval)
+    freezeInterval = null
+  }
+}
+
+onUnmounted(() => {
+  clearIntervals()
+})
 </script>
 
 <style scoped>

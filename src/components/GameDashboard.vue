@@ -9,21 +9,21 @@
             <div class="p-2.5 bg-blue-50 rounded-xl text-blue-500">
               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
             </div>
-            <span class="font-extrabold text-slate-700 tracking-tight">Learning Value</span>
+            <span class="font-extrabold text-slate-700 tracking-tight">{{ isZh ? '学习值' : 'Learning Value' }}</span>
           </div>
           <span class="text-4xl font-black text-blue-600 font-variant-numeric: tabular-nums transition-transform duration-300"
                 :class="{ 'scale-110': isLearningBumping }">{{ animatedLearning }}</span>
         </div>
         <div class="relative h-6 bg-slate-100 rounded-full overflow-hidden shadow-inner p-1">
           <div class="absolute top-1 left-1 bottom-1 rounded-full transition-all duration-700 ease-out flex items-center justify-end pr-1.5 progress-striped-blue shadow-sm" 
-               :style="{ width: `calc(${Math.min((learningValue / 100) * 100, 100)}% - 8px)` }">
+               :style="{ width: `calc(${learningProgressPercent}% - 8px)` }">
                <svg v-if="learningValue > 0" class="w-4 h-4 text-white/90 animate-spin-slow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           </div>
         </div>
         <div class="flex justify-between mt-3 text-xs font-bold text-slate-400 items-center">
-          <span>0</span>
-          <span class="text-blue-600 bg-blue-50 px-2 py-1 rounded-full text-[10px] sm:text-xs truncate max-w-[140px] sm:max-w-none">Next unlock: 100 pts</span>
-          <span>100</span>
+          <span>{{ learningRange.min }}</span>
+          <span class="text-blue-600 bg-blue-50 px-2 py-1 rounded-full text-[10px] sm:text-xs truncate max-w-[180px] sm:max-w-none">{{ learningMilestoneLabel }}</span>
+          <span>{{ learningRange.max }}</span>
         </div>
       </div>
 
@@ -34,21 +34,21 @@
             <div class="p-2.5 bg-amber-50 rounded-xl text-amber-500">
               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
             </div>
-            <span class="font-extrabold text-slate-700 tracking-tight">Task Value</span>
+            <span class="font-extrabold text-slate-700 tracking-tight">{{ isZh ? '任务值' : 'Task Value' }}</span>
           </div>
           <span class="text-4xl font-black text-amber-500 font-variant-numeric: tabular-nums transition-transform duration-300"
                 :class="{ 'scale-110': isTaskBumping }">{{ animatedTask }}</span>
         </div>
         <div class="relative h-6 bg-slate-100 rounded-full overflow-hidden shadow-inner p-1">
           <div class="absolute top-1 left-1 bottom-1 rounded-full transition-all duration-700 ease-out flex items-center justify-end pr-1.5 progress-striped-amber shadow-sm" 
-               :style="{ width: `calc(${Math.min((taskValue / 200) * 100, 100)}% - 8px)` }">
+               :style="{ width: `calc(${taskProgressPercent}% - 8px)` }">
                <svg v-if="taskValue > 0" class="w-4 h-4 text-white/90 animate-spin-slow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           </div>
         </div>
         <div class="flex justify-between mt-3 text-xs font-bold text-slate-400 items-center">
-          <span>0</span>
-          <span class="text-amber-600 bg-amber-50 px-2 py-1 rounded-full text-[10px] sm:text-xs truncate max-w-[140px] sm:max-w-none">Next unlock: 200 pts</span>
-          <span>200</span>
+          <span>{{ taskRange.min }}</span>
+          <span class="text-amber-600 bg-amber-50 px-2 py-1 rounded-full text-[10px] sm:text-xs truncate max-w-[180px] sm:max-w-none">{{ taskMilestoneLabel }}</span>
+          <span>{{ taskRange.max }}</span>
         </div>
       </div>
     </div>
@@ -77,11 +77,11 @@
           <div class="flex flex-wrap items-center gap-3">
             <button @click="$emit('add-learning')" class="flex items-center gap-2 px-4 py-2.5 bg-blue-50 shadow-[0_3px_0_#BFDBFE] text-blue-600 rounded-xl text-sm font-bold hover:bg-blue-100 active:translate-y-[3px] active:shadow-none transition-all">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
-              +10 LV
+              +50 LV
             </button>
             <button @click="$emit('add-task')" class="flex items-center gap-2 px-4 py-2.5 bg-amber-50 shadow-[0_3px_0_#FDE68A] text-amber-600 rounded-xl text-sm font-bold hover:bg-amber-100 active:translate-y-[3px] active:shadow-none transition-all">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              +10 TV
+              +50 TV
             </button>
             <button @click="$emit('show-advisor')" class="flex items-center gap-2 px-4 py-2.5 bg-[#7FA1ED]/10 shadow-[0_3px_0_#5B78BA]/30 text-[#5B78BA] rounded-xl text-sm font-bold hover:bg-[#7FA1ED]/20 active:translate-y-[3px] active:shadow-none transition-all">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
@@ -310,6 +310,7 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { getGuideById } from '../data/guides'
+import { GEAR_CONFIG } from '../data/gearConfig'
 import KnowledgeTree from './KnowledgeTree.vue'
 
 const props = defineProps({
@@ -317,6 +318,7 @@ const props = defineProps({
   userRole: String,
   learningValue: Number,
   taskValue: Number,
+  gearState: { type: Object, default: () => ({}) },
   completedLevels: Array,
   unlockedStories: Array,
   currentCombo: { type: Number, default: 0 },
@@ -331,6 +333,8 @@ const animatedLearning = ref(props.learningValue)
 const animatedTask = ref(props.taskValue)
 const isLearningBumping = ref(false)
 const isTaskBumping = ref(false)
+const tvShopThresholds = [30, 40, 50, 100]
+const lvUpgradeThresholds = [...new Set(GEAR_CONFIG.flatMap((gear) => gear.prices.slice(1)))].sort((a, b) => a - b)
 
 watch(() => props.learningValue, (newVal, oldVal) => { 
   animateValue(animatedLearning, oldVal, newVal, 1000) 
@@ -360,6 +364,48 @@ function animateValue(target, start, end, duration) {
   requestAnimationFrame(update)
 }
 
+function getMilestoneRange(value, thresholds) {
+  const previous = [...thresholds].reverse().find((threshold) => value >= threshold) ?? 0
+  const next = thresholds.find((threshold) => value < threshold) ?? previous
+  return { previous, next }
+}
+
+const learningRange = computed(() => {
+  const { previous, next } = getMilestoneRange(props.learningValue || 0, lvUpgradeThresholds)
+  return { min: previous, max: next || previous || lvUpgradeThresholds[lvUpgradeThresholds.length - 1] }
+})
+
+const taskRange = computed(() => {
+  const { previous, next } = getMilestoneRange(props.taskValue || 0, tvShopThresholds)
+  return { min: previous, max: next || previous || tvShopThresholds[tvShopThresholds.length - 1] }
+})
+
+function getProgressPercent(value, min, max) {
+  if (!max || max <= min) return 100
+  const ratio = ((value - min) / (max - min)) * 100
+  return Math.max(0, Math.min(ratio, 100))
+}
+
+const learningProgressPercent = computed(() =>
+  getProgressPercent(props.learningValue || 0, learningRange.value.min, learningRange.value.max)
+)
+
+const taskProgressPercent = computed(() =>
+  getProgressPercent(props.taskValue || 0, taskRange.value.min, taskRange.value.max)
+)
+
+const learningMilestoneLabel = computed(() => {
+  const next = lvUpgradeThresholds.find((threshold) => (props.learningValue || 0) < threshold)
+  if (!next) return props.isZh ? '已覆盖全部单次升级档位' : 'All single upgrades affordable'
+  return props.isZh ? `下个装备档位: ${next} LV` : `Next gear tier: ${next} LV`
+})
+
+const taskMilestoneLabel = computed(() => {
+  const next = tvShopThresholds.find((threshold) => (props.taskValue || 0) < threshold)
+  if (!next) return props.isZh ? '商店商品均可购买' : 'All TV shop items affordable'
+  return props.isZh ? `下个商店档位: ${next} TV` : `Next shop tier: ${next} TV`
+})
+
 const levels = computed(() => {
   const role = props.userRole || 'explorer'
   const isExplorer = role === 'explorer' || role === 'confused'
@@ -367,58 +413,58 @@ const levels = computed(() => {
   return [
     { 
       id: 'level-1', order: 1, 
-      title: isExplorer ? 'Identity' : 'Goal Setting', 
-      description: isExplorer ? 'Discover your true self & school fit' : 'Define your target programs', 
-      icon: isExplorer ? '🌍' : '🎯', 
+      title: isExplorer ? 'Discovery' : 'Target & Plan', 
+      description: isExplorer ? 'Explore your interests, strengths & school fit. Identify programs that match your profile.' : 'Define clear goals, build your school selection strategy and timeline.', 
+      icon: isExplorer ? '🧭' : '🎯', 
       unlockCondition: {}, 
       rewards: { learningValue: 20, taskValue: 10 }, 
       mapPosition: { x: 10, y: 50 },
-      zhTitle: isExplorer ? '自我认知' : '目标设定',
-      zhDescription: isExplorer ? '发现真实的自己与选校定位' : '明确你的目标申请项目'
+      zhTitle: isExplorer ? '探索与定位' : '目标与规划',
+      zhDescription: isExplorer ? '探索兴趣、优势与选校定位，找到最匹配的项目' : '明确目标，制定选校策略与时间规划'
     },
     { 
       id: 'level-2', order: 2, 
-      title: isExplorer ? 'Research' : 'Materials', 
-      description: isExplorer ? 'Explore programs & gather info' : 'Prepare application documents', 
+      title: isExplorer ? 'Research & Funding' : 'Materials & Funding', 
+      description: isExplorer ? 'Gather documents, explore scholarships & research funding options.' : 'Prepare all materials efficiently. Secure scholarships & financial aid.', 
       icon: isExplorer ? '🔍' : '📋', 
       unlockCondition: { requiredLevel: 'level-1' }, 
       rewards: { learningValue: 20, taskValue: 15 }, 
       mapPosition: { x: 28, y: 20 },
-      zhTitle: isExplorer ? '信息调研' : '材料准备',
-      zhDescription: isExplorer ? '探索项目、收集信息' : '准备申请材料'
+      zhTitle: isExplorer ? '调研与资金' : '材料与资金',
+      zhDescription: isExplorer ? '收集材料，探索奖学金与资助渠道' : '高效准备材料，争取奖学金与资助'
     },
     { 
       id: 'level-3', order: 3, 
-      title: isExplorer ? 'Essays' : 'Submission', 
-      description: isExplorer ? 'Craft your personal story' : 'Finalize & submit apps', 
+      title: isExplorer ? 'Craft & Submit' : 'Apply & Submit', 
+      description: isExplorer ? 'Write compelling essays, polish your CV & submit applications.' : 'Finalize essays, perfect your CV, submit polished applications.', 
       icon: isExplorer ? '✍️' : '🚀', 
       unlockCondition: { requiredLevel: 'level-2' }, 
       rewards: { learningValue: 30, taskValue: 20 }, 
       mapPosition: { x: 50, y: 50 },
-      zhTitle: isExplorer ? '文书写作' : '提交申请',
-      zhDescription: isExplorer ? '撰写你的个人故事' : '完成并提交申请'
+      zhTitle: isExplorer ? '文书与提交' : '申请与提交',
+      zhDescription: isExplorer ? '撰写文书，打磨CV，提交申请' : '完善文书与CV，高效提交申请'
     },
     { 
       id: 'level-4', order: 4, 
-      title: isExplorer ? 'Decisions' : 'Interview', 
-      description: isExplorer ? 'Evaluate offers & choose' : 'Prepare for interviews', 
-      icon: isExplorer ? '⚖️' : '💬', 
+      title: isExplorer ? 'Connect & Interview' : 'Interview & Connect', 
+      description: isExplorer ? 'Network with professors, prepare for interviews & follow up.' : 'Ace your interviews, build connections & follow up professionally.', 
+      icon: isExplorer ? '🔗' : '💬', 
       unlockCondition: { requiredLevel: 'level-3' }, 
       rewards: { learningValue: 20, taskValue: 15 }, 
       mapPosition: { x: 72, y: 80 },
-      zhTitle: isExplorer ? 'offer抉择' : '面试准备',
-      zhDescription: isExplorer ? '评估offer并做出选择' : '准备面试'
+      zhTitle: isExplorer ? '连接与面试' : '面试与连接',
+      zhDescription: isExplorer ? '联系教授，准备面试，专业跟进' : '面试冲刺，建立人脉，专业跟进'
     },
     { 
       id: 'level-5', order: 5, 
-      title: isExplorer ? 'Next Step' : 'Success', 
-      description: isExplorer ? 'Plan your next journey' : 'Celebrate your acceptances', 
-      icon: isExplorer ? '🧭' : '🏆', 
+      title: isExplorer ? 'Decide & Depart' : 'Decide & Go', 
+      description: isExplorer ? 'Compare offers, secure visa & prepare for departure abroad.' : 'Make final decisions, handle visa logistics & launch your journey.', 
+      icon: isExplorer ? '✈️' : '🏆', 
       unlockCondition: { requiredLevel: 'level-4' }, 
       rewards: { learningValue: 30, taskValue: 20 }, 
       mapPosition: { x: 90, y: 50 },
-      zhTitle: isExplorer ? '后续规划' : '收获成功',
-      zhDescription: isExplorer ? '规划你的下一段旅程' : '庆祝你的录取'
+      zhTitle: isExplorer ? '决策与出发' : '决策与启程',
+      zhDescription: isExplorer ? '比较offer，办理签证，准备出发' : '做出最终决策，办理签证，开启新旅程'
     }
   ]
 })
@@ -544,7 +590,9 @@ const stories = {
   'story-essay': { title: 'Personal Statement Master Guide' },
   'story-school': { title: 'School Selection Strategy' },
   'story-cv': { title: 'CV Writing Excellence' },
-  'story-interview': { title: 'Interview Preparation' }
+  'story-interview': { title: 'Interview Preparation' },
+  'story-research': { title: 'Research Proposal & Cold Email' },
+  'story-departure': { title: 'Pre-Departure Checklist' }
 }
 
 function isLocked(levelId) {

@@ -1,6 +1,6 @@
 export interface SimulationOption {
   text: { en: string; zh: string }
-  requiredGear?: { ielts?: number; internship?: number }
+  requiredGear?: { ielts?: number; internship?: number; research?: number }
   feedback: { en: string; zh: string }
   baseTV: number
 }
@@ -15,7 +15,7 @@ export interface Simulation {
   id: string
   title: { en: string; zh: string }
   description: { en: string; zh: string }
-  requiredGear?: { ielts?: number; internship?: number }
+  requiredGear?: { ielts?: number; internship?: number; research?: number }
   questions: SimulationQuestion[]
 }
 
@@ -227,10 +227,218 @@ export const INTERVIEW_SIMULATIONS: Simulation[] = [
         ]
       }
     ]
+  },
+  {
+    id: 'technical-cs',
+    title: { en: 'Technical Interview - CS', zh: '技术面试 - 计算机' },
+    description: {
+      en: 'Technical questions for Computer Science graduate programs',
+      zh: '计算机科学研究生项目的技术面试问题'
+    },
+    requiredGear: { ielts: 6.5 },
+    questions: [
+      {
+        id: 'algo-complexity',
+        question: {
+          en: 'What is the time complexity of binary search? Explain why.',
+          zh: '二分查找的时间复杂度是什么？请解释原因。'
+        },
+        options: [
+          {
+            text: { en: 'O(n) because it scans half the array each time', zh: 'O(n)，因为它每次扫描数组的一半' },
+            feedback: { en: 'Not quite. It does not scan all elements.', zh: '不太对。它并不会扫描所有元素。' },
+            baseTV: 15
+          },
+          {
+            text: { en: 'O(log n) because it halves the search space each iteration', zh: 'O(log n)，因为每次迭代都将搜索空间减半' },
+            feedback: { en: 'Correct! Binary search divides the problem in half each time.', zh: '正确！二分查找每次将问题规模减半。' },
+            baseTV: 35
+          },
+          {
+            text: { en: 'O(log n), and it requires the input array to be sorted', zh: 'O(log n)，且要求输入数组必须有序' },
+            requiredGear: { research: 1 },
+            feedback: { en: 'Excellent! You also noted the prerequisite condition.', zh: '优秀！你还提到了前提条件。' },
+            baseTV: 50
+          }
+        ]
+      },
+      {
+        id: 'system-design',
+        question: {
+          en: 'Design a URL shortening service like bit.ly. What are the key components?',
+          zh: '设计一个类似 bit.ly 的短链接服务。关键组件有哪些？'
+        },
+        options: [
+          {
+            text: { en: 'Just a database that maps short URLs to long URLs', zh: '只需要一个将短链接映射到长链接的数据库' },
+            feedback: { en: 'Too simplistic. Consider scalability and caching.', zh: '过于简单。考虑可扩展性和缓存。' },
+            baseTV: 15
+          },
+          {
+            text: { en: 'Database + hash function + caching layer + load balancer', zh: '数据库 + 哈希函数 + 缓存层 + 负载均衡器' },
+            feedback: { en: 'Good structure! Mention replication for high availability.', zh: '结构不错！可以提及高可用性的复制。' },
+            baseTV: 35
+          },
+          {
+            text: { en: 'Full design with database sharding, CDN, rate limiting, and analytics', zh: '完整设计包含数据库分片、CDN、限流和分析' },
+            requiredGear: { internship: 1 },
+            feedback: { en: 'Outstanding! This shows real-world system design thinking.', zh: '出色！这展示了真实的系统设计思维。' },
+            baseTV: 50
+          }
+        ]
+      },
+      {
+        id: 'db-normalization',
+        question: {
+          en: 'Explain database normalization and when you might intentionally denormalize.',
+          zh: '解释数据库规范化，以及何时你可能会故意反规范化。'
+        },
+        options: [
+          {
+            text: { en: 'Normalization removes duplicate data; denormalization is always bad', zh: '规范化去除重复数据；反规范化总是不好的' },
+            feedback: { en: 'Denormalization is not always bad. It has valid use cases.', zh: '反规范化并非总是不好。它有合理的应用场景。' },
+            baseTV: 15
+          },
+          {
+            text: { en: 'Normalization reduces redundancy; denormalize for read-heavy workloads', zh: '规范化减少冗余；在读多写少的场景下反规范化' },
+            feedback: { en: 'Good answer! Trade-offs between consistency and performance.', zh: '好答案！一致性和性能之间的权衡。' },
+            baseTV: 35
+          },
+          {
+            text: { en: '3NF for consistency + strategic denormalization with materialized views for analytics', zh: '3NF 保证一致性 + 用物化视图进行策略性反规范化以支持分析' },
+            requiredGear: { research: 1 },
+            feedback: { en: 'Excellent! You understand both theory and practical optimization.', zh: '优秀！你理解了理论和实际优化。' },
+            baseTV: 50
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'research-talk',
+    title: { en: 'Research Discussion', zh: '学术讨论' },
+    description: {
+      en: 'Academic discussion for research-oriented programs (requires Research background)',
+      zh: '研究型项目的学术讨论（需要科研背景）'
+    },
+    requiredGear: { research: 1 },
+    questions: [
+      {
+        id: 'research-interest',
+        question: {
+          en: 'What research area interests you most and why?',
+          zh: '你对哪个研究领域最感兴趣，为什么？'
+        },
+        options: [
+          {
+            text: { en: 'Mention a broad field like "AI" without specifics', zh: '提到一个宽泛的领域如"AI"，没有具体方向' },
+            feedback: { en: 'Too vague. Show depth by citing specific problems.', zh: '太模糊了。引用具体问题来展示深度。' },
+            baseTV: 20
+          },
+          {
+            text: { en: 'Name a specific problem and mention 2-3 recent papers', zh: '指出一个具体问题并提及 2-3 篇近期论文' },
+            feedback: { en: 'Great! This shows you follow the literature.', zh: '很好！这表明你关注文献动态。' },
+            baseTV: 40
+          },
+          {
+            text: { en: 'Connect the problem to the advisor\'s work and propose an approach', zh: '将问题与导师的工作联系起来并提出研究思路' },
+            requiredGear: { research: 2 },
+            feedback: { en: 'Outstanding! This demonstrates research maturity.', zh: '出色！这展示了研究成熟度。' },
+            baseTV: 55
+          }
+        ]
+      },
+      {
+        id: 'methodology',
+        question: {
+          en: 'How would you approach a research problem if the initial hypothesis fails?',
+          zh: '如果初始假设失败，你会如何处理一个研究问题？'
+        },
+        options: [
+          {
+            text: { en: 'Abandon the project and switch to a new topic', zh: '放弃项目，转向新课题' },
+            feedback: { en: 'Research often involves pivoting, but not immediate abandonment.', zh: '研究常涉及调整，但不是立即放弃。' },
+            baseTV: 15
+          },
+          {
+            text: { en: 'Analyze why it failed, refine the hypothesis, and redesign experiments', zh: '分析失败原因，改进假设，重新设计实验' },
+            feedback: { en: 'Good scientific approach! Iteration is key.', zh: '好的科学方法！迭代是关键。' },
+            baseTV: 40
+          },
+          {
+            text: { en: 'Document negative results, explore boundary conditions, and publish if significant', zh: '记录负面结果，探索边界条件，若有意义则发表' },
+            requiredGear: { research: 2 },
+            feedback: { en: 'Excellent! This shows true research mindset.', zh: '优秀！这展示了真正的研究思维。' },
+            baseTV: 55
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'case-study',
+    title: { en: 'Case Interview', zh: '案例分析' },
+    description: {
+      en: 'Business case interviews for MBA and management programs',
+      zh: 'MBA 和管理类项目的商业案例面试'
+    },
+    requiredGear: { ielts: 7.0 },
+    questions: [
+      {
+        id: 'market-entry',
+        question: {
+          en: 'A European luxury brand wants to enter the Chinese market. What factors should they consider?',
+          zh: '一个欧洲奢侈品牌想进入中国市场。他们应该考虑哪些因素？'
+        },
+        options: [
+          {
+            text: { en: 'Focus only on marketing channels like WeChat and Douyin', zh: '只关注微信和抖音等营销渠道' },
+            feedback: { en: 'Too narrow. Consider regulatory, competitive, and cultural factors.', zh: '太局限了。考虑监管、竞争和文化因素。' },
+            baseTV: 15
+          },
+          {
+            text: { en: 'Analyze market size, competition, regulations, and localization strategy', zh: '分析市场规模、竞争、法规和本地化策略' },
+            feedback: { en: 'Good structured thinking! Add consumer behavior analysis.', zh: '结构化思维不错！加上消费者行为分析。' },
+            baseTV: 35
+          },
+          {
+            text: { en: 'Full framework: PESTEL + Porter\'s 5 Forces + consumer segmentation + entry mode', zh: '完整框架：PESTEL + 波特五力 + 消费者细分 + 进入模式' },
+            requiredGear: { internship: 1 },
+            feedback: { en: 'Outstanding consulting-level analysis!', zh: '出色的咨询级分析！' },
+            baseTV: 50
+          }
+        ]
+      },
+      {
+        id: 'profitability',
+        question: {
+          en: 'A coffee shop chain\'s profits have dropped 20% this quarter. Diagnose the problem.',
+          zh: '一家连锁咖啡店本季度利润下降了 20%。诊断问题所在。'
+        },
+        options: [
+          {
+            text: { en: 'Blame external factors like the economy or competition', zh: '归咎于经济或竞争等外部因素' },
+            feedback: { en: 'Do not jump to conclusions. Break down revenue and costs first.', zh: '不要急于下结论。先分解收入和成本。' },
+            baseTV: 15
+          },
+          {
+            text: { en: 'Use profit tree: Revenue (volume x price) vs Costs (fixed + variable)', zh: '使用利润树：收入（量 x 价）vs 成本（固定 + 变动）' },
+            feedback: { en: 'Good framework! Now dig into each branch.', zh: '好框架！现在深入每个分支。' },
+            baseTV: 35
+          },
+          {
+            text: { en: 'Profit tree + benchmark against competitors + check for operational inefficiencies', zh: '利润树 + 与竞争对手对标 + 检查运营效率低下' },
+            requiredGear: { internship: 1 },
+            feedback: { en: 'Excellent! Comprehensive and actionable diagnosis.', zh: '优秀！全面且可操作的诊断。' },
+            baseTV: 50
+          }
+        ]
+      }
+    ]
   }
 ]
 
-export function getAvailableSimulations(gearState: { ielts?: number; internship?: number }): Simulation[] {
+export function getAvailableSimulations(gearState: { ielts?: number; internship?: number; research?: number }): Simulation[] {
   return INTERVIEW_SIMULATIONS.filter(sim => {
     if (!sim.requiredGear) return true
     
@@ -240,11 +448,14 @@ export function getAvailableSimulations(gearState: { ielts?: number; internship?
     if (sim.requiredGear.internship && (!gearState.internship || gearState.internship < sim.requiredGear.internship)) {
       return false
     }
+    if (sim.requiredGear.research && (!gearState.research || gearState.research < sim.requiredGear.research)) {
+      return false
+    }
     return true
   })
 }
 
-// export function canSelectOption(option: SimulationOption, gearState: { ielts?: number; internship?: number }): boolean {
+// export function canSelectOption(option: SimulationOption, gearState: { ielts?: number; internship?: number; research?: number }): boolean {
 //   if (!option.requiredGear) return true
   
 //   if (option.requiredGear.ielts && (!gearState.ielts || gearState.ielts < option.requiredGear.ielts)) {
@@ -285,6 +496,15 @@ export function canSelectOption(option: SimulationOption, gearState: { ielts?: n
     
     if (internshipLevel < option.requiredGear.internship) {
       return false; // 实习段数不够，锁定
+    }
+  }
+
+  // 5. 验证科研背景
+  if (option.requiredGear.research) {
+    const researchLevel = gearState.research || 0;
+    
+    if (researchLevel < option.requiredGear.research) {
+      return false; // 科研背景不够，锁定
     }
   }
 

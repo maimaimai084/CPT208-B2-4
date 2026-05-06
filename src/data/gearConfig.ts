@@ -19,8 +19,8 @@ export const GEAR_CONFIG: Gear[] = [
     },
     icon: '📝',
     maxLevel: 4,
-    prices: [0, 50, 100, 200],
-    tvBonus: [0.1, 0.2, 0.35, 0.5],
+    prices: [0, 50, 100, 200, 200],
+    tvBonus: [0.1, 0.2, 0.35, 0.45],
     levels: [
       { en: '6.0', zh: '6.0' },
       { en: '6.5', zh: '6.5' },
@@ -37,8 +37,8 @@ export const GEAR_CONFIG: Gear[] = [
     },
     icon: '📊',
     maxLevel: 4,
-    prices: [0, 50, 100, 200],
-    tvBonus: [0.1, 0.2, 0.35, 0.5],
+    prices: [0, 50, 100, 200, 200],
+    tvBonus: [0.1, 0.2, 0.35, 0.45],
     levels: [
       { en: '3.0', zh: '3.0' },
       { en: '3.3', zh: '3.3' },
@@ -55,7 +55,7 @@ export const GEAR_CONFIG: Gear[] = [
     },
     icon: '💼',
     maxLevel: 3,
-    prices: [0, 30, 80, 150],
+    prices: [0, 50, 100, 200],
     tvBonus: [0.05, 0.15, 0.25],
     levels: [
       { en: 'None', zh: '无' },
@@ -73,8 +73,8 @@ export const GEAR_CONFIG: Gear[] = [
     },
     icon: '🔬',
     maxLevel: 2,
-    prices: [0, 40, 120],
-    tvBonus: [0.15, 0.30],
+    prices: [0, 80, 170],
+    tvBonus: [0.15, 0.25],
     levels: [
       { en: 'None', zh: '无' },
       { en: 'Course Project', zh: '课程项目' },
@@ -90,8 +90,8 @@ export const GEAR_CONFIG: Gear[] = [
     },
     icon: '🏆',
     maxLevel: 3,
-    prices: [0, 60, 150],
-    tvBonus: [0.1, 0.2, 0.35],
+    prices: [0, 60, 140, 200],
+    tvBonus: [0.1, 0.2, 0.3],
     levels: [
       { en: 'None', zh: '无' },
       { en: 'University Level', zh: '校级' },
@@ -108,8 +108,8 @@ export const GEAR_CONFIG: Gear[] = [
     },
     icon: '✉️',
     maxLevel: 3,
-    prices: [0, 40, 100],
-    tvBonus: [0.1, 0.2, 0.3],
+    prices: [0, 40, 100, 160],
+    tvBonus: [0.1, 0.2, 0.25],
     levels: [
       { en: 'None', zh: '无' },
       { en: 'TA Letter', zh: 'TA推荐' },

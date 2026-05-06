@@ -54,7 +54,7 @@
 
       <div class="bg-white rounded-2xl border-2 border-[#E0C3CC] p-5 text-center shadow-[0_4px_0_#F0D8E0] relative overflow-hidden group hover:-translate-y-1 transition-transform">
         <div class="absolute top-0 right-0 w-16 h-16 bg-emerald-50 rounded-full blur-xl group-hover:bg-emerald-100 transition-colors"></div>
-        <div class="text-3xl font-black text-emerald-500 relative z-10">{{ completedLevels.length }}/5</div>
+        <div class="text-3xl font-black text-emerald-500 relative z-10">{{ completedLevels.length }}/10</div>
         <div class="text-xs font-bold text-slate-400 mt-2 uppercase tracking-wider relative z-10">Levels Done</div>
       </div>
     </div>

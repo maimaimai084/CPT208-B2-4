@@ -57,5 +57,42 @@ export const MATCH_LEVELS: MatchLevel[] = [
       { id: 'p4-4', left: { en: 'Year 3, Semester 2', zh: '大三下学期' }, right: { en: 'Submit applications & interview', zh: '提交申请 & 准备面试' } },
       { id: 'p4-5', left: { en: 'Year 4, Semester 1', zh: '大四上学期' }, right: { en: 'Receive offers & apply for visa', zh: '接收offer & 办理签证' } }
     ]
+  },
+  {
+    id: 'match-5',
+    title: { en: 'Scholarship Fit', zh: '奖学金匹配' },
+    description: { en: 'Match scholarship profile with strongest evidence', zh: '将奖学金类型与最佳证明材料配对' },
+    pairs: [
+      { id: 'p5-1', left: { en: 'Research Excellence Scholarship', zh: '科研卓越奖学金' }, right: { en: 'Publications + methodology depth', zh: '论文成果 + 方法论深度' } },
+      { id: 'p5-2', left: { en: 'Leadership Scholarship', zh: '领导力奖学金' }, right: { en: 'Team impact + measurable outcomes', zh: '团队影响力 + 可量化结果' } },
+      { id: 'p5-3', left: { en: 'Community Impact Award', zh: '社区贡献奖' }, right: { en: 'Sustained service + beneficiaries', zh: '长期服务 + 受益人规模' } },
+      { id: 'p5-4', left: { en: 'Need-based Grant', zh: '助学金（经济需求）' }, right: { en: 'Verified financial statements', zh: '可核验的资金证明' } },
+      { id: 'p5-5', left: { en: 'Women in STEM Award', zh: '女性STEM奖' }, right: { en: 'STEM achievements + mentoring evidence', zh: 'STEM成果 + 帮扶证明' } }
+    ]
+  },
+  {
+    id: 'match-6',
+    title: { en: 'Visa Docs Mapping', zh: '签证材料映射' },
+    description: { en: 'Match each document with the correct visa purpose', zh: '将签证材料与用途配对' },
+    pairs: [
+      { id: 'p6-1', left: { en: 'CAS / I-20', zh: 'CAS / I-20' }, right: { en: 'Proof of institutional sponsorship', zh: '证明学校录取与担保关系' } },
+      { id: 'p6-2', left: { en: 'Bank Statement', zh: '银行流水' }, right: { en: 'Demonstrate stable proof of funds', zh: '证明稳定资金能力' } },
+      { id: 'p6-3', left: { en: 'TB Test Certificate', zh: '肺结核检测证明' }, right: { en: 'Health compliance for entry clearance', zh: '满足入境健康要求' } },
+      { id: 'p6-4', left: { en: 'Biometric Appointment', zh: '生物信息采集' }, right: { en: 'Identity verification in visa workflow', zh: '签证流程中的身份核验' } },
+      { id: 'p6-5', left: { en: 'ATAS Clearance', zh: 'ATAS许可' }, right: { en: 'Security review for sensitive majors', zh: '敏感专业的安全审查' } }
+    ]
+  },
+  {
+    id: 'match-7',
+    title: { en: 'Program-Outcome Match', zh: '项目与结果匹配' },
+    description: { en: 'Match program features with realistic outcomes', zh: '将项目特征与合理结果配对' },
+    pairs: [
+      { id: 'p7-1', left: { en: 'Coursework-heavy taught master', zh: '授课型硕士（课程密集）' }, right: { en: 'Fast skill build, shorter thesis exposure', zh: '技能提升快，论文训练相对少' } },
+      { id: 'p7-2', left: { en: 'Research-intensive master', zh: '研究型硕士' }, right: { en: 'Stronger PhD pipeline readiness', zh: '更强的博士衔接能力' } },
+      { id: 'p7-3', left: { en: 'Co-op integrated program', zh: '带实习合作项目' }, right: { en: 'Higher short-term employability', zh: '短期就业竞争力提升' } },
+      { id: 'p7-4', left: { en: 'Small cohort seminar format', zh: '小班研讨课' }, right: { en: 'More direct professor interaction', zh: '与教授互动更频繁' } },
+      { id: 'p7-5', left: { en: 'Urban campus with industry clusters', zh: '位于产业集群城市' }, right: { en: 'Denser internship networking opportunities', zh: '更密集的实习与人脉机会' } },
+      { id: 'p7-6', left: { en: 'High tuition + strong alumni network', zh: '学费较高 + 强校友网络' }, right: { en: 'Need ROI analysis before commit', zh: '入学前需做ROI测算' } }
+    ]
   }
 ];

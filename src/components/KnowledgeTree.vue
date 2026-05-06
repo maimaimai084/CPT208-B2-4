@@ -125,9 +125,27 @@
         </g>
 
         <text x="350" y="445" text-anchor="middle" font-size="11" fill="#9CA3AF" opacity="0.7">
-          ← {{ isExplorerRole ? (isZh ? '按顺序解锁：自我 → 调研 → 文书 → 抉择 → 规划' : 'Unlock in order: Identity → Research → Essays → Decide → Plan') : (isZh ? '按顺序解锁：目标 → 材料 → 提交 → 面试 → 成功' : 'Unlock in order: Goals → Materials → Submit → Interview → Success') }} →
+          {{ isZh ? '完成当前阶段解锁下一关卡' : 'Complete current stage to unlock the next' }}
         </text>
       </svg>
+    </div>
+
+    <div class="mt-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-100">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="text-2xl">{{ stageDetail.icon }}</span>
+        <div>
+          <div class="font-bold text-slate-700">{{ stageDetail.title }}</div>
+          <div class="text-xs text-slate-500">{{ stageDetail.subtitle }}</div>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-2 mt-3">
+        <div v-for="(topic, idx) in stageDetail.topics" :key="idx"
+             class="flex items-center gap-2 text-xs px-2 py-1.5 rounded-lg"
+             :class="topic.covered ? 'bg-green-100 text-green-700' : 'bg-white text-slate-500 border border-slate-200'">
+          <span>{{ topic.covered ? '✅' : '⬜' }}</span>
+          <span>{{ topic.label }}</span>
+        </div>
+      </div>
     </div>
 
     <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -205,17 +223,17 @@ const stageNodes = computed(() => {
   const isExplorer = role === 'explorer' || role === 'confused'
   
   const baseNodes = isExplorer ? [
-    { x: 220, y: 300, id: 'level-1', icon: '🧭', label: '1. ' + (props.isZh ? '自我' : 'Identity'), order: 1, labelX: 185, labelY: 335 },
-    { x: 480, y: 260, id: 'level-2', icon: '�', label: '2. ' + (props.isZh ? '调研' : 'Research'), order: 2, labelX: 445, labelY: 295 },
-    { x: 230, y: 200, id: 'level-3', icon: '✍️', label: '3. ' + (props.isZh ? '文书' : 'Essays'), order: 3, labelX: 195, labelY: 235 },
-    { x: 470, y: 160, id: 'level-4', icon: '⚖️', label: '4. ' + (props.isZh ? '抉择' : 'Decide'), order: 4, labelX: 435, labelY: 195 },
-    { x: 350, y: 80, id: 'level-5', icon: '🧭', label: '5. ' + (props.isZh ? '规划' : 'Plan'), order: 5, labelX: 315, labelY: 115 }
+    { x: 220, y: 300, id: 'level-1', icon: '🧭', label: '1. ' + (props.isZh ? '探索定位' : 'Discovery'), order: 1, labelX: 185, labelY: 335 },
+    { x: 480, y: 260, id: 'level-2', icon: '🔍', label: '2. ' + (props.isZh ? '调研资金' : 'Research'), order: 2, labelX: 445, labelY: 295 },
+    { x: 230, y: 200, id: 'level-3', icon: '✍️', label: '3. ' + (props.isZh ? '文书提交' : 'Craft'), order: 3, labelX: 195, labelY: 235 },
+    { x: 470, y: 160, id: 'level-4', icon: '🔗', label: '4. ' + (props.isZh ? '面试连接' : 'Connect'), order: 4, labelX: 435, labelY: 195 },
+    { x: 350, y: 80, id: 'level-5', icon: '✈️', label: '5. ' + (props.isZh ? '决策出发' : 'Depart'), order: 5, labelX: 315, labelY: 115 }
   ] : [
-    { x: 220, y: 300, id: 'level-1', icon: '🎯', label: '1. ' + (props.isZh ? '目标' : 'Goals'), order: 1, labelX: 185, labelY: 335 },
-    { x: 480, y: 260, id: 'level-2', icon: '📋', label: '2. ' + (props.isZh ? '材料' : 'Materials'), order: 2, labelX: 445, labelY: 295 },
-    { x: 230, y: 200, id: 'level-3', icon: '🚀', label: '3. ' + (props.isZh ? '提交' : 'Submit'), order: 3, labelX: 195, labelY: 235 },
-    { x: 470, y: 160, id: 'level-4', icon: '💬', label: '4. ' + (props.isZh ? '面试' : 'Interview'), order: 4, labelX: 435, labelY: 195 },
-    { x: 350, y: 80, id: 'level-5', icon: '🏆', label: '5. ' + (props.isZh ? '成功' : 'Success'), order: 5, labelX: 315, labelY: 115 }
+    { x: 220, y: 300, id: 'level-1', icon: '🎯', label: '1. ' + (props.isZh ? '目标规划' : 'Target'), order: 1, labelX: 185, labelY: 335 },
+    { x: 480, y: 260, id: 'level-2', icon: '📋', label: '2. ' + (props.isZh ? '材料资金' : 'Materials'), order: 2, labelX: 445, labelY: 295 },
+    { x: 230, y: 200, id: 'level-3', icon: '🚀', label: '3. ' + (props.isZh ? '申请提交' : 'Apply'), order: 3, labelX: 195, labelY: 235 },
+    { x: 470, y: 160, id: 'level-4', icon: '💬', label: '4. ' + (props.isZh ? '面试连接' : 'Interview'), order: 4, labelX: 435, labelY: 195 },
+    { x: 350, y: 80, id: 'level-5', icon: '🏆', label: '5. ' + (props.isZh ? '决策启程' : 'Decide'), order: 5, labelX: 315, labelY: 115 }
   ]
 
   return baseNodes.map(node => {
@@ -358,32 +376,32 @@ const stageInfo = computed(() => {
   
   if (isExplorer) {
     const explorerStages = props.isZh ? [
-      { name: '🧭 自我认知', desc: '探索自我兴趣与优势，明确升学方向' },
-      { name: '🔍 调研探索', desc: '调研目标院校与专业，收集关键信息' },
-      { name: '✍️ 文书创作', desc: '撰写个人陈述与申请文书，展现独特性' },
-      { name: '⚖️ 抉择权衡', desc: '权衡不同选择，做出明智的申请决策' },
-      { name: '🗺️ 规划未来', desc: '制定详细申请计划，稳步迈向目标' }
+      { name: '🧭 探索与定位', desc: '探索兴趣、优势与选校定位，找到最匹配的项目' },
+      { name: '🔍 调研与资金', desc: '收集材料，探索奖学金与资助渠道' },
+      { name: '✍️ 文书与提交', desc: '撰写文书，打磨CV，提交申请' },
+      { name: '🔗 连接与面试', desc: '联系教授，准备面试，专业跟进' },
+      { name: '✈️ 决策与出发', desc: '比较offer，办理签证，准备出发' }
     ] : [
-      { name: '🧭 Identity', desc: 'Explore your interests and strengths, define your direction' },
-      { name: '🔍 Research', desc: 'Investigate target schools and programs, gather key information' },
-      { name: '✍️ Essays', desc: 'Write personal statements and application essays, showcase uniqueness' },
-      { name: '⚖️ Decide', desc: 'Weigh different options, make wise application decisions' },
-      { name: '🗺️ Plan', desc: 'Create detailed application plan, steadily move toward your goal' }
+      { name: '🧭 Discovery', desc: 'Explore your interests, strengths & school fit' },
+      { name: '🔍 Research & Funding', desc: 'Gather documents, explore scholarships & funding' },
+      { name: '✍️ Craft & Submit', desc: 'Write essays, polish CV & submit applications' },
+      { name: '🔗 Connect & Interview', desc: 'Network with professors & ace interviews' },
+      { name: '✈️ Decide & Depart', desc: 'Compare offers, secure visa & depart' }
     ]
     return explorerStages[currentStage.value - 1] || explorerStages[0]
   } else {
     const sprintStages = props.isZh ? [
-      { name: '🎯 目标设定', desc: '明确申请目标，锁定理想院校' },
-      { name: '📋 材料准备', desc: '高效准备申请材料，确保完整无误' },
-      { name: '🚀 提交申请', desc: '快速提交申请，抢占先机' },
-      { name: '💬 面试冲刺', desc: '全力准备面试，展现最佳状态' },
-      { name: '🏆 成功录取', desc: '收获录取通知，开启新征程！' }
+      { name: '🎯 目标与规划', desc: '明确目标，制定选校策略与时间规划' },
+      { name: '📋 材料与资金', desc: '高效准备材料，争取奖学金与资助' },
+      { name: '🚀 申请与提交', desc: '完善文书与CV，高效提交申请' },
+      { name: '💬 面试与连接', desc: '面试冲刺，建立人脉，专业跟进' },
+      { name: '🏆 决策与启程', desc: '做出最终决策，办理签证，开启新旅程' }
     ] : [
-      { name: '🎯 Goal Setting', desc: 'Define clear application goals, target ideal schools' },
-      { name: '📋 Materials', desc: 'Efficiently prepare application materials, ensure completeness' },
-      { name: '🚀 Submit', desc: 'Submit applications quickly, seize the opportunity' },
-      { name: '💬 Interview', desc: 'Prepare intensively for interviews, show your best self' },
-      { name: '🏆 Success', desc: 'Receive admission offers, start your new journey!' }
+      { name: '🎯 Target & Plan', desc: 'Define clear goals, build strategy & timeline' },
+      { name: '📋 Materials & Funding', desc: 'Prepare materials efficiently, secure financial aid' },
+      { name: '🚀 Apply & Submit', desc: 'Finalize essays, perfect CV & submit apps' },
+      { name: '💬 Interview & Connect', desc: 'Ace interviews, build connections & follow up' },
+      { name: '🏆 Decide & Go', desc: 'Make final decisions, handle visa & launch' }
     ]
     return sprintStages[currentStage.value - 1] || sprintStages[0]
   }
@@ -394,6 +412,136 @@ function handleNodeClick(node) {
     emit('select-stage', node.id)
   }
 }
+
+const stageDetail = computed(() => {
+  const isExplorer = isExplorerRole.value
+  const details = isExplorer ? (props.isZh ? [
+    { icon: '🧭', title: '探索与定位', subtitle: '涵盖选校定位、自我认知、目标设定', topics: [
+      { label: '兴趣与优势分析', covered: props.completedLevels.includes('level-1') },
+      { label: '院校调研对比', covered: props.completedLevels.includes('level-1') },
+      { label: '专业方向匹配', covered: props.completedLevels.includes('level-1') },
+      { label: '选校目标清单', covered: props.completedLevels.includes('level-1') }
+    ]},
+    { icon: '🔍', title: '调研与资金', subtitle: '涵盖材料准备、奖学金申请、研究计划', topics: [
+      { label: '材料清单整理', covered: props.completedLevels.includes('level-2') },
+      { label: '奖学金与资助', covered: props.completedLevels.includes('level-2') },
+      { label: '推荐信准备', covered: props.completedLevels.includes('level-2') },
+      { label: '成绩认证(WES)', covered: props.completedLevels.includes('level-2') }
+    ]},
+    { icon: '✍️', title: '文书与提交', subtitle: '涵盖文书写作、CV打磨、网申提交、研究计划', topics: [
+      { label: '个人陈述撰写', covered: props.completedLevels.includes('level-3') },
+      { label: 'CV/简历优化', covered: props.completedLevels.includes('level-3') },
+      { label: '网申材料提交', covered: props.completedLevels.includes('level-3') },
+      { label: '研究计划套磁', covered: props.completedLevels.includes('level-3') }
+    ]},
+    { icon: '🔗', title: '连接与面试', subtitle: '涵盖面试准备、教授套磁、跟进沟通', topics: [
+      { label: '面试模拟训练', covered: props.completedLevels.includes('level-4') },
+      { label: '教授套磁技巧', covered: props.completedLevels.includes('level-4') },
+      { label: '常见问题应对', covered: props.completedLevels.includes('level-4') },
+      { label: '面试后跟进', covered: props.completedLevels.includes('level-4') }
+    ]},
+    { icon: '✈️', title: '决策与出发', subtitle: '涵盖Offer比较、签证办理、行前准备', topics: [
+      { label: '多offer对比', covered: props.completedLevels.includes('level-5') },
+      { label: '奖学金评估', covered: props.completedLevels.includes('level-5') },
+      { label: '签证申请办理', covered: props.completedLevels.includes('level-5') },
+      { label: '行前准备清单', covered: props.completedLevels.includes('level-5') }
+    ]}
+  ] : [
+    { icon: '🧭', title: 'Discovery', subtitle: 'School selection, self-assessment & goal setting', topics: [
+      { label: 'Interest & Strength Analysis', covered: props.completedLevels.includes('level-1') },
+      { label: 'School Research & Comparison', covered: props.completedLevels.includes('level-1') },
+      { label: 'Program Fit Matching', covered: props.completedLevels.includes('level-1') },
+      { label: 'Target School List', covered: props.completedLevels.includes('level-1') }
+    ]},
+    { icon: '🔍', title: 'Research & Funding', subtitle: 'Documents, scholarships & financial aid', topics: [
+      { label: 'Document Checklist', covered: props.completedLevels.includes('level-2') },
+      { label: 'Scholarships & Funding', covered: props.completedLevels.includes('level-2') },
+      { label: 'Recommendation Letters', covered: props.completedLevels.includes('level-2') },
+      { label: 'Credential Evaluation', covered: props.completedLevels.includes('level-2') }
+    ]},
+    { icon: '✍️', title: 'Craft & Submit', subtitle: 'Essays, CV, online applications & research proposals', topics: [
+      { label: 'Personal Statement', covered: props.completedLevels.includes('level-3') },
+      { label: 'CV / Resume Polish', covered: props.completedLevels.includes('level-3') },
+      { label: 'Online Application', covered: props.completedLevels.includes('level-3') },
+      { label: 'Research Proposal', covered: props.completedLevels.includes('level-3') }
+    ]},
+    { icon: '🔗', title: 'Connect & Interview', subtitle: 'Interview prep, networking & follow-ups', topics: [
+      { label: 'Mock Interviews', covered: props.completedLevels.includes('level-4') },
+      { label: 'Professor Networking', covered: props.completedLevels.includes('level-4') },
+      { label: 'Common Q&A Practice', covered: props.completedLevels.includes('level-4') },
+      { label: 'Post-Interview Follow-up', covered: props.completedLevels.includes('level-4') }
+    ]},
+    { icon: '✈️', title: 'Decide & Depart', subtitle: 'Offer comparison, visa & pre-departure prep', topics: [
+      { label: 'Multi-Offer Comparison', covered: props.completedLevels.includes('level-5') },
+      { label: 'Scholarship Evaluation', covered: props.completedLevels.includes('level-5') },
+      { label: 'Visa Application', covered: props.completedLevels.includes('level-5') },
+      { label: 'Pre-departure Checklist', covered: props.completedLevels.includes('level-5') }
+    ]}
+  ]) : (props.isZh ? [
+    { icon: '🎯', title: '目标与规划', subtitle: '涵盖选校策略、时间管理、目标设定', topics: [
+      { label: '申请目标确定', covered: props.completedLevels.includes('level-1') },
+      { label: '院校排名分析', covered: props.completedLevels.includes('level-1') },
+      { label: '申请时间线', covered: props.completedLevels.includes('level-1') },
+      { label: '冲刺/保底策略', covered: props.completedLevels.includes('level-1') }
+    ]},
+    { icon: '📋', title: '材料与资金', subtitle: '涵盖材料准备、奖学金、资助申请', topics: [
+      { label: '材料清单准备', covered: props.completedLevels.includes('level-2') },
+      { label: '奖学金申请', covered: props.completedLevels.includes('level-2') },
+      { label: '推荐信跟进', covered: props.completedLevels.includes('level-2') },
+      { label: '成绩送分认证', covered: props.completedLevels.includes('level-2') }
+    ]},
+    { icon: '🚀', title: '申请与提交', subtitle: '涵盖文书终审、网申提交、材料完善', topics: [
+      { label: '文书终审打磨', covered: props.completedLevels.includes('level-3') },
+      { label: 'CV定稿', covered: props.completedLevels.includes('level-3') },
+      { label: '网申系统填写', covered: props.completedLevels.includes('level-3') },
+      { label: '材料提交确认', covered: props.completedLevels.includes('level-3') }
+    ]},
+    { icon: '💬', title: '面试与连接', subtitle: '涵盖面试冲刺、人脉建设、跟进策略', topics: [
+      { label: '面试题库练习', covered: props.completedLevels.includes('level-4') },
+      { label: '模拟面试', covered: props.completedLevels.includes('level-4') },
+      { label: '邮件跟进模板', covered: props.completedLevels.includes('level-4') },
+      { label: '教授联络策略', covered: props.completedLevels.includes('level-4') }
+    ]},
+    { icon: '🏆', title: '决策与启程', subtitle: '涵盖最终决策、签证办理、出发准备', topics: [
+      { label: 'Offer对比决策', covered: props.completedLevels.includes('level-5') },
+      { label: '奖学金/学费评估', covered: props.completedLevels.includes('level-5') },
+      { label: '签证申请办理', covered: props.completedLevels.includes('level-5') },
+      { label: '出发准备清单', covered: props.completedLevels.includes('level-5') }
+    ]}
+  ] : [
+    { icon: '🎯', title: 'Target & Plan', subtitle: 'School strategy, time management & goal setting', topics: [
+      { label: 'Application Goals', covered: props.completedLevels.includes('level-1') },
+      { label: 'School Ranking Analysis', covered: props.completedLevels.includes('level-1') },
+      { label: 'Application Timeline', covered: props.completedLevels.includes('level-1') },
+      { label: 'Safety/Reach Strategy', covered: props.completedLevels.includes('level-1') }
+    ]},
+    { icon: '📋', title: 'Materials & Funding', subtitle: 'Documents, scholarships & financial aid', topics: [
+      { label: 'Document Checklist', covered: props.completedLevels.includes('level-2') },
+      { label: 'Scholarship Applications', covered: props.completedLevels.includes('level-2') },
+      { label: 'Recommendation Follow-up', covered: props.completedLevels.includes('level-2') },
+      { label: 'Score Sending', covered: props.completedLevels.includes('level-2') }
+    ]},
+    { icon: '🚀', title: 'Apply & Submit', subtitle: 'Final essay review, online apps & submission', topics: [
+      { label: 'Final Essay Review', covered: props.completedLevels.includes('level-3') },
+      { label: 'CV Finalized', covered: props.completedLevels.includes('level-3') },
+      { label: 'Online Application', covered: props.completedLevels.includes('level-3') },
+      { label: 'Submission Confirmed', covered: props.completedLevels.includes('level-3') }
+    ]},
+    { icon: '💬', title: 'Interview & Connect', subtitle: 'Interview prep, networking & follow-up', topics: [
+      { label: 'Interview Q&A Practice', covered: props.completedLevels.includes('level-4') },
+      { label: 'Mock Interviews', covered: props.completedLevels.includes('level-4') },
+      { label: 'Follow-up Templates', covered: props.completedLevels.includes('level-4') },
+      { label: 'Professor Outreach', covered: props.completedLevels.includes('level-4') }
+    ]},
+    { icon: '🏆', title: 'Decide & Go', subtitle: 'Final decisions, visa & departure prep', topics: [
+      { label: 'Offer Comparison', covered: props.completedLevels.includes('level-5') },
+      { label: 'Scholarship/Tuition Eval', covered: props.completedLevels.includes('level-5') },
+      { label: 'Visa Application', covered: props.completedLevels.includes('level-5') },
+      { label: 'Departure Checklist', covered: props.completedLevels.includes('level-5') }
+    ]}
+  ])
+  return details[currentStage.value - 1] || details[0]
+})
 
 function handleLeafClick(leaf) {
   console.log('Leaf clicked:', leaf.type)
