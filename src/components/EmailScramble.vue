@@ -15,8 +15,23 @@
           </p>
         </div>
       </div>
-      <div class="text-sm font-bold text-[#E3B75C] bg-[#E3B75C]/15 px-4 py-2 rounded-xl border border-[#E3B75C]/30">
-        🎯 TV {{ isZh ? '加成' : 'Bonus' }}: +{{ (tvBonus * 100).toFixed(0) }}%
+      <div class="flex items-center gap-2">
+        <span v-if="gameStarted && !showResults"
+              class="text-xs font-bold px-2 py-1 rounded-lg border"
+              :class="timeLeft <= 20 ? 'text-red-600 bg-red-50 border-red-200' : 'text-slate-600 bg-slate-50 border-slate-200'">
+          ⏳ {{ timeLeft }}s
+        </span>
+        <button
+          v-if="gameStarted && !showResults && (inventory?.timeFreezes || 0) > 0"
+          @click="activateTimeFreeze"
+          :disabled="freezeActive"
+          class="text-xs font-bold px-2 py-1 rounded-lg border transition-colors"
+          :class="freezeActive ? 'text-slate-400 bg-slate-100 border-slate-200 cursor-not-allowed' : 'text-cyan-700 bg-cyan-50 border-cyan-200 hover:bg-cyan-100'">
+          {{ freezeActive ? (isZh ? `冻结中 ${freezeLeft}s` : `Frozen ${freezeLeft}s`) : (isZh ? `时停 x${inventory.timeFreezes}` : `Freeze x${inventory.timeFreezes}`) }}
+        </button>
+        <div class="text-sm font-bold text-[#E3B75C] bg-[#E3B75C]/15 px-4 py-2 rounded-xl border border-[#E3B75C]/30">
+          🎯 TV {{ isZh ? '加成' : 'Bonus' }}: +{{ (tvBonus * 100).toFixed(0) }}%
+        </div>
       </div>
     </div>
 
@@ -30,6 +45,7 @@
           <li>{{ isZh ? '• 按正确的逻辑顺序拖拽排列' : '• Drag and arrange in the correct logical order' }}</li>
           <li>{{ isZh ? '• 排序正确获得 TV 奖励' : '• Correct ordering earns TV rewards' }}</li>
           <li>{{ isZh ? '• 学习专业的申请邮件写作技巧' : '• Learn professional application email writing skills' }}</li>
+          <li>{{ isZh ? `• 高级推荐信场景：${recommendationUnlocked ? '已解锁' : '需 Recommendation Lv1'}` : `• Advanced recommendation scenario: ${recommendationUnlocked ? 'Unlocked' : 'Need Recommendation Lv1'}` }}</li>
         </ul>
       </div>
 
@@ -51,7 +67,7 @@
       <div class="bg-slate-50 rounded-xl p-5 mb-6 inline-block text-left w-full max-w-xs">
         <div class="flex justify-between items-center mb-2">
           <span class="text-sm text-slate-600">{{ isZh ? '总得分' : 'Total Score' }}:</span>
-          <span class="font-bold text-emerald-600">{{ score }} / {{ challenges.length }}</span>
+          <span class="font-bold text-emerald-600">{{ score }} / {{ activeChallenges.length }}</span>
         </div>
         <div class="flex justify-between items-center mb-2">
           <span class="text-sm text-slate-600">{{ isZh ? '奖励 TV' : 'Earned TV' }}:</span>
@@ -76,11 +92,11 @@
     <div v-else class="space-y-4">
       <div class="flex items-center justify-between mb-2">
         <span class="px-3 py-1 bg-slate-800 text-white text-xs font-bold rounded-lg">
-          {{ isZh ? '挑战' : 'Challenge' }} {{ currentChallenge + 1 }} / {{ challenges.length }}
+            {{ isZh ? '挑战' : 'Challenge' }} {{ currentChallenge + 1 }} / {{ activeChallenges.length }}
         </span>
         <div class="flex items-center gap-3">
           <div class="flex gap-1.5">
-            <div v-for="i in challenges.length" :key="i" class="w-2 h-2 rounded-full" :class="i <= currentChallenge + 1 ? 'bg-[#FF9F43]' : 'bg-slate-300'"></div>
+              <div v-for="i in activeChallenges.length" :key="i" class="w-2 h-2 rounded-full" :class="i <= currentChallenge + 1 ? 'bg-[#FF9F43]' : 'bg-slate-300'"></div>
           </div>
           <span class="text-sm font-bold text-[#7FA1ED] bg-[#7FA1ED]/20 px-3 py-1 rounded-full">
             +{{ earnedTV }} TV
@@ -140,22 +156,23 @@
 
       <button v-if="feedback" @click="nextChallenge"
               class="w-full py-3 bg-slate-800 text-white rounded-xl font-bold text-sm hover:bg-slate-900 transition-colors shadow-[0_4px_0_#000000]">
-        {{ currentChallenge < challenges.length - 1 ? (isZh ? '下一题 →' : 'Next Challenge →') : (isZh ? '查看结果 🎉' : 'See Results 🎉') }}
+        {{ currentChallenge < activeChallenges.length - 1 ? (isZh ? '下一题 →' : 'Next Challenge →') : (isZh ? '查看结果 🎉' : 'See Results 🎉') }}
       </button>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onUnmounted } from 'vue'
 import { calculateTVBonus } from '../data/gearConfig'
 
 const props = defineProps({
   gearState: { type: Object, default: () => ({}) },
-  isZh: { type: Boolean, default: false }
+  isZh: { type: Boolean, default: false },
+  inventory: { type: Object, default: () => ({ timeFreezes: 0 }) }
 })
 
-const emit = defineEmits(['complete', 'exit'])
+const emit = defineEmits(['complete', 'exit', 'use-item'])
 
 const gameStarted = ref(false)
 const currentChallenge = ref(0)
@@ -166,6 +183,12 @@ const showResults = ref(false)
 const dragIndex = ref(null)
 const tvBonus = computed(() => calculateTVBonus(props.gearState))
 const totalEarnedTV = computed(() => earnedTV.value + Math.floor(earnedTV.value * tvBonus.value))
+const recommendationUnlocked = computed(() => (props.gearState?.recommendation || 0) >= 1)
+const timeLeft = ref(150)
+const freezeLeft = ref(0)
+const freezeActive = ref(false)
+let timerInterval = null
+let freezeInterval = null
 
 const challenges = computed(() => props.isZh ? [
   {
@@ -203,6 +226,20 @@ const challenges = computed(() => props.isZh ? [
       { id: 'e', text: '感谢您的审阅。如有任何问题，请随时与我联系。祝好！', order: 5 }
     ],
     correctOrder: ['a', 'b', 'c', 'd', 'e']
+  },
+  {
+    title: '📧 推荐信催办（高级）',
+    description: '在不冒犯教授的前提下，礼貌催办推荐信并提供可执行信息',
+    sections: [
+      { id: 'a', text: '尊敬的王教授，感谢您此前同意为我撰写研究生申请推荐信。', order: 1 },
+      { id: 'b', text: '考虑到系统截止时间为11月20日（英国时间23:59），我想确认您是否还需要我补充材料。', order: 2 },
+      { id: 'c', text: '我已将更新后的CV、项目摘要与成绩单链接整理在文末，便于您快速查阅。', order: 3 },
+      { id: 'd', text: '若您时间紧张，我也准备了要点草稿供参考，当然最终内容完全以您的判断为准。', order: 4 },
+      { id: 'e', text: '非常感谢您的指导与支持，如有任何我可协助的部分，请随时告知。', order: 5 },
+      { id: 'f', text: '此致敬礼，李明（学号：20231234）', order: 6 }
+    ],
+    correctOrder: ['a', 'b', 'c', 'd', 'e', 'f'],
+    advanced: true
   }
 ] : [
   {
@@ -240,10 +277,28 @@ const challenges = computed(() => props.isZh ? [
       { id: 'e', text: 'Thank you for your review. Please do not hesitate to contact me if you have any questions. Best regards!', order: 5 }
     ],
     correctOrder: ['a', 'b', 'c', 'd', 'e']
+  },
+  {
+    title: '📧 Recommendation Reminder (Advanced)',
+    description: 'Politely remind a professor about a recommendation letter with clear action items',
+    sections: [
+      { id: 'a', text: 'Dear Professor Wang, thank you again for agreeing to write my graduate recommendation letter.', order: 1 },
+      { id: 'b', text: 'As the submission deadline is 20 Nov (23:59 UK time), I wanted to check whether any additional materials from me would be helpful.', order: 2 },
+      { id: 'c', text: 'I have attached an updated CV, project summary, and transcript links for quick reference.', order: 3 },
+      { id: 'd', text: 'If useful, I also drafted bullet-point highlights; please feel free to use or ignore them at your discretion.', order: 4 },
+      { id: 'e', text: 'Thank you sincerely for your time and guidance. I am happy to assist with any follow-up information.', order: 5 },
+      { id: 'f', text: 'Best regards, Ming Li (Student ID: 20231234)', order: 6 }
+    ],
+    correctOrder: ['a', 'b', 'c', 'd', 'e', 'f'],
+    advanced: true
   }
 ])
 
-const currentChallengeData = computed(() => challenges.value[currentChallenge.value])
+const activeChallenges = computed(() =>
+  challenges.value.filter((item) => !item.advanced || recommendationUnlocked.value)
+)
+
+const currentChallengeData = computed(() => activeChallenges.value[currentChallenge.value])
 
 const shuffledSections = computed(() => {
   if (!currentChallengeData.value) return []
@@ -259,6 +314,20 @@ function startGame() {
   score.value = 0
   feedback.value = null
   showResults.value = false
+  timeLeft.value = recommendationUnlocked.value ? 180 : 150
+  freezeLeft.value = 0
+  freezeActive.value = false
+  clearIntervals()
+  timerInterval = setInterval(() => {
+    if (freezeActive.value || !gameStarted.value || showResults.value) return
+    if (timeLeft.value <= 1) {
+      timeLeft.value = 0
+      showResults.value = true
+      clearIntervals()
+      return
+    }
+    timeLeft.value -= 1
+  }, 1000)
   userOrder.value = [...shuffledSections.value]
 }
 
@@ -293,7 +362,7 @@ function checkOrder() {
   const isCorrect = JSON.stringify(userSequence) === JSON.stringify(correctSequence)
   
   if (isCorrect) {
-    earnedTV.value += 15
+    earnedTV.value += currentChallengeData.value.advanced ? 20 : 15
     score.value++
   }
   
@@ -307,22 +376,60 @@ function checkOrder() {
 
 function nextChallenge() {
   feedback.value = null
-  if (currentChallenge.value < challenges.value.length - 1) {
+  if (currentChallenge.value < activeChallenges.value.length - 1) {
     currentChallenge.value++
     userOrder.value = [...shuffledSections.value]
   } else {
     showResults.value = true
+    clearIntervals()
   }
 }
 
+function activateTimeFreeze() {
+  if (freezeActive.value || !gameStarted.value || showResults.value) return
+  const available = props.inventory?.timeFreezes || 0
+  if (available <= 0) return
+  freezeActive.value = true
+  freezeLeft.value = 10
+  emit('use-item', { itemId: 'time-freeze', amount: 1 })
+  if (freezeInterval) clearInterval(freezeInterval)
+  freezeInterval = setInterval(() => {
+    if (freezeLeft.value <= 1) {
+      freezeLeft.value = 0
+      freezeActive.value = false
+      clearInterval(freezeInterval)
+      freezeInterval = null
+      return
+    }
+    freezeLeft.value -= 1
+  }, 1000)
+}
+
 function handleClaim() {
+  clearIntervals()
   emit('complete', { tv: totalEarnedTV.value, score: score.value })
   handleExit()
 }
 
 function handleExit() {
+  clearIntervals()
   emit('exit')
 }
+
+function clearIntervals() {
+  if (timerInterval) {
+    clearInterval(timerInterval)
+    timerInterval = null
+  }
+  if (freezeInterval) {
+    clearInterval(freezeInterval)
+    freezeInterval = null
+  }
+}
+
+onUnmounted(() => {
+  clearIntervals()
+})
 </script>
 
 <style scoped>

@@ -82,22 +82,55 @@
 
       <div v-else class="quest-interface">
         <div v-if="activeQuest === 'interview'">
-          <InterviewSim :gear-state="gearState" :is-zh="isZh" @complete="handleComplete" @exit="activeQuest = null" />
+          <InterviewSim
+            :gear-state="gearState"
+            :is-zh="isZh"
+            :inventory="inventory"
+            @complete="handleComplete"
+            @exit="activeQuest = null"
+            @use-item="(payload) => emit('use-item', payload)"
+          />
         </div>
         <div v-else-if="activeQuest === 'essay'">
           <PSWorkshop :gear-state="gearState" :is-zh="isZh" @complete="handleComplete" @exit="activeQuest = null" />
         </div>
         <div v-else-if="activeQuest === 'document-rush'">
-          <DocumentRush :is-zh="isZh" @complete="handleComplete" @exit="activeQuest = null" />
+          <DocumentRush
+            :gear-state="gearState"
+            :is-zh="isZh"
+            :inventory="inventory"
+            @complete="handleComplete"
+            @exit="activeQuest = null"
+            @use-item="(payload) => emit('use-item', payload)"
+          />
         </div>
         <div v-else-if="activeQuest === 'school-matcher'">
-          <SchoolMatcher :is-zh="isZh" @complete="handleComplete" @exit="activeQuest = null" />
+          <SchoolMatcher
+            :is-zh="isZh"
+            :inventory="inventory"
+            @complete="handleComplete"
+            @exit="activeQuest = null"
+            @use-item="(payload) => emit('use-item', payload)"
+          />
         </div>
         <div v-else-if="activeQuest === 'timeline-puzzle'">
-          <TimelinePuzzle :is-zh="isZh" @complete="handleComplete" @exit="activeQuest = null" />
+          <TimelinePuzzle
+            :is-zh="isZh"
+            :inventory="inventory"
+            @complete="handleComplete"
+            @exit="activeQuest = null"
+            @use-item="(payload) => emit('use-item', payload)"
+          />
         </div>
         <div v-else-if="activeQuest === 'email-scramble'">
-          <EmailScramble :is-zh="isZh" @complete="handleComplete" @exit="activeQuest = null" />
+          <EmailScramble
+            :gear-state="gearState"
+            :is-zh="isZh"
+            :inventory="inventory"
+            @complete="handleComplete"
+            @exit="activeQuest = null"
+            @use-item="(payload) => emit('use-item', payload)"
+          />
         </div>
       </div>
     </div>
@@ -123,10 +156,11 @@ import { resetAllCooldowns } from '../utils/CooldownManager'
 const props = defineProps({
   gearState: { type: Object, default: () => ({}) },
   isZh: { type: Boolean, default: false },
-  userRole: { type: String, default: 'confused' }
+  userRole: { type: String, default: 'confused' },
+  inventory: { type: Object, default: () => ({}) }
 })
 
-const emit = defineEmits(['complete'])
+const emit = defineEmits(['complete', 'use-item'])
 
 const activeQuest = ref(null)
 

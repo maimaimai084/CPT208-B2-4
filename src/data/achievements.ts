@@ -15,6 +15,9 @@ export interface AchievementProgress {
   totalLearning: number;
   totalTask: number;
   perfectLevels: number;
+  totalTVSpent: number;
+  hintTokensUsed: number;
+  gearMaxed: boolean;
 }
 
 export const ACHIEVEMENTS: Achievement[] = [
@@ -41,6 +44,14 @@ export const ACHIEVEMENTS: Achievement[] = [
     icon: '⚡',
     condition: (p) => p.maxCombo >= 10,
     reward: { type: 'learning', value: 30 }
+  },
+  {
+    id: 'combo-legend',
+    title: 'Combo Legend',
+    description: 'Achieve a 15-question combo',
+    icon: '🌟',
+    condition: (p) => p.maxCombo >= 15,
+    reward: { type: 'learning', value: 60 }
   },
   {
     id: 'week-warrior',
@@ -75,11 +86,43 @@ export const ACHIEVEMENTS: Achievement[] = [
     reward: { type: 'learning', value: 60 }
   },
   {
+    id: 'halfway-there',
+    title: 'Halfway There',
+    description: 'Complete 3 stages',
+    icon: '🥾',
+    condition: (p) => p.levelsCompleted >= 3,
+    reward: { type: 'learning', value: 80 }
+  },
+  {
     id: 'journey-complete',
     title: 'Journey Complete',
     description: 'Complete all 5 stages',
     icon: '🎓',
     condition: (p) => p.levelsCompleted >= 5,
+    reward: { type: 'learning', value: 150 }
+  },
+  {
+    id: 'tv-spender',
+    title: 'Big Spender',
+    description: 'Spend 500 TV in the TV Store',
+    icon: '💰',
+    condition: (p) => p.totalTVSpent >= 500,
+    reward: { type: 'task', value: 50 }
+  },
+  {
+    id: 'hint-master',
+    title: 'Hint Master',
+    description: 'Use 10 Hint Tokens',
+    icon: '💡',
+    condition: (p) => p.hintTokensUsed >= 10,
+    reward: { type: 'learning', value: 40 }
+  },
+  {
+    id: 'gear-max',
+    title: 'Gear Master',
+    description: 'Max out any piece of gear',
+    icon: '⬆️',
+    condition: (p) => p.gearMaxed,
     reward: { type: 'learning', value: 100 }
   }
 ]

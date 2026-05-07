@@ -119,6 +119,7 @@
           :user-role="userRole"
           :learning-value="learningValue"
           :task-value="taskValue"
+          :gear-state="gearState"
           :completed-levels="completedLevels"
           :unlocked-stories="unlockedStories"
           :current-combo="currentCombo"
@@ -149,7 +150,9 @@
           v-if="activeTab === 'interview-sim'"
           :gear-state="gearState"
           :is-zh="isZh"
+          :inventory="inventory"
           @complete="handleTVEarned"
+          @use-item="handleUseItem"
         />
         <PSWorkshop 
           v-if="activeTab === 'ps-workshop'"
@@ -162,7 +165,9 @@
           :task-value="taskValue"
           :is-zh="isZh"
           :inventory="inventory"
+          :purchase-limits="purchaseLimits"
           @purchase="handlePurchaseItem"
+          @reset-store="handleResetStore"
         />
         <QuestHub 
           v-if="activeTab === 'quest-hub'"
@@ -171,6 +176,7 @@
           :user-role="userRole"
           :inventory="inventory"
           @complete="handleTVEarned"
+          @use-item="handleUseItem"
         />
         <DailyWeeklyCycle 
           v-if="activeTab === 'cycle-quests'"
@@ -191,8 +197,10 @@
       :level="currentLevel"
       :user-type="userRole"
       :is-zh="isZh"
+      :inventory="inventory"
       @close="handleQuizClose"
       @complete="handleQuizComplete"
+      @use-item="handleUseItem"
       @update:isZh="isZh = $event"
     />
 
@@ -227,7 +235,8 @@ import DemoAdmissionData from '../components/DemoAdmissionData.vue'
 import DemoActivities from '../components/DemoActivities.vue'
 import { getGuideById } from '../data/guides'
 import { calculateComboReward } from '../data/combos'
-import { DAILY_QUESTS, initializeDailyProgress, shouldResetDaily } from '../data/dailyquests'
+import { DAILY_QUESTS, initializeDailyProgress, shouldResetDaily, shouldResetWeekly } from '../data/dailyquests'
+import { GEAR_CONFIG } from '../data/gearConfig'
 import { ACHIEVEMENTS, checkAchievements } from '../data/achievements'
 
 // ============================================
@@ -249,6 +258,9 @@ const tabsBase = [
   { id: 'admission', labelEn: 'Data', labelZh: '数据', icon: '📊', theme: 'bg-[#a9eee6] shadow-[0_5px_0_#4D9C71] text-white', category: 'other' },
   { id: 'activities', labelEn: 'Events', labelZh: '活动', icon: '🎉', theme: 'bg-[#EBA173] shadow-[0_5px_0_#B8764B] text-white', category: 'other' }
 ]
+
+const ADVISOR_LV_GRANT = 50
+const ADVISOR_TV_GRANT = 50
 
 const activeTab = ref('journey')
 const isZh = ref(false)
@@ -295,6 +307,7 @@ const daysStreak = ref(0)
 const gearState = ref({ ielts: 0, gpa: 0, internship: 0, research: 0, award: 0, recommendation: 0 })
 const inventory = ref({ heartRefills: 0, hintTokens: 0, xpBoostCount: 0, timeFreezes: 0, xpBoostExpiry: null })
 const totalTVSpent = ref(0)
+const hintTokensUsed = ref(0)
 const dailyQuestProgress = ref(initializeDailyProgress())
 const unlockedAchievements = ref([])
 const totalCorrectAnswers = ref(0)
@@ -303,8 +316,12 @@ const weeklyTV = ref(0)
 const weeklyLevelsCompleted = ref(0)
 const loginDaysThisWeek = ref([])
 const weeklyAllDailyDays = ref([])
+const purchaseLimits = ref({
+  heartRefillDaily: 0,
+  xpBoostWeekly: 0
+})
 
-const storyUnlockMap = { 'level-3': 'story-cv', 'level-5': 'story-interview' }
+const storyUnlockMap = { 'level-3': 'story-cv', 'level-4': 'story-interview', 'level-5': 'story-departure' }
 
 // Computed props for clean template
 const profileProps = computed(() => ({
@@ -352,20 +369,44 @@ function handleRoleConfirmed(data) {
     totalCorrectAnswers.value = progress.totalCorrectAnswers || 0
     perfectLevelsCount.value = progress.perfectLevelsCount || 0
     if (progress.dailyQuestProgress && progress.dailyQuestProgress.length > 0) {
-      if (shouldResetDaily(progress.dailyQuestProgress)) {
-        dailyQuestProgress.value = initializeDailyProgress()
+      const needsWeeklyReset = shouldResetWeekly(progress.dailyQuestProgress)
+      const needsDailyReset = shouldResetDaily(progress.dailyQuestProgress)
+      let nextProgress = progress.dailyQuestProgress
+
+      if (needsWeeklyReset) {
+        nextProgress = resetQuestProgress(nextProgress, 'weekly')
+        weeklyTV.value = 0
+        weeklyLevelsCompleted.value = 0
+        loginDaysThisWeek.value = []
+        weeklyAllDailyDays.value = []
+        purchaseLimits.value.xpBoostWeekly = 0
       } else {
-        dailyQuestProgress.value = progress.dailyQuestProgress
+        weeklyTV.value = progress.weeklyTV || 0
+        weeklyLevelsCompleted.value = progress.weeklyLevelsCompleted || 0
+        loginDaysThisWeek.value = progress.loginDaysThisWeek || []
+        weeklyAllDailyDays.value = progress.weeklyAllDailyDays || []
+        purchaseLimits.value.xpBoostWeekly = progress.purchaseLimits?.xpBoostWeekly || 0
       }
+
+      if (needsDailyReset) {
+        nextProgress = resetQuestProgress(nextProgress, 'daily')
+        purchaseLimits.value.heartRefillDaily = 0
+      } else {
+        purchaseLimits.value.heartRefillDaily = progress.purchaseLimits?.heartRefillDaily || 0
+      }
+
+      dailyQuestProgress.value = nextProgress
     } else {
       dailyQuestProgress.value = initializeDailyProgress()
+      weeklyTV.value = 0
+      weeklyLevelsCompleted.value = 0
+      loginDaysThisWeek.value = []
+      weeklyAllDailyDays.value = []
+      purchaseLimits.value = { heartRefillDaily: 0, xpBoostWeekly: 0 }
     }
-    weeklyTV.value = progress.weeklyTV || 0
-    weeklyLevelsCompleted.value = progress.weeklyLevelsCompleted || 0
-    loginDaysThisWeek.value = progress.loginDaysThisWeek || []
-    weeklyAllDailyDays.value = progress.weeklyAllDailyDays || []
     inventory.value = progress.inventory || { heartRefills: 0, hintTokens: 0, xpBoostCount: 0, timeFreezes: 0, xpBoostExpiry: null }
     totalTVSpent.value = progress.totalTVSpent || 0
+    hintTokensUsed.value = progress.hintTokensUsed || 0
   } else {
     learningValue.value = 60
     taskValue.value = 40
@@ -381,8 +422,10 @@ function handleRoleConfirmed(data) {
     weeklyLevelsCompleted.value = 0
     loginDaysThisWeek.value = []
     weeklyAllDailyDays.value = []
+    purchaseLimits.value = { heartRefillDaily: 0, xpBoostWeekly: 0 }
     inventory.value = { heartRefills: 0, hintTokens: 0, xpBoostCount: 0, timeFreezes: 0, xpBoostExpiry: null }
     totalTVSpent.value = 0
+    hintTokensUsed.value = 0
   }
 
   const today = new Date().toDateString()
@@ -403,8 +446,8 @@ function handleSwitchRole() {
   currentView.value = 'roleselect'
 }
 
-function handleAddLearning() { learningValue.value += 10; saveProgress(); }
-function handleAddTask() { taskValue.value += 10; saveProgress(); }
+function handleAddLearning() { learningValue.value += ADVISOR_LV_GRANT; saveProgress(); }
+function handleAddTask() { taskValue.value += ADVISOR_TV_GRANT; saveProgress(); }
 
 function handleTVEarned(data) {
   taskValue.value += data.tv
@@ -433,18 +476,39 @@ function handleUpgradeGear(data) {
   saveProgress()
 }
 
+function handleUseItem(data) {
+  if (data.itemId === 'heart-refill' && inventory.value.heartRefills > 0) {
+    inventory.value.heartRefills -= data.amount || 1
+  } else if (data.itemId === 'hint-token' && inventory.value.hintTokens > 0) {
+    inventory.value.hintTokens -= data.amount || 1
+    hintTokensUsed.value += data.amount || 1
+    checkAchievementsProgress()
+  } else if (data.itemId === 'time-freeze' && inventory.value.timeFreezes > 0) {
+    inventory.value.timeFreezes -= data.amount || 1
+  }
+  saveProgress()
+}
+
 function handlePurchaseItem(data) {
+  const itemId = data.itemId
+  if (itemId === 'heart-refill' && purchaseLimits.value.heartRefillDaily >= 3) {
+    return
+  }
+  if (itemId === 'xp-boost-24h' && purchaseLimits.value.xpBoostWeekly >= 1) {
+    return
+  }
   if (data.price && data.price > 0) {
     taskValue.value -= data.price
     totalTVSpent.value += data.price
   }
-  const itemId = data.itemId
   if (itemId === 'heart-refill') {
     inventory.value.heartRefills++
+    purchaseLimits.value.heartRefillDaily++
   } else if (itemId === 'hint-token') {
     inventory.value.hintTokens++
   } else if (itemId === 'xp-boost-24h') {
     inventory.value.xpBoostCount++
+    purchaseLimits.value.xpBoostWeekly++
     const expiry = new Date()
     expiry.setHours(expiry.getHours() + 24)
     inventory.value.xpBoostExpiry = expiry.toISOString()
@@ -455,6 +519,14 @@ function handlePurchaseItem(data) {
   saveProgress()
 }
 
+function handleResetStore() {
+  purchaseLimits.value = { heartRefillDaily: 0, xpBoostWeekly: 0 }
+  inventory.value = { heartRefills: 0, hintTokens: 0, xpBoostCount: 0, timeFreezes: 0, xpBoostExpiry: null }
+  totalTVSpent.value = 0
+  hintTokensUsed.value = 0
+  saveProgress()
+}
+
 function handleResetProgress() {
   learningValue.value = 0; taskValue.value = 0; completedLevels.value = ['level-1'];
   unlockedStories.value = []; currentAchievement.value = null; currentCombo.value = 0;
@@ -462,8 +534,10 @@ function handleResetProgress() {
   unlockedAchievements.value = []; totalCorrectAnswers.value = 0; perfectLevelsCount.value = 0;
   weeklyTV.value = 0; weeklyLevelsCompleted.value = 0;
   loginDaysThisWeek.value = []; weeklyAllDailyDays.value = [];
+  purchaseLimits.value = { heartRefillDaily: 0, xpBoostWeekly: 0 };
   inventory.value = { heartRefills: 0, hintTokens: 0, xpBoostCount: 0, timeFreezes: 0, xpBoostExpiry: null }
   totalTVSpent.value = 0;
+  hintTokensUsed.value = 0;
   saveProgress();
 }
 
@@ -561,11 +635,30 @@ function updateDailyQuestProgress(questId, amount) {
   }
 }
 
+function resetQuestProgress(existingProgress, period) {
+  const now = new Date().toISOString()
+  return DAILY_QUESTS.map((quest) => {
+    const existing = existingProgress.find((progress) => progress.questId === quest.id)
+    const shouldReset = period === 'all' || quest.period === period
+    return {
+      questId: quest.id,
+      current: shouldReset ? 0 : (existing?.current || 0),
+      completed: shouldReset ? false : Boolean(existing?.completed),
+      lastUpdated: now
+    }
+  })
+}
+
 function checkAchievementsProgress() {
+  const gearMaxed = Object.entries(gearState.value).some(([id, level]) => {
+    const gear = GEAR_CONFIG.find(g => g.id === id)
+    return gear && level >= gear.maxLevel
+  })
   const progress = {
     levelsCompleted: completedLevels.value.length, totalCorrectAnswers: totalCorrectAnswers.value,
     maxCombo: maxCombo.value, daysStreak: 1, totalLearning: learningValue.value,
-    totalTask: taskValue.value, perfectLevels: perfectLevelsCount.value
+    totalTask: taskValue.value, perfectLevels: perfectLevelsCount.value,
+    totalTVSpent: totalTVSpent.value, hintTokensUsed: hintTokensUsed.value, gearMaxed
   }
   const { newAchievements, rewards } = checkAchievements(progress, unlockedAchievements.value)
   for (const id of newAchievements) unlockedAchievements.value.push(id)
@@ -588,7 +681,9 @@ function saveProgress() {
     perfectLevelsCount: perfectLevelsCount.value, dailyQuestProgress: dailyQuestProgress.value,
     weeklyTV: weeklyTV.value, weeklyLevelsCompleted: weeklyLevelsCompleted.value,
     loginDaysThisWeek: loginDaysThisWeek.value, weeklyAllDailyDays: weeklyAllDailyDays.value,
+    purchaseLimits: purchaseLimits.value,
     inventory: inventory.value, totalTVSpent: totalTVSpent.value,
+    hintTokensUsed: hintTokensUsed.value,
     lastUpdated: new Date().toISOString()
   }
   localStorage.setItem(`progress_${userRole.value}`, JSON.stringify(progress))

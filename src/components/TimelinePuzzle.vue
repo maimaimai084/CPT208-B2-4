@@ -16,6 +16,19 @@
         </div>
       </div>
       <div class="flex items-center gap-3">
+        <span v-if="isStarted && !isFinished"
+              class="text-xs font-bold px-2 py-1 rounded-lg border"
+              :class="timeLeft <= 15 ? 'text-red-600 bg-red-50 border-red-200' : 'text-slate-600 bg-slate-50 border-slate-200'">
+          ⏳ {{ timeLeft }}s
+        </span>
+        <button
+          v-if="isStarted && !isFinished && (inventory?.timeFreezes || 0) > 0"
+          @click="activateTimeFreeze"
+          :disabled="freezeActive"
+          class="text-xs font-bold px-2 py-1 rounded-lg border transition-colors"
+          :class="freezeActive ? 'text-slate-400 bg-slate-100 border-slate-200 cursor-not-allowed' : 'text-cyan-700 bg-cyan-50 border-cyan-200 hover:bg-cyan-100'">
+          {{ freezeActive ? (isZh ? `冻结中 ${freezeLeft}s` : `Frozen ${freezeLeft}s`) : (isZh ? `时停 x${inventory.timeFreezes}` : `Freeze x${inventory.timeFreezes}`) }}
+        </button>
         <div class="text-2xl" v-for="i in 3" :key="i">
           {{ i <= hearts ? '❤️' : '🤍' }}
         </div>
@@ -106,11 +119,14 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onUnmounted } from 'vue'
 import { TIMELINE_LEVELS } from '@/data/timelinePuzzle'
 
-const props = defineProps({ isZh: { type: Boolean, default: false } })
-const emit = defineEmits(['complete', 'exit'])
+const props = defineProps({
+  isZh: { type: Boolean, default: false },
+  inventory: { type: Object, default: () => ({ timeFreezes: 0 }) }
+})
+const emit = defineEmits(['complete', 'exit', 'use-item'])
 const lang = computed(() => props.isZh ? 'zh' : 'en')
 
 const isStarted = ref(false)
@@ -122,6 +138,11 @@ const currentOrder = ref([])
 const feedback = ref(null)
 const wrongChecks = ref(0)
 const checkedCorrectly = ref(new Set())
+const timeLeft = ref(90)
+const freezeLeft = ref(0)
+const freezeActive = ref(false)
+let timerInterval = null
+let freezeInterval = null
 
 function shuffleArray(arr) {
   const a = [...arr]
@@ -140,8 +161,22 @@ function startGame() {
   feedback.value = null
   wrongChecks.value = 0
   checkedCorrectly.value = new Set()
+  timeLeft.value = 90
+  freezeLeft.value = 0
+  freezeActive.value = false
   const level = TIMELINE_LEVELS[selectedLevelIndex.value]
   currentOrder.value = shuffleArray(level.steps)
+  clearIntervals()
+  timerInterval = setInterval(() => {
+    if (freezeActive.value || !isStarted.value || isFinished.value) return
+    if (timeLeft.value <= 1) {
+      timeLeft.value = 0
+      isFinished.value = true
+      clearIntervals()
+      return
+    }
+    timeLeft.value -= 1
+  }, 1000)
 }
 
 function moveUp(idx) {
@@ -185,6 +220,7 @@ function checkOrder() {
     currentOrder.value.forEach((_, idx) => newSet.add(idx))
     checkedCorrectly.value = newSet
     setTimeout(() => { isFinished.value = true }, 1200)
+    clearIntervals()
   } else {
     hearts.value--
     const hints = []
@@ -205,9 +241,45 @@ function checkOrder() {
 
     if (hearts.value <= 0) {
       setTimeout(() => { isFinished.value = true }, 1500)
+      clearIntervals()
     }
   }
 }
+
+function activateTimeFreeze() {
+  if (freezeActive.value || !isStarted.value || isFinished.value) return
+  const available = props.inventory?.timeFreezes || 0
+  if (available <= 0) return
+  freezeActive.value = true
+  freezeLeft.value = 10
+  emit('use-item', { itemId: 'time-freeze', amount: 1 })
+  if (freezeInterval) clearInterval(freezeInterval)
+  freezeInterval = setInterval(() => {
+    if (freezeLeft.value <= 1) {
+      freezeLeft.value = 0
+      freezeActive.value = false
+      clearInterval(freezeInterval)
+      freezeInterval = null
+      return
+    }
+    freezeLeft.value -= 1
+  }, 1000)
+}
+
+function clearIntervals() {
+  if (timerInterval) {
+    clearInterval(timerInterval)
+    timerInterval = null
+  }
+  if (freezeInterval) {
+    clearInterval(freezeInterval)
+    freezeInterval = null
+  }
+}
+
+onUnmounted(() => {
+  clearIntervals()
+})
 </script>
 
 <style scoped>

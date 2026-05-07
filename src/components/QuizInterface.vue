@@ -46,7 +46,10 @@
       <div class="space-y-3 mb-6">
         <div v-for="(opt, index) in currentQuestion.options" :key="index"
              class="option-btn w-full bg-white rounded-xl p-4 shadow-soft border-2 border-transparent hover:border-[#4F8CFF] hover:shadow-card text-left flex items-center gap-4 group transition-all cursor-pointer"
-             :class="{ 'opacity-40 grayscale': selectedIndex !== null && selectedIndex !== index }"
+             :class="{
+               'opacity-40 grayscale': selectedIndex !== null && selectedIndex !== index,
+               'opacity-30 grayscale pointer-events-none border-dashed border-slate-300': eliminatedIndices.includes(index)
+             }"
              @click="handleSelect(opt, index)">
           <div class="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm shrink-0 transition-colors"
                :class="getOptionColorClass(index, selectedIndex === index)">
@@ -59,6 +62,19 @@
         </div>
       </div>
 
+      <div v-if="(inventory?.hintTokens || 0) > 0" class="mb-4">
+        <button
+          @click="useHintToken"
+          :disabled="selectedIndex !== null || hintUsedOnCurrent || availableWrongIndices.length === 0"
+          class="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors"
+          :class="selectedIndex === null && !hintUsedOnCurrent && availableWrongIndices.length > 0
+            ? 'bg-amber-100 hover:bg-amber-200 text-amber-700 border-2 border-amber-300'
+            : 'bg-slate-100 text-slate-400 border-2 border-slate-200 cursor-not-allowed'">
+          <span>💡</span>
+          <span>{{ isZh ? `使用提示 (剩余 ${inventory.hintTokens})` : `Use Hint (${inventory.hintTokens} left)` }}</span>
+        </button>
+      </div>
+
       <div class="grid grid-cols-3 gap-4 md:gap-6 mt-auto">
         <div v-for="(opt, index) in currentQuestion.options" :key="index"
              class="flip-card group"
@@ -68,7 +84,10 @@
                :class="{ 'flipped': selectedIndex === index }">
             
             <div class="flip-card-front rounded-2xl flex flex-col items-center justify-center transition-transform group-hover:-translate-y-2 shadow-lg cursor-pointer bg-white border border-slate-200"
-                 :class="{ 'opacity-30 grayscale': selectedIndex !== null && selectedIndex !== index }"
+                 :class="{
+                   'opacity-30 grayscale': selectedIndex !== null && selectedIndex !== index,
+                   'opacity-20 grayscale pointer-events-none': eliminatedIndices.includes(index)
+                 }"
                  @click="handleSelect(opt, index)">
               <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-2" :class="getOptionColorClass(index, false)">
                 <svg v-if="index === 0" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 22 22 2 22"/></svg>
@@ -114,15 +133,21 @@ import { QUESTION_TRANSLATIONS } from '@/data/questionTranslations'
 const props = defineProps({
   level: { type: [Object, String], required: true },
   userType: { type: String, default: 'confused' },
-  isZh: { type: Boolean, default: false }
+  isZh: { type: Boolean, default: false },
+  inventory: {
+    type: Object,
+    default: () => ({ hintTokens: 0 })
+  }
 })
 
-const emit = defineEmits(['close', 'complete', 'update:isZh'])
+const emit = defineEmits(['close', 'complete', 'update:isZh', 'use-item'])
 
 const questions = ref([])
 const currentQuestionIndex = ref(0)
 const selectedIndex = ref(null)
 const isShaking = ref(false)
+const eliminatedIndices = ref([])
+const hintUsedOnCurrent = ref(false)
 const isZh = computed(() => props.isZh)
 const sessionResults = { correctCount: 0, learning: 0, task: 0 }
 
@@ -138,6 +163,17 @@ function getHeaderTitle() {
 
 const levelId = computed(() => (typeof props.level === 'object' ? props.level.id : props.level))
 const currentQuestion = computed(() => questions.value[currentQuestionIndex.value] || null)
+const currentBestValue = computed(() => {
+  if (!currentQuestion.value) return 0
+  return Math.max(...currentQuestion.value.options.map((option) => option.learning))
+})
+const availableWrongIndices = computed(() => {
+  if (!currentQuestion.value) return []
+  return currentQuestion.value.options
+    .map((option, index) => ({ option, index }))
+    .filter(({ option, index }) => option.learning < currentBestValue.value && !eliminatedIndices.value.includes(index))
+    .map(({ index }) => index)
+})
 
 const optionColors = [
   'bg-red-50 text-red-500 group-hover:bg-red-100',
@@ -194,6 +230,14 @@ function toggleLanguage() {
   emit('update:isZh', !props.isZh)
 }
 
+function useHintToken() {
+  if (selectedIndex.value !== null || hintUsedOnCurrent.value || availableWrongIndices.value.length === 0) return
+  const candidateIndex = availableWrongIndices.value[0]
+  eliminatedIndices.value = [...eliminatedIndices.value, candidateIndex]
+  hintUsedOnCurrent.value = true
+  emit('use-item', { itemId: 'hint-token', amount: 1 })
+}
+
 onMounted(() => {
   if (levelId.value) {
     questions.value = getQuestionsByLevel(levelId.value, props.userType)
@@ -201,7 +245,7 @@ onMounted(() => {
 })
 
 function handleSelect(option, index) {
-  if (selectedIndex.value !== null) return
+  if (selectedIndex.value !== null || eliminatedIndices.value.includes(index)) return
   
   selectedIndex.value = index
   
@@ -218,6 +262,8 @@ function handleSelect(option, index) {
     if (currentQuestionIndex.value < questions.value.length - 1) {
       currentQuestionIndex.value++
       selectedIndex.value = null
+      eliminatedIndices.value = []
+      hintUsedOnCurrent.value = false
     } else {
       emit('complete', { 
         learning: sessionResults.learning, 

@@ -232,6 +232,106 @@ export const GUIDES: Record<string, Guide> = {
         </div>
       </div>
     `
+  },
+  'story-research': {
+    id: 'story-research',
+    title: 'Research Proposal & Cold Email Guide',
+    icon: '🔬',
+    content: `
+      <div class="space-y-6">
+        <div class="bg-purple-50 rounded-xl p-4 border-l-4 border-purple-500">
+          <h4 class="font-bold text-purple-900 mb-2">What is a Research Proposal?</h4>
+          <p class="text-gray-700">A Research Proposal (RP) outlines your intended research project. It demonstrates your ability to identify a research gap, formulate questions, and design a methodology.</p>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-gray-900 mb-3 text-lg">📋 Core Components of an RP</h4>
+          <ul class="space-y-2 text-gray-700">
+            <li class="flex items-start gap-2"><span class="text-purple-500 mt-1">•</span><span><strong>Research Background:</strong> Context and significance of your topic</span></li>
+            <li class="flex items-start gap-2"><span class="text-purple-500 mt-1">•</span><span><strong>Literature Review:</strong> Key studies and identified gaps</span></li>
+            <li class="flex items-start gap-2"><span class="text-purple-500 mt-1">•</span><span><strong>Research Questions:</strong> Clear, focused questions your study will answer</span></li>
+            <li class="flex items-start gap-2"><span class="text-purple-500 mt-1">•</span><span><strong>Methodology:</strong> How you will collect and analyze data</span></li>
+            <li class="flex items-start gap-2"><span class="text-purple-500 mt-1">•</span><span><strong>Timeline:</strong> Realistic schedule for completion</span></li>
+            <li class="flex items-start gap-2"><span class="text-purple-500 mt-1">•</span><span><strong>Expected Outcomes:</strong> Anticipated contributions to the field</span></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-gray-900 mb-3 text-lg">✉️ Cold Email Best Practices</h4>
+          <div class="space-y-3">
+            <div class="bg-green-50 rounded-lg p-3">
+              <p class="font-medium text-green-900">Be Concise</p>
+              <p class="text-gray-600 text-sm">Keep your email under 200 words. Professors receive hundreds of emails weekly.</p>
+            </div>
+            <div class="bg-green-50 rounded-lg p-3">
+              <p class="font-medium text-green-900">Show Genuine Interest</p>
+              <p class="text-gray-600 text-sm">Reference a specific paper they wrote and explain how it connects to your interests.</p>
+            </div>
+            <div class="bg-green-50 rounded-lg p-3">
+              <p class="font-medium text-green-900">Attach a CV</p>
+              <p class="text-gray-600 text-sm">Always include a brief, well-formatted CV so they can quickly assess your background.</p>
+            </div>
+            <div class="bg-green-50 rounded-lg p-3">
+              <p class="font-medium text-green-900">Follow Up Once</p>
+              <p class="text-gray-600 text-sm">If no response after 1-2 weeks, send a polite follow-up. If still no response, move on.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-amber-50 rounded-xl p-4 border-l-4 border-amber-500">
+          <h4 class="font-bold text-amber-900 mb-2">💡 Pro Tip</h4>
+          <p class="text-gray-700">Before writing your RP, read 5-10 recent theses from your target department. This gives you a clear sense of scope, depth, and formatting expectations.</p>
+        </div>
+      </div>
+    `
+  },
+  'story-departure': {
+    id: 'story-departure',
+    title: 'Pre-Departure Checklist',
+    icon: '✈️',
+    content: `
+      <div class="space-y-6">
+        <div class="bg-blue-50 rounded-xl p-4 border-l-4 border-blue-500">
+          <h4 class="font-bold text-blue-900 mb-2">The Final Countdown</h4>
+          <p class="text-gray-700">The months before departure are crucial. Proper preparation ensures a smooth transition to your new academic life abroad.</p>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-gray-900 mb-3 text-lg">📋 3 Months Before</h4>
+          <ul class="space-y-2 text-gray-700">
+            <li class="flex items-start gap-2"><span class="text-blue-500 mt-1">✓</span><span>Confirm accommodation and pay deposits</span></li>
+            <li class="flex items-start gap-2"><span class="text-blue-500 mt-1">✓</span><span>Arrange health insurance and vaccinations</span></li>
+            <li class="flex items-start gap-2"><span class="text-blue-500 mt-1">✓</span><span>Book flights with flexible change policies</span></li>
+            <li class="flex items-start gap-2"><span class="text-blue-500 mt-1">✓</span><span>Open a local bank account or prepare international cards</span></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-gray-900 mb-3 text-lg">📋 1 Month Before</h4>
+          <ul class="space-y-2 text-gray-700">
+            <li class="flex items-start gap-2"><span class="text-green-500 mt-1">✓</span><span>Register for orientation and enrollment</span></li>
+            <li class="flex items-start gap-2"><span class="text-green-500 mt-1">✓</span><span>Join student groups and connect with future classmates</span></li>
+            <li class="flex items-start gap-2"><span class="text-green-500 mt-1">✓</span><span>Prepare academic documents (transcripts, certificates)</span></li>
+            <li class="flex items-start gap-2"><span class="text-green-500 mt-1">✓</span><span>Set up phone plan and essential apps</span></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-gray-900 mb-3 text-lg">📋 1 Week Before</h4>
+          <ul class="space-y-2 text-gray-700">
+            <li class="flex items-start gap-2"><span class="text-amber-500 mt-1">✓</span><span>Pack essentials and check baggage limits</span></li>
+            <li class="flex items-start gap-2"><span class="text-amber-500 mt-1">✓</span><span>Notify bank of travel dates</span></li>
+            <li class="flex items-start gap-2"><span class="text-amber-500 mt-1">✓</span><span>Print copies of all important documents</span></li>
+            <li class="flex items-start gap-2"><span class="text-amber-500 mt-1">✓</span><span>Prepare a small amount of local currency</span></li>
+          </ul>
+        </div>
+
+        <div class="bg-purple-50 rounded-xl p-4 border-l-4 border-purple-500">
+          <h4 class="font-bold text-purple-900 mb-2">💡 Pro Tip</h4>
+          <p class="text-gray-700">Bring digital and physical copies of all important documents. Store scans in cloud storage so you can access them anywhere.</p>
+        </div>
+      </div>
+    `
   }
 }
 

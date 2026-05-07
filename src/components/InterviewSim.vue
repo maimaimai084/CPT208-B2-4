@@ -160,19 +160,49 @@
           </p>
         </div>
       </div>
-      <div class="text-sm font-bold text-[#E3B75C] bg-[#E3B75C]/15 px-4 py-2 rounded-xl border border-[#E3B75C]/30 backdrop-blur-sm">
-        🎯 TV {{ isZh ? '加成' : 'Bonus' }}: +{{ (tvBonus * 100).toFixed(0) }}%
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-1 text-sm font-bold text-rose-500 bg-rose-50 px-3 py-1.5 rounded-xl border border-rose-200">
+          <template v-if="hearts > 0">
+            <span v-for="h in hearts" :key="h">❤️</span>
+          </template>
+          <template v-if="MAX_HEARTS - hearts > 0">
+            <span v-for="h in (MAX_HEARTS - hearts)" :key="'e'+h">🤍</span>
+          </template>
+        </div>
+        <div v-if="inventory.heartRefills > 0" class="text-xs text-rose-400 font-medium">
+          +{{ inventory.heartRefills }} {{ isZh ? '补充包' : 'Refills' }}
+        </div>
+        <div class="text-sm font-bold text-[#E3B75C] bg-[#E3B75C]/15 px-4 py-2 rounded-xl border border-[#E3B75C]/30 backdrop-blur-sm">
+          🎯 TV {{ isZh ? '加成' : 'Bonus' }}: +{{ (tvBonus * 100).toFixed(0) }}%
+        </div>
       </div>
     </div>
 
     <div class="space-y-4">
       <div v-if="!canStartSimulation" class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-center">
-        <div class="text-amber-600 font-bold mb-1">
-          {{ isZh ? '今日次数已用尽' : 'Daily Limit Reached' }}
+        <div v-if="hearts <= 0" class="mb-2">
+          <div class="text-rose-600 font-bold mb-1">
+            {{ isZh ? '❤️ 生命值不足' : '❤️ Out of Hearts' }}
+          </div>
+          <div class="text-sm text-rose-500">
+            {{ isZh ? '使用 Heart Refill 恢复一颗心，或等待明日重置' : 'Use a Heart Refill to restore, or wait for daily reset' }}
+          </div>
+          <button v-if="inventory.heartRefills > 0" @click="useHeartRefill"
+                  class="mt-3 px-5 py-2.5 bg-rose-500 hover:bg-rose-600 text-white rounded-xl font-bold text-sm shadow-[0_3px_0_#9B1C31] active:translate-y-[3px] active:shadow-none transition-all">
+            ❤️ {{ isZh ? '使用补充包' : 'Use Heart Refill' }} ({{ inventory.heartRefills }})
+          </button>
+          <div v-else class="mt-2 text-xs text-rose-400">
+            {{ isZh ? '暂无补充包，前往 TV 商店购买' : 'No refills. Visit TV Shop to buy.' }}
+          </div>
         </div>
-        <div class="text-sm text-amber-500">{{ cooldownHint }}</div>
-        <div v-if="cooldownStatus" class="text-xs text-amber-400 mt-2">
-          {{ isZh ? `已使用 ${cooldownStatus.used} / ${cooldownStatus.max} 次` : `Used ${cooldownStatus.used} / ${cooldownStatus.max} times` }}
+        <div v-else-if="!canAttempt('interviewSim')">
+          <div class="text-amber-600 font-bold mb-1">
+            {{ isZh ? '今日次数已用尽' : 'Daily Limit Reached' }}
+          </div>
+          <div class="text-sm text-amber-500">{{ cooldownHint }}</div>
+          <div v-if="cooldownStatus" class="text-xs text-amber-400 mt-2">
+            {{ isZh ? `已使用 ${cooldownStatus.used} / ${cooldownStatus.max} 次` : `Used ${cooldownStatus.used} / ${cooldownStatus.max} times` }}
+          </div>
         </div>
         <button @click="handleResetFromLimit"
                 class="mt-3 px-5 py-2.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-bold text-sm shadow-[0_3px_0_#B45309] active:translate-y-[3px] active:shadow-none transition-all">
@@ -223,10 +253,11 @@ import { getCooldownStatus, canAttempt, getTimeHint, recordAttempt, getStreakBon
 
 const props = defineProps({
   gearState: { type: Object, default: () => ({}) },
-  isZh: { type: Boolean, default: false }
+  isZh: { type: Boolean, default: false },
+  inventory: { type: Object, default: () => ({}) }
 })
 
-const emit = defineEmits(['complete', 'exit', 'update:isZh'])
+const emit = defineEmits(['complete', 'exit', 'update:isZh', 'use-item'])
 
 const currentSimulation = ref(null)
 const currentQuestionIndex = ref(0)
@@ -238,13 +269,26 @@ const selectedIndex = ref(null)
 const feedback = ref(null)
 const showResults = ref(false)
 const isShaking = ref(false)
+const hearts = ref(3)
+const MAX_HEARTS = 3
 
 onMounted(() => {
   cooldownStatus.value = getCooldownStatus('interviewSim')
   streakBonus.value = getStreakBonus()
+  // 恢复 hearts（按天重置）
+  const savedDate = localStorage.getItem('interviewSim_heartsDate')
+  const savedHearts = localStorage.getItem('interviewSim_hearts')
+  const today = new Date().toDateString()
+  if (savedDate === today && savedHearts !== null) {
+    hearts.value = Math.min(MAX_HEARTS, parseInt(savedHearts) || MAX_HEARTS)
+  } else {
+    hearts.value = MAX_HEARTS
+    localStorage.setItem('interviewSim_heartsDate', today)
+    localStorage.setItem('interviewSim_hearts', String(MAX_HEARTS))
+  }
 })
 
-const canStartSimulation = computed(() => canAttempt('interviewSim'))
+const canStartSimulation = computed(() => canAttempt('interviewSim') && hearts.value > 0)
 const cooldownHint = computed(() => {
   if (!cooldownStatus.value) return ''
   return getTimeHint(cooldownStatus.value, props.isZh)
@@ -264,6 +308,8 @@ const totalEarnedTV = computed(() => {
 
 function startSimulation(sim) {
   if (!canStartSimulation.value) return
+  hearts.value--
+  localStorage.setItem('interviewSim_hearts', String(hearts.value))
   currentSimulation.value = sim
   currentQuestionIndex.value = 0
   selectedAnswers.value = []
@@ -272,6 +318,15 @@ function startSimulation(sim) {
   feedback.value = null
   showResults.value = false
   recordAttempt('interviewSim', { simId: sim.id })
+}
+
+function useHeartRefill() {
+  if (hearts.value >= MAX_HEARTS) return
+  const refills = props.inventory?.heartRefills || 0
+  if (refills <= 0) return
+  hearts.value++
+  localStorage.setItem('interviewSim_hearts', String(hearts.value))
+  emit('use-item', { itemId: 'heart-refill', amount: 1 })
 }
 
 const optionColors = [

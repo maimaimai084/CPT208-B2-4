@@ -154,3 +154,126 @@ export const PUNCTUATION_CHALLENGES: PunctuationChallenge[] = [
     explanation: 'Use the Oxford comma: "CV, transcript, and recommendation letter". The comma before "and" prevents ambiguity!'
   }
 ];
+
+export const AWARD_DOCUMENT_ROUNDS: DocumentRound[] = [
+  {
+    id: 'award-doc-1',
+    type: 'spelling',
+    difficulty: 'hard',
+    document: {
+      en: 'Dear Scholarship Committee,\n\nI am honored to submit my application for the Merit Scholarship. My reaserch focuses on trustworthy machine learning, and my undergrad captsone examined model robustness under domain shift.\n\nSincerely,\nApplicant'
+    },
+    errorSegments: [{ en: 'reaserch' }, { en: 'captsone' }],
+    correctSegments: [{ en: 'research' }, { en: 'capstone' }],
+    explanation: { en: 'High-stakes application emails require precision: "reaserch" -> "research", "captsone" -> "capstone".' }
+  },
+  {
+    id: 'award-doc-2',
+    type: 'spelling',
+    difficulty: 'hard',
+    document: {
+      en: 'In my statement, I discussed reproducibility, interpretability, and methodological rigour. I also included a brif replication plan and a transparent errata policy.'
+    },
+    errorSegments: [{ en: 'brif' }],
+    correctSegments: [{ en: 'brief' }],
+    explanation: { en: 'Technical writing tolerance is low. Even one typo like "brif" can hurt credibility in competitive pools.' }
+  }
+];
+
+export const AWARD_GRAMMAR_CHALLENGES: GrammarChallenge[] = [
+  {
+    id: 'award-gram-1',
+    sentence: 'Not only the experiments but also the theoretical framework were thoroughly justified.',
+    errorType: 'Subject-Verb Agreement (Correlative Conjunction)',
+    options: [
+      { text: 'Not only the experiments but also the theoretical framework was thoroughly justified.', correct: true },
+      { text: 'Not only the experiments but also the theoretical framework were thoroughly justified.', correct: false },
+      { text: 'Not only the experiments but also theoretical framework was thoroughly justified.', correct: false }
+    ],
+    explanation: 'With "not only ... but also ...", the verb agrees with the closer subject: "framework was".'
+  },
+  {
+    id: 'award-gram-2',
+    sentence: 'Had I knew the funding deadline earlier, I would have prepared the supporting documents sooner.',
+    errorType: 'Inversion + Perfect Conditional',
+    options: [
+      { text: 'Had I known the funding deadline earlier, I would have prepared the supporting documents sooner.', correct: true },
+      { text: 'Had I knew the funding deadline earlier, I would have prepared the supporting documents sooner.', correct: false },
+      { text: 'If I had knew the funding deadline earlier, I would prepare the supporting documents sooner.', correct: false }
+    ],
+    explanation: 'After "had" inversion, use past participle: "known".'
+  },
+  {
+    id: 'award-gram-3',
+    sentence: 'Each of the recommendation letters highlight different dimensions of my research potential.',
+    errorType: 'Subject-Verb Agreement (Each of)',
+    options: [
+      { text: 'Each of the recommendation letters highlights different dimensions of my research potential.', correct: true },
+      { text: 'Each of the recommendation letters highlight different dimensions of my research potential.', correct: false },
+      { text: 'Each of recommendation letters highlights different dimensions of my research potential.', correct: false }
+    ],
+    explanation: '"Each" is singular, so use "highlights".'
+  },
+  {
+    id: 'award-gram-4',
+    sentence: 'The committee requested that every applicant submits a revised budget statement.',
+    errorType: 'Mandative Subjunctive',
+    options: [
+      { text: 'The committee requested that every applicant submit a revised budget statement.', correct: true },
+      { text: 'The committee requested that every applicant submits a revised budget statement.', correct: false },
+      { text: 'The committee requested every applicant to submits a revised budget statement.', correct: false }
+    ],
+    explanation: 'Mandative structures use base verb: "that ... submit".'
+  }
+];
+
+export const AWARD_PUNCTUATION_CHALLENGES: PunctuationChallenge[] = [
+  {
+    id: 'award-punc-1',
+    sentence: 'My project had three objectives identify a benchmark implement a baseline and evaluate fairness across cohorts.',
+    errorType: 'Series with Introductory Clause',
+    correctPunctuation: 'colon and serial commas',
+    options: [
+      { text: 'My project had three objectives: identify a benchmark, implement a baseline, and evaluate fairness across cohorts.', correct: true },
+      { text: 'My project had three objectives identify a benchmark, implement a baseline and evaluate fairness across cohorts.', correct: false },
+      { text: 'My project had three objectives; identify a benchmark implement a baseline and evaluate fairness across cohorts.', correct: false }
+    ],
+    explanation: 'Use a colon after "objectives" and Oxford commas in a three-part list.'
+  },
+  {
+    id: 'award-punc-2',
+    sentence: 'The proposal is ambitious however the timeline remains realistic.',
+    errorType: 'Conjunctive Adverb / Clause Boundary',
+    correctPunctuation: 'semicolon + comma',
+    options: [
+      { text: 'The proposal is ambitious; however, the timeline remains realistic.', correct: true },
+      { text: 'The proposal is ambitious however, the timeline remains realistic.', correct: false },
+      { text: 'The proposal is ambitious, however the timeline remains realistic.', correct: false }
+    ],
+    explanation: 'Between independent clauses, conjunctive adverbs typically take "; however,".'
+  },
+  {
+    id: 'award-punc-3',
+    sentence: 'Applicants who have prior publications may upload a writing sample those without publications may submit a project report.',
+    errorType: 'Run-on Sentence',
+    correctPunctuation: 'semicolon',
+    options: [
+      { text: 'Applicants who have prior publications may upload a writing sample; those without publications may submit a project report.', correct: true },
+      { text: 'Applicants who have prior publications may upload a writing sample, those without publications may submit a project report.', correct: false },
+      { text: 'Applicants who have prior publications may upload a writing sample those without publications; may submit a project report.', correct: false }
+    ],
+    explanation: 'Two complete clauses need separation; a semicolon is appropriate here.'
+  },
+  {
+    id: 'award-punc-4',
+    sentence: 'Before submitting the file please verify citation style reference formatting and appendix labels.',
+    errorType: 'Introductory Phrase + List',
+    correctPunctuation: 'comma + serial commas',
+    options: [
+      { text: 'Before submitting the file, please verify citation style, reference formatting, and appendix labels.', correct: true },
+      { text: 'Before submitting the file please verify citation style, reference formatting and appendix labels.', correct: false },
+      { text: 'Before submitting, the file please verify citation style reference formatting and appendix labels.', correct: false }
+    ],
+    explanation: 'Add a comma after introductory phrase and separate list items clearly.'
+  }
+];

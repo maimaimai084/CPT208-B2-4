@@ -16,7 +16,15 @@
         </div>
       </div>
       <div class="text-sm font-bold text-[#4F8CFF] bg-blue-50 px-3 py-1.5 rounded-xl">
-        {{ timerText }}
+        <span>{{ timerText }}</span>
+        <button
+          v-if="isStarted && !isFinished && (inventory?.timeFreezes || 0) > 0"
+          @click="activateTimeFreeze"
+          :disabled="freezeActive"
+          class="ml-2 text-xs font-bold px-2 py-0.5 rounded border transition-colors"
+          :class="freezeActive ? 'text-slate-400 bg-slate-100 border-slate-200 cursor-not-allowed' : 'text-cyan-700 bg-cyan-50 border-cyan-200 hover:bg-cyan-100'">
+          {{ freezeActive ? (isZh ? `冻结中 ${freezeLeft}s` : `Frozen ${freezeLeft}s`) : (isZh ? `时停 x${inventory.timeFreezes}` : `Freeze x${inventory.timeFreezes}`) }}
+        </button>
       </div>
     </div>
 
@@ -110,8 +118,11 @@
 import { ref, computed, onUnmounted } from 'vue'
 import { MATCH_LEVELS } from '@/data/schoolMatcher'
 
-const props = defineProps({ isZh: { type: Boolean, default: false } })
-const emit = defineEmits(['complete', 'exit'])
+const props = defineProps({
+  isZh: { type: Boolean, default: false },
+  inventory: { type: Object, default: () => ({ timeFreezes: 0 }) }
+})
+const emit = defineEmits(['complete', 'exit', 'use-item'])
 const lang = computed(() => props.isZh ? 'zh' : 'en')
 
 const isStarted = ref(false)
@@ -124,7 +135,10 @@ const matchedPairs = ref([])
 const feedback = ref(null)
 const wrongAttempts = ref(0)
 const elapsedSeconds = ref(0)
+const freezeLeft = ref(0)
+const freezeActive = ref(false)
 let timerInterval = null
+let freezeInterval = null
 
 const currentLevel = computed(() => MATCH_LEVELS[selectedLevelIndex.value])
 
@@ -160,7 +174,13 @@ function startGame() {
   feedback.value = null
   wrongAttempts.value = 0
   elapsedSeconds.value = 0
-  timerInterval = setInterval(() => elapsedSeconds.value++, 1000)
+  freezeLeft.value = 0
+  freezeActive.value = false
+  clearIntervals()
+  timerInterval = setInterval(() => {
+    if (freezeActive.value) return
+    elapsedSeconds.value++
+  }, 1000)
 }
 
 function getLeftClass(item) {
@@ -200,6 +220,7 @@ function tryMatch() {
       setTimeout(() => {
         clearInterval(timerInterval)
         isFinished.value = true
+        clearIntervals()
       }, 800)
     }
   } else {
@@ -212,7 +233,38 @@ function tryMatch() {
   selectedRight.value = null
 }
 
-onUnmounted(() => { if (timerInterval) clearInterval(timerInterval) })
+function activateTimeFreeze() {
+  if (freezeActive.value || !isStarted.value || isFinished.value) return
+  const available = props.inventory?.timeFreezes || 0
+  if (available <= 0) return
+  freezeActive.value = true
+  freezeLeft.value = 10
+  emit('use-item', { itemId: 'time-freeze', amount: 1 })
+  if (freezeInterval) clearInterval(freezeInterval)
+  freezeInterval = setInterval(() => {
+    if (freezeLeft.value <= 1) {
+      freezeLeft.value = 0
+      freezeActive.value = false
+      clearInterval(freezeInterval)
+      freezeInterval = null
+      return
+    }
+    freezeLeft.value -= 1
+  }, 1000)
+}
+
+function clearIntervals() {
+  if (timerInterval) {
+    clearInterval(timerInterval)
+    timerInterval = null
+  }
+  if (freezeInterval) {
+    clearInterval(freezeInterval)
+    freezeInterval = null
+  }
+}
+
+onUnmounted(() => { clearIntervals() })
 </script>
 
 <style scoped>
