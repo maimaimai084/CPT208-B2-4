@@ -5,6 +5,15 @@
       <h3 class="text-lg font-bold text-slate-900 mb-1">Ask a Question</h3>
       <p class="text-sm text-slate-500 mb-5">Submit your application questions. An advisor will respond in the Q&A section.</p>
 
+      <div class="mb-5 rounded-xl border p-3" :class="questionCredits > 0 ? 'bg-emerald-50 border-emerald-200' : 'bg-amber-50 border-amber-200'">
+        <p class="text-xs font-bold" :class="questionCredits > 0 ? 'text-emerald-700' : 'text-amber-700'">
+          Teacher Q&A chances: {{ questionCredits }}
+        </p>
+        <p class="text-xs text-slate-500 mt-1">
+          Spend 50 LV in Gear Shop to get 1 chance to submit a teacher question.
+        </p>
+      </div>
+
       <form @submit.prevent="handleSubmit" class="space-y-4">
         <div>
           <label class="block text-sm font-medium text-slate-700 mb-1">Your Name</label>
@@ -32,9 +41,13 @@
                     class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-[#7FA1ED] focus:outline-none text-sm resize-none"></textarea>
         </div>
 
-        <button type="submit"
-            class="w-full px-4 py-3 bg-[#DEB956] hover:bg-[#C2A771] text-white rounded-xl font-medium text-sm transition-colors shadow-sm">
-          Submit Question
+        <button
+          type="submit"
+          :disabled="questionCredits <= 0"
+          class="w-full px-4 py-3 rounded-xl font-medium text-sm transition-colors shadow-sm"
+          :class="questionCredits > 0 ? 'bg-[#DEB956] hover:bg-[#C2A771] text-white' : 'bg-slate-100 text-slate-400 cursor-not-allowed'"
+        >
+          {{ questionCredits > 0 ? 'Submit Question' : 'No Q&A Chances' }}
         </button>
       </form>
 
@@ -94,8 +107,14 @@ const props = defineProps({
   userName: {
     type: String,
     default: ''
+  },
+  questionCredits: {
+    type: Number,
+    default: 0
   }
 })
+
+const emit = defineEmits(['consume-question-credit'])
 
 const STORAGE_KEY = 'demo_questions'
 
@@ -152,6 +171,7 @@ onMounted(() => {
 
 function handleSubmit() {
   if (!form.value.question.trim()) return
+  if (props.questionCredits <= 0) return
 
   const newQ = {
     name: form.value.name || 'Anonymous',
@@ -165,6 +185,7 @@ function handleSubmit() {
   questions.value.unshift(newQ)
   saveQuestions()
   form.value.question = ''
+  emit('consume-question-credit')
 }
 
 function saveQuestions() {

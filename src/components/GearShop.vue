@@ -14,6 +14,38 @@
       </div>
     </div>
 
+    <div class="bg-white rounded-2xl border-2 border-[#DEB956] p-4 mb-6 shadow-sm">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="flex items-start gap-3">
+          <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl">
+            ?
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-700">
+              {{ isZh ? '老师问答机会' : 'Teacher Q&A Chance' }}
+            </h3>
+            <p class="text-xs text-slate-500 mt-1">
+              {{ isZh ? '每花费 50 LV，可以在 Q&A 模块向老师提交 1 个问题。' : 'Spend 50 LV to submit 1 question in the Q&A module.' }}
+            </p>
+            <p class="text-xs font-bold text-amber-700 mt-2">
+              {{ isZh ? '当前次数' : 'Current chances' }}: {{ teacherQuestionCredits }}
+            </p>
+          </div>
+        </div>
+
+        <button
+          @click="handleBuyTeacherQuestion"
+          :disabled="learningValue < 50"
+          class="px-5 py-2.5 rounded-xl font-bold transition-all shrink-0"
+          :class="learningValue >= 50
+            ? 'bg-[#DEB956] hover:bg-[#C2A771] text-white shadow-[0_4px_0_#B38A3B] active:translate-y-[4px] active:shadow-none'
+            : 'bg-slate-100 text-slate-400 cursor-not-allowed'"
+        >
+          {{ learningValue >= 50 ? (isZh ? '购买 (-50 LV)' : 'Buy (-50 LV)') : (isZh ? '需要 50 LV' : 'Need 50 LV') }}
+        </button>
+      </div>
+    </div>
+
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
       <div v-for="gear in GEAR_CONFIG" :key="gear.id"
            class="bg-white rounded-2xl border-2 p-4 transition-all duration-300"
@@ -109,13 +141,17 @@ const props = defineProps({
     type: Object,
     default: () => ({})
   },
+  teacherQuestionCredits: {
+    type: Number,
+    default: 0
+  },
   isZh: {
     type: Boolean,
     default: false
   }
 })
 
-const emit = defineEmits(['upgrade-gear', 'update-gear'])
+const emit = defineEmits(['upgrade-gear', 'update-gear', 'buy-teacher-question'])
 
 const showToast = ref(false)
 const toastMessage = ref('')
@@ -202,6 +238,26 @@ function handleUpgrade(gear) {
   toastClass.value = 'bg-[#10B981] text-white'
   showToast.value = true
   setTimeout(() => { showToast.value = false }, 2000)
+}
+
+function handleBuyTeacherQuestion() {
+  if (props.learningValue < 50) {
+    showToastMessage(props.isZh ? '学习值不足' : 'Not enough Learning Value')
+    toastClass.value = 'bg-red-500 text-white'
+    showToast.value = true
+    setTimeout(() => { showToast.value = false }, 2000)
+    return
+  }
+
+  emit('buy-teacher-question', { cost: 50 })
+  showToastMessage(props.isZh ? '已获得 1 次提问机会' : 'Teacher question chance added')
+  toastClass.value = 'bg-[#10B981] text-white'
+  showToast.value = true
+  setTimeout(() => { showToast.value = false }, 2000)
+}
+
+function showToastMessage(message) {
+  toastMessage.value = message
 }
 </script>
 

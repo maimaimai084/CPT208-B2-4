@@ -11,15 +11,18 @@ A gamified web application for XJTLU students to learn about postgraduate applic
 
 - 🎯 **5 Role-Specific Application Stages**: Tailored paths for Explorers (Discovery → Research & Funding → Craft & Submit → Connect & Interview → Decide & Depart) and Sprinters (Target & Plan → Materials & Funding → Apply & Submit → Interview & Connect → Decide & Go)
 - 👥 **Dual Role System**: Explorer (Year 2) and Sprint (Year 3) with customized content and visuals for each
-- 🎮 **Mini-Games (TV Quests)**: Role-specific interactive challenges (e.g., Timeline Puzzle, School Matcher) to test practical skills
+- 🎮 **Mini-Games (TV Quests)**: 6 role-specific interactive challenges (Timeline Puzzle, School Matcher, Document Rush, Email Scramble, Interview Simulation, PS Workshop)
 - 📊 **Dual Value & Gear System**: Spend Learning Value (theory) to upgrade gears for Task Value (practice) multipliers (up to +195% total bonus)
-- 🏆 **Achievement System**: Unlock badges and rewards as you progress
+- 💬 **Teacher Q&A Credit**: Exchange 50 LV for one teacher question credit; submit questions and view teacher responses
+- 🃏 **Admission Case Flip Cards**: 3D CSS flip-card interactive display of real admission cases and statistics
+- 🏆 **Achievement System**: Unlock 13 unique badges through gameplay progression
 - 📱 **Responsive Design**: Optimized for both mobile and desktop experiences
 - 📖 **Story Unlock Mechanism**: Reach value thresholds to unlock exclusive strategy guides
 - 🔄 **Role Switch**: Experience both user personas with independent progress tracking
 - 📋 **Prototype Showcase**: Module 5 poster content integrated into the application
-- ⚡ **Daily Quests**: Refreshable daily challenges for consistent engagement
-- 🔥 **Combo System**: Streak rewards for consecutive correct answers
+- ⚡ **Daily & Weekly Quests**: Refreshable daily and weekly challenges for consistent engagement
+- 🔥 **Combo System**: Streak rewards for consecutive correct answers (3+ / 5+ / 10+ / 15+)
+- 🚀 **Onboarding Tour**: Guided first-time user experience to learn game mechanics
 
 ## 🛠️ Tech Stack
 
@@ -82,59 +85,72 @@ Output will be in the `dist/` directory.
 ```
 ├── src/
 │   ├── components/                 # Vue components (game + portfolio)
-│   │   ├── RoleSelect.vue          # Role selection (Explorer/Sprint)
-│   │   ├── GameDashboard.vue       # Main game dashboard (supports `isZh`)
-│   │   ├── QuizInterface.vue       # Quiz challenge interface (supports `isZh`)
-│   │   ├── QuestHub.vue            # TV quest hub (supports `isZh`)
-│   │   ├── InterviewSim.vue        # Interview simulation (supports `isZh`)
-│   │   ├── PSWorkshop.vue          # PS/essay workshop (supports `isZh`)
-│   │   ├── DailyWeeklyCycle.vue    # Daily/weekly quests (supports `isZh`)
-│   │   ├── DailyQuestPanel.vue     # Daily quest panel UI
-│   │   ├── FriendTree.vue          # Friend tree / social module
-│   │   ├── ProfilePanel.vue        # Player profile panel (supports `isZh`)
-│   │   ├── AdvisorDashboard.vue    # Advisor analytics dashboard (supports `isZh`)
-│   │   ├── QuestionForm.vue        # Q&A submit + history (supports `isZh`)
-│   │   ├── AIChat.vue              # Preset AI chat demo (supports `isZh`)
-│   │   ├── DemoAdmissionData.vue   # Admission stats demo (supports `isZh`)
-│   │   ├── DemoActivities.vue      # Timeline demo (supports `isZh`)
-│   │   ├── PrototypeShowcase.vue   # Module 5 poster showcase + TOC
-│   │   ├── Navigation.vue          # Top navigation bar
+│   │   ├── RoleSelect.vue              # Role selection (Explorer/Sprint)
+│   │   ├── GameDashboard.vue           # Main game dashboard (supports `isZh`)
+│   │   ├── QuizInterface.vue           # Quiz challenge interface (supports `isZh`)
+│   │   ├── QuestHub.vue                # TV quest hub (supports `isZh`)
+│   │   ├── InterviewSim.vue            # Interview simulation (supports `isZh`)
+│   │   ├── PSWorkshop.vue              # PS/essay workshop (supports `isZh`)
+│   │   ├── DocumentRush.vue            # 21-round document proofreading mini-game
+│   │   ├── TimelinePuzzle.vue          # 6-level timeline sorting mini-game
+│   │   ├── SchoolMatcher.vue           # 7-level university matching mini-game
+│   │   ├── EmailScramble.vue           # 5-scenario email sorting mini-game
+│   │   ├── GearShop.vue                # Gear upgrade shop (spend LV for TV bonuses)
+│   │   ├── TVStore.vue                 # TV item store & reset system
+│   │   ├── KnowledgeTree.vue           # SVG knowledge tree visualization
+│   │   ├── AdmissionCaseFlipCard.vue   # 3D CSS flip-card for admission cases
+│   │   ├── QuestionForm.vue            # Teacher Q&A submit + history (supports `isZh`)
+│   │   ├── DailyWeeklyCycle.vue        # Daily/weekly quests (supports `isZh`)
+│   │   ├── DailyQuestPanel.vue         # Daily quest panel UI
+│   │   ├── FriendTree.vue              # Friend tree / social module
+│   │   ├── OnboardingTour.vue          # First-time user guided tour
+│   │   ├── ProfilePanel.vue            # Player profile panel (supports `isZh`)
+│   │   ├── AdvisorDashboard.vue        # Advisor analytics dashboard (supports `isZh`)
+│   │   ├── AIChat.vue                  # Preset AI chat demo (supports `isZh`)
+│   │   ├── DemoAdmissionData.vue       # Admission stats demo (supports `isZh`)
+│   │   ├── DemoActivities.vue          # Timeline demo (supports `isZh`)
+│   │   ├── PrototypeShowcase.vue       # Module 5 poster showcase + TOC
+│   │   ├── Navigation.vue              # Top navigation bar
 │   │   ├── AchievementNotification.vue # Achievement unlock popup
-│   │   ├── GuideModal.vue          # Strategy guide popup modal
-│   │   └── portfolio/              # Portfolio page components
-│   │       ├── ModuleHeader.vue    # Shared module page header
-│   │       └── TableOfContents.vue # Auto-generated TOC component
-│   │   ├── GearShop.vue            # Gear upgrade shop (spend LV)
-│   │   ├── TVStore.vue             # TV item store & reset system
-│   │   ├── DocumentRush.vue        # 21-round document proofreading mini-game
-│   │   ├── TimelinePuzzle.vue      # 6-level timeline sorting mini-game
-│   │   ├── SchoolMatcher.vue       # 7-level university matching mini-game
-│   │   ├── EmailScramble.vue       # 5-scenario email sorting mini-game
-│   ├── views/                      # Portfolio page views (routes)
+│   │   ├── GuideModal.vue              # Strategy guide popup modal
+│   │   └── portfolio/                  # Portfolio page components
+│   │       ├── ModuleHeader.vue        # Shared module page header
+│   │       └── TableOfContents.vue     # Auto-generated TOC component
+│   ├── views/                          # Portfolio page views (routes)
 │   │   ├── Home.vue
 │   │   ├── Introduction.vue
 │   │   ├── TargetUsers.vue
 │   │   ├── DesignProcess.vue
 │   │   ├── Evaluation.vue
 │   │   ├── Conclusion.vue
-│   │   └── GameDemo.vue            # Live game demo entry + global language toggle (`isZh`)
+│   │   └── GameDemo.vue                # Live game demo entry + global language toggle (`isZh`)
 │   ├── router/
-│   │   └── index.js                # Vue Router configuration
+│   │   └── index.js                    # Vue Router configuration
 │   ├── data/
-│   │   ├── questions.ts
-│   │   ├── guides.ts
-│   │   ├── achievements.ts
-│   │   ├── dailyquests.ts
-│   │   ├── combos.ts
-│   │   └── admissionData.ts
+│   │   ├── questions.ts                # Quiz question bank
+│   │   ├── guides.ts                   # Strategy guide content
+│   │   ├── achievements.ts             # Achievement definitions (13 badges)
+│   │   ├── dailyquests.ts              # Daily & weekly quest challenges
+│   │   ├── combos.ts                   # Combo reward tiers
+│   │   ├── admissionData.ts            # Admission case data for flip cards
+│   │   ├── gearConfig.ts               # Gear upgrade configuration
+│   │   ├── documentRush.ts             # DocumentRush mini-game data
+│   │   ├── schoolMatcher.ts            # SchoolMatcher mini-game data
+│   │   ├── timelinePuzzle.ts           # TimelinePuzzle mini-game data
+│   │   ├── emailScramble.ts            # EmailScramble mini-game data
+│   │   ├── simulations.ts              # Interview simulation scenarios
+│   │   └── questionTranslations.ts     # EN/ZH question translations
 │   ├── utils/
-│   │   └── CooldownManager.js
-│   ├── App.vue                     # Main application component
-│   ├── main.js                     # Application entry point
-│   ├── i18n.js                     # i18n entry (currently empty/reserved)
-│   └── style.css                   # Global styles
+│   │   └── CooldownManager.js          # Cooldown & rate-limit utility
+│   ├── App.vue                         # Main application component
+│   ├── main.js                         # Application entry point
+│   ├── i18n.js                         # i18n entry (currently empty/reserved)
+│   └── style.css                       # Global styles
+├── ailogs/                             # AI usage retrospective (coursework requirement)
+│   ├── README.md
+│   └── retrospective.md
 ├── public/
-│   ├── images/                     # Game assets and prototype images
+│   ├── images/                         # Game assets and prototype images
 │   ├── favicon.svg
 │   └── icons.svg
 ├── index.html
@@ -159,18 +175,18 @@ Output will be in the `dist/` directory.
 
 The game features a fully integrated economic loop driven by two core currencies:
 
-- [cite_start]**📚 Learning Value (LV)**: Earned by answering Journey quiz questions correctly.
-  - [cite_start]**Primary Use**: Spend LV in the **Gear Shop** to upgrade your background gears (e.g., IELTS, GPA, Internship)[cite: 36, 138].
-  - [cite_start]Upgraded gears provide permanent multipliers (up to +195%) to your future TV earnings[cite: 40, 140].
+- **📚 Learning Value (LV)**: Earned by answering Journey quiz questions correctly.
+  - **Primary Use**: Spend LV in the **Gear Shop** to upgrade your background gears (e.g., IELTS, GPA, Internship).
+  - Upgraded gears provide permanent multipliers (up to +195%) to your future TV earnings.
   
-- [cite_start]**✅ Task Value (TV)**: Earned by completing practical mini-games (TV Quests)[cite: 144].
-  - [cite_start]**Primary Use**: Spend TV in the **TV Store** to purchase tactical items to help you progress: Heart Refills, Hint Tokens, XP Boosts, and Time Freezes[cite: 27, 146].
+- **✅ Task Value (TV)**: Earned by completing practical mini-games (TV Quests).
+  - **Primary Use**: Spend TV in the **TV Store** to purchase tactical items to help you progress: Heart Refills, Hint Tokens, XP Boosts, and Time Freezes.
 
 - **📖 Story Unlocks**: As you accumulate LV and TV, you will automatically hit thresholds to unlock exclusive, in-depth strategy guides from the `guides.ts` database:
-  - [cite_start]CV Writing Excellence [cite: 175]
-  - [cite_start]Interview Preparation Guide [cite: 175]
-  - [cite_start]Research Proposal & Cold Email Guide [cite: 175]
-  - [cite_start]Pre-Departure Checklist [cite: 175]
+  - CV Writing Excellence
+  - Interview Preparation Guide
+  - Research Proposal & Cold Email Guide
+  - Pre-Departure Checklist
 
 ### 5 Role-Specific Application Stages
 
@@ -241,7 +257,7 @@ This project uses AI tools as permitted by course guidelines:
 
 **Core design logic**—including the Dual-Value system, narrative unlocking mechanics, five-stage application structure, user research methodology, and evaluation design—was developed entirely by the team. No AI was used to generate user personas, survey questions, or heuristic evaluation results.
 
-For coding, the project was built with **Vue 3 and Tailwind CSS** written directly by team members. If AI coding assistance was used for debugging or component scaffolding, all prompts are documented in the `/ailogs` folder in our GitHub repository.
+For coding, the project was built with **Vue 3 and Tailwind CSS** written directly by team members. During the main development period, we did not keep a prompt-by-prompt AI coding log; `/ailogs` contains retrospective (non-verbatim) notes documenting the AI tools used and the core features they assisted with.
 
 ### Citation
 

@@ -49,8 +49,11 @@
     <div>
       <h3 class="text-lg font-bold text-slate-900 mb-4">By Major</h3>
       <div class="grid md:grid-cols-2 gap-4">
-        <div v-for="major in majorStats" :key="major.id"
-             class="bg-white rounded-2xl border border-[#81C1C3] p-5 shadow-sm hover:shadow-md transition-shadow">
+        <div
+          v-for="major in majorStats"
+          :key="major.id"
+          class="bg-white rounded-2xl border border-[#81C1C3] p-5 shadow-sm hover:shadow-md transition-shadow"
+        >
           <div class="flex items-center justify-between mb-3">
             <div>
               <h4 class="font-bold text-slate-900">{{ major.name }}</h4>
@@ -75,21 +78,21 @@
 
           <!-- Score Tiers -->
           <div class="space-y-2 mb-4">
-            <div v-for="(tier, idx) in major.scoreTiers" :key="idx"
-                 class="text-xs p-2 rounded-lg"
-                 :class="idx === 0 ? 'bg-emerald-50 text-emerald-800' : idx === 1 ? 'bg-blue-50 text-blue-800' : 'bg-amber-50 text-amber-800'">
-              <span class="font-bold">{{ tier.range }}</span> ({{ tier.degreeClass }}) — {{ tier.targets }}
+            <div
+              v-for="(tier, idx) in major.scoreTiers"
+              :key="idx"
+              class="text-xs p-2 rounded-lg"
+              :class="idx === 0 ? 'bg-emerald-50 text-emerald-800' : idx === 1 ? 'bg-blue-50 text-blue-800' : 'bg-amber-50 text-amber-800'"
+            >
+              <span class="font-bold">{{ tier.range }}</span> ({{ tier.degreeClass }}) - {{ tier.targets }}
             </div>
           </div>
 
-          <!-- Case Study -->
-          <div v-if="major.caseStudies.length > 0" class="border-t border-slate-100 pt-3">
-            <p class="text-[10px] font-semibold text-slate-400 uppercase tracking-wide mb-1">Spotlight Case</p>
-            <div class="text-xs text-slate-700">
-              <p class="font-medium">{{ major.caseStudies[0].gpa }} GPA · {{ major.caseStudies[0].route }} · {{ major.caseStudies[0].offers[0] }}</p>
-              <p class="text-slate-500 mt-1">{{ major.caseStudies[0].highlight }}</p>
-            </div>
-          </div>
+          <AdmissionCaseFlipCard
+            v-if="major.caseStudies.length > 0"
+            :major="major"
+            :case-study="major.caseStudies[0]"
+          />
         </div>
       </div>
     </div>
@@ -122,5 +125,6 @@
 </template>
 
 <script setup>
+import AdmissionCaseFlipCard from './AdmissionCaseFlipCard.vue'
 import { majorStats, overallStats } from '../data/admissionData'
 </script>

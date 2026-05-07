@@ -142,9 +142,11 @@
           v-if="activeTab === 'gear-shop'"
           :learning-value="learningValue"
           :gear-state="gearState"
+          :teacher-question-credits="inventory.teacherQuestionCredits || 0"
           :is-zh="isZh"
           @upgrade-gear="handleUpgradeGear"
           @update-gear="(newState) => gearState = newState"
+          @buy-teacher-question="handleBuyTeacherQuestion"
         />
         <InterviewSim 
           v-if="activeTab === 'interview-sim'"
@@ -185,7 +187,12 @@
           :daily-quest-progress="dailyQuestProgress"
         />
         <AIChat v-if="activeTab === 'ai-advisor'" />
-        <QuestionForm v-if="activeTab === 'qa'" :user-name="userName" />
+        <QuestionForm
+          v-if="activeTab === 'qa'"
+          :user-name="userName"
+          :question-credits="inventory.teacherQuestionCredits || 0"
+          @consume-question-credit="handleConsumeTeacherQuestion"
+        />
         <DemoAdmissionData v-if="activeTab === 'admission'" />
         <DemoActivities v-if="activeTab === 'activities'" />
         <AdvisorDashboard v-if="activeTab === 'advisor-view'" v-bind="advisorProps" />
@@ -305,7 +312,22 @@ const currentCombo = ref(0)
 const maxCombo = ref(0)
 const daysStreak = ref(0)
 const gearState = ref({ ielts: 0, gpa: 0, internship: 0, research: 0, award: 0, recommendation: 0 })
-const inventory = ref({ heartRefills: 0, hintTokens: 0, xpBoostCount: 0, timeFreezes: 0, xpBoostExpiry: null })
+function createDefaultInventory() {
+  return {
+    heartRefills: 0,
+    hintTokens: 0,
+    xpBoostCount: 0,
+    timeFreezes: 0,
+    xpBoostExpiry: null,
+    teacherQuestionCredits: 0
+  }
+}
+
+function normalizeInventory(savedInventory) {
+  return { ...createDefaultInventory(), ...(savedInventory || {}) }
+}
+
+const inventory = ref(createDefaultInventory())
 const totalTVSpent = ref(0)
 const hintTokensUsed = ref(0)
 const dailyQuestProgress = ref(initializeDailyProgress())
@@ -404,7 +426,7 @@ function handleRoleConfirmed(data) {
       weeklyAllDailyDays.value = []
       purchaseLimits.value = { heartRefillDaily: 0, xpBoostWeekly: 0 }
     }
-    inventory.value = progress.inventory || { heartRefills: 0, hintTokens: 0, xpBoostCount: 0, timeFreezes: 0, xpBoostExpiry: null }
+    inventory.value = normalizeInventory(progress.inventory)
     totalTVSpent.value = progress.totalTVSpent || 0
     hintTokensUsed.value = progress.hintTokensUsed || 0
   } else {
@@ -423,7 +445,7 @@ function handleRoleConfirmed(data) {
     loginDaysThisWeek.value = []
     weeklyAllDailyDays.value = []
     purchaseLimits.value = { heartRefillDaily: 0, xpBoostWeekly: 0 }
-    inventory.value = { heartRefills: 0, hintTokens: 0, xpBoostCount: 0, timeFreezes: 0, xpBoostExpiry: null }
+    inventory.value = createDefaultInventory()
     totalTVSpent.value = 0
     hintTokensUsed.value = 0
   }
@@ -476,6 +498,20 @@ function handleUpgradeGear(data) {
   saveProgress()
 }
 
+function handleBuyTeacherQuestion(data) {
+  const cost = data.cost || 50
+  if (learningValue.value < cost) return
+  learningValue.value -= cost
+  inventory.value.teacherQuestionCredits = (inventory.value.teacherQuestionCredits || 0) + 1
+  saveProgress()
+}
+
+function handleConsumeTeacherQuestion() {
+  if ((inventory.value.teacherQuestionCredits || 0) <= 0) return
+  inventory.value.teacherQuestionCredits--
+  saveProgress()
+}
+
 function handleUseItem(data) {
   if (data.itemId === 'heart-refill' && inventory.value.heartRefills > 0) {
     inventory.value.heartRefills -= data.amount || 1
@@ -521,7 +557,7 @@ function handlePurchaseItem(data) {
 
 function handleResetStore() {
   purchaseLimits.value = { heartRefillDaily: 0, xpBoostWeekly: 0 }
-  inventory.value = { heartRefills: 0, hintTokens: 0, xpBoostCount: 0, timeFreezes: 0, xpBoostExpiry: null }
+  inventory.value = createDefaultInventory()
   totalTVSpent.value = 0
   hintTokensUsed.value = 0
   saveProgress()
@@ -535,7 +571,7 @@ function handleResetProgress() {
   weeklyTV.value = 0; weeklyLevelsCompleted.value = 0;
   loginDaysThisWeek.value = []; weeklyAllDailyDays.value = [];
   purchaseLimits.value = { heartRefillDaily: 0, xpBoostWeekly: 0 };
-  inventory.value = { heartRefills: 0, hintTokens: 0, xpBoostCount: 0, timeFreezes: 0, xpBoostExpiry: null }
+  inventory.value = createDefaultInventory()
   totalTVSpent.value = 0;
   hintTokensUsed.value = 0;
   saveProgress();
