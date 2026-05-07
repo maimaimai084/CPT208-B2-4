@@ -155,15 +155,22 @@ Output will be in the `dist/` directory.
 | **Explorer** | Year 2 Students | Process introduction, timeline planning, option exploration |
 | **Sprint** | Year 3 Students | Advanced strategies, essay techniques, interview prep |
 
-### Value System
+### Value System & Economic Loop
 
-- **📚 Learning Value**: Earned by answering quiz questions correctly
-  - Unlock PS Writing Guide at 100 points
-  - Unlock CV Guide at 80 points
+The game features a fully integrated economic loop driven by two core currencies:
+
+- [cite_start]**📚 Learning Value (LV)**: Earned by answering Journey quiz questions correctly.
+  - [cite_start]**Primary Use**: Spend LV in the **Gear Shop** to upgrade your background gears (e.g., IELTS, GPA, Internship)[cite: 36, 138].
+  - [cite_start]Upgraded gears provide permanent multipliers (up to +195%) to your future TV earnings[cite: 40, 140].
   
-- **✅ Task Value**: Earned by completing practical tasks
-  - Unlock School Selection Guide at 200 points
-  - Unlock Interview Guide at 150 points (requires both values)
+- [cite_start]**✅ Task Value (TV)**: Earned by completing practical mini-games (TV Quests)[cite: 144].
+  - [cite_start]**Primary Use**: Spend TV in the **TV Store** to purchase tactical items to help you progress: Heart Refills, Hint Tokens, XP Boosts, and Time Freezes[cite: 27, 146].
+
+- **📖 Story Unlocks**: As you accumulate LV and TV, you will automatically hit thresholds to unlock exclusive, in-depth strategy guides from the `guides.ts` database:
+  - [cite_start]CV Writing Excellence [cite: 175]
+  - [cite_start]Interview Preparation Guide [cite: 175]
+  - [cite_start]Research Proposal & Cold Email Guide [cite: 175]
+  - [cite_start]Pre-Departure Checklist [cite: 175]
 
 ### 5 Role-Specific Application Stages
 
