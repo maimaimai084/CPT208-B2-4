@@ -123,7 +123,7 @@
               <img src="/images/team/wyy.jpg" alt="Yeyun Wan" class="w-full h-full object-cover">
             </div>
             <h3 class="font-bold text-gray-900">Yeyun Wan</h3>
-            <p class="text-sm text-gray-500">Technical Lead</p>
+            <p class="text-sm text-gray-500">Lead Developer & Content Lead</p>
           </div>
 
           <!-- Team Member 2: Ziying Ren -->
@@ -132,7 +132,7 @@
               <img src="/images/team/rzy.jpg" alt="Ziying Ren" class="w-full h-full object-cover">
             </div>
             <h3 class="font-bold text-gray-900">Ziying Ren</h3>
-            <p class="text-sm text-gray-500">User Research & Video</p>
+            <p class="text-sm text-gray-500">User Researcher & Video Producer</p>
           </div>
 
           <!-- Team Member 3: Yueyue Wang -->
@@ -141,7 +141,7 @@
               <img src="/images/team/wyy2.jpg" alt="Yueyue Wang" class="w-full h-full object-cover">
             </div>
             <h3 class="font-bold text-gray-900">Yueyue Wang</h3>
-            <p class="text-sm text-gray-500">Content Research & Video</p>
+            <p class="text-sm text-gray-500">Poster Design & Content Creator</p>
           </div>
 
           <!-- Team Member 4: Ruoxuan Mai -->
@@ -150,7 +150,7 @@
               <img src="/images/team/mrx.jpg" alt="Ruoxuan Mai" class="w-full h-full object-cover">
             </div>
             <h3 class="font-bold text-gray-900">Ruoxuan Mai</h3>
-            <p class="text-sm text-gray-500">Design Methodology & Video</p>
+            <p class="text-sm text-gray-500">Design Support & Content Creator</p>
           </div>
         </div>
         
@@ -169,23 +169,23 @@
               <tbody>
                 <tr class="hover:bg-blue-50/50 transition-colors">
                   <td class="p-3 border font-medium">Yeyun Wan</td>
-                  <td class="p-3 border">Technical Lead</td>
-                  <td class="p-3 border">Portfolio website development (Vue 3 + Tailwind), Game Demo frontend architecture, interactive components (RoleSelect, QuizInterface, Dashboard, AdvisorPanel), system deployment on GitHub Pages</td>
+                  <td class="p-3 border">Lead Developer & Content Lead</td>
+                  <td class="p-3 border">Majority of website code development (Vue 3 + Tailwind CSS) and written content across all modules (except Evaluation), including Introduction, Conclusion, Target Users data analysis & presentation, and Prototype module; content research, integration & optimization for web presentation; game demo design & implementation with continuous iteration; system deployment on GitHub Pages</td>
                 </tr>
                 <tr class="even:bg-gray-50 hover:bg-blue-50/50 transition-colors">
                   <td class="p-3 border font-medium">Ziying Ren</td>
-                  <td class="p-3 border">User Research & Video</td>
-                  <td class="p-3 border">User survey design and distribution (n=90), persona creation (Emily & Alex), user testing coordination, 2-min project video production</td>
+                  <td class="p-3 border">User Researcher & Video Producer</td>
+                  <td class="p-3 border">Target Users section content (personas, user survey design & distribution n=90), user testing coordination with students & teachers, 2-min project video production (primary contributor)</td>
                 </tr>
                 <tr class="hover:bg-blue-50/50 transition-colors">
                   <td class="p-3 border font-medium">Yueyue Wang</td>
-                  <td class="p-3 border">Content Research & Video</td>
-                  <td class="p-3 border">Academic literature review (4 papers), commercial product analysis (4 products), research gap synthesis, 2-min project video production</td>
+                  <td class="p-3 border">Poster Design & Content</td>
+                  <td class="p-3 border">Poster design & layout (primary contributor), AIlog-related, partial content collection & research, QA Chance feature in Gear module, Data module pagination enhancement, participated in video production (partial), user testing coordination with students & teachers</td>
                 </tr>
                 <tr class="even:bg-gray-50 hover:bg-blue-50/50 transition-colors">
                   <td class="p-3 border font-medium">Ruoxuan Mai</td>
-                  <td class="p-3 border">Design Methodology & Video</td>
-                  <td class="p-3 border">Crazy 8s brainstorming facilitation, design process documentation, design decisions (game format / dual-value / story trigger), 2-min project video production</td>
+                  <td class="p-3 border">Design Support & Content Creator</td>
+                  <td class="p-3 border">Partial website development & demo refinement, AI-assisted image generation, Design Process section content, profile page optimization, participated in video production (partial), user testing coordination with students & teachers</td>
                 </tr>
               </tbody>
             </table>
