@@ -6,14 +6,13 @@ A gamified web application for XJTLU students to learn about postgraduate applic
 
 **MasterApply Quest** is an interactive text-based adventure game designed to help students navigate the postgraduate application journey through engaging gameplay and structured learning.
 
-### Key Features
 
 ### Key Features
 
-- 🎯 **5 Role-Specific Application Stages**: Tailored paths for Explorers (Identity → Research → Essays → Decide → Plan) and Sprinters (Goals → Materials → Submit → Interview → Success)
+- 🎯 **5 Role-Specific Application Stages**: Tailored paths for Explorers (Discovery → Research & Funding → Craft & Submit → Connect & Interview → Decide & Depart) and Sprinters (Target & Plan → Materials & Funding → Apply & Submit → Interview & Connect → Decide & Go)
 - 👥 **Dual Role System**: Explorer (Year 2) and Sprint (Year 3) with customized content and visuals for each
 - 🎮 **Mini-Games (TV Quests)**: Role-specific interactive challenges (e.g., Timeline Puzzle, School Matcher) to test practical skills
-- 📊 **Dual Value & Gear System**: Spend Learning Value (theory) to upgrade gears for Task Value (practice) multipliers
+- 📊 **Dual Value & Gear System**: Spend Learning Value (theory) to upgrade gears for Task Value (practice) multipliers (up to +195% total bonus)
 - 🏆 **Achievement System**: Unlock badges and rewards as you progress
 - 📱 **Responsive Design**: Optimized for both mobile and desktop experiences
 - 📖 **Story Unlock Mechanism**: Reach value thresholds to unlock exclusive strategy guides
@@ -105,6 +104,12 @@ Output will be in the `dist/` directory.
 │   │   └── portfolio/              # Portfolio page components
 │   │       ├── ModuleHeader.vue    # Shared module page header
 │   │       └── TableOfContents.vue # Auto-generated TOC component
+│   │   ├── GearShop.vue            # Gear upgrade shop (spend LV)
+│   │   ├── TVStore.vue             # TV item store & reset system
+│   │   ├── DocumentRush.vue        # 21-round document proofreading mini-game
+│   │   ├── TimelinePuzzle.vue      # 6-level timeline sorting mini-game
+│   │   ├── SchoolMatcher.vue       # 7-level university matching mini-game
+│   │   ├── EmailScramble.vue       # 5-scenario email sorting mini-game
 │   ├── views/                      # Portfolio page views (routes)
 │   │   ├── Home.vue
 │   │   ├── Introduction.vue
@@ -165,19 +170,18 @@ Output will be in the `dist/` directory.
 To provide a highly personalized experience, the system abandons the "one-size-fits-all" approach and offers two distinct 5-stage learning paths tailored to the specific needs of each user persona:
 
 **🧭 The Explorer Path (Year 2 Focus)**
-1. **Identity** - Understand personal interests, strengths, and initial directions.
-2. **Research** - Deep dive into target countries, universities, and academic programs.
-3. **Essays** - Build the foundational narrative for a compelling Personal Statement (PS) and CV.
-4. **Decide** - Evaluate different postgraduate paths and career options.
-5. **Plan** - Formulate an actionable long-term background improvement plan.
+1. **Discovery** - Interest analysis, university research, major matching, and creating a target list.
+2. **Research & Funding** - Material checklists, scholarships, recommendation letters, and grade accreditation.
+3. **Craft & Submit** - PS writing, CV optimization, online application submission, and research proposals.
+4. **Connect & Interview** - Interview simulation, cold emailing professors, Q&A practice, and interview follow-ups.
+5. **Decide & Depart** - Offer comparison, scholarship evaluation, visa processing, and pre-departure checklists.
 
 **🚀 The Sprint Path (Year 3 Focus)**
-1. **Goals** - Lock in specific target (reach, match, and safety) universities.
-2. **Materials** - Efficiently prepare transcripts, language certificates, and recommendation letters.
-3. **Submit** - Navigate and conquer various university online application systems.
-4. **Interview** - Master high-frequency questions and practical interview techniques.
-5. **Success** - Track application status, accept offers, and prepare for departure.
-
+1. **Target & Plan** - Application targets, ranking analysis, timelines, and reach/safety strategies.
+2. **Materials & Funding** - Material preparation, scholarships, recommendation follow-ups, and score reporting.
+3. **Apply & Submit** - Essay finalization, CV finalization, online application filling, and material confirmation.
+4. **Interview & Connect** - Interview question banks, mock interviews, email templates, and contacting professors.
+5. **Decide & Go** - Offer decisions, tuition evaluation, visa processing, and departure checklists.
 ### Daily Quests
 
 Refreshable daily challenges that reset every 24 hours:
@@ -190,20 +194,27 @@ Refreshable daily challenges that reset every 24 hours:
 
 Streak rewards for consecutive correct answers:
 
-| Combo | Bonus |
-|-------|-------|
-| 3+ | +15% points |
-| 5+ | +25% points |
-| 10+ | +50% points |
+| Combo | Bonus | Achievement |
+|-------|-------|-------------|
+| 3+ | +15% points | - |
+| 5+ | +25% points | - |
+| 10+ | +50% points | Unlocks "Combo Master" |
+| 15+ | +75% points | Unlocks "Combo Legend" | 
+
 
 ### Achievement System
 
-Unlock badges through gameplay achievements:
-- First Quiz Complete
-- Explorer/Sprint Role Master
-- Combo Champion
-- Daily Quest Hero
-- Guide Collector
+Unlock 13 unique badges through gameplay progression:
+- **First Step**: Complete your first level
+- **Quiz Master**: Get 50 correct answers
+- **Combo Master & Legend**: Reach 10 and 15 max combos
+- **Week Warrior**: Maintain a 7-day streak
+- **Learning Guru & Task Master**: Accumulate large amounts of LV and TV
+- **Perfect Student**: Achieve perfect scores on 3 levels
+- **Halfway There & Journey Complete**: Complete 3 and 5 levels respectively
+- **Big Spender**: Spend 500 TV in the store
+- **Hint Master**: Use 10 Hint Tokens
+- **Gear Master**: Max out all gears
 
 ## 🎓 Course Information
 

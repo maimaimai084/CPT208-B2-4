@@ -47,19 +47,19 @@
             </h3>
             <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
               <div class="text-center p-3 bg-white rounded-lg border border-blue-200 shadow-sm">
-                <div class="text-2xl mb-1">🧭</div><div class="text-xs text-gray-500">Stage 1</div><h4 class="font-bold text-gray-800 text-sm">Identity</h4>
+                <div class="text-2xl mb-1">🧭</div><div class="text-xs text-gray-500">Stage 1</div><h4 class="font-bold text-gray-800 text-sm">Discovery</h4>
               </div>
               <div class="text-center p-3 bg-white rounded-lg border border-blue-200 shadow-sm">
-                <div class="text-2xl mb-1">🔍</div><div class="text-xs text-gray-500">Stage 2</div><h4 class="font-bold text-gray-800 text-sm">Research</h4>
+                <div class="text-2xl mb-1">🔍</div><div class="text-xs text-gray-500">Stage 2</div><h4 class="font-bold text-gray-800 text-sm">Research & Funding</h4>
               </div>
               <div class="text-center p-3 bg-white rounded-lg border border-blue-200 shadow-sm">
-                <div class="text-2xl mb-1">✍️</div><div class="text-xs text-gray-500">Stage 3</div><h4 class="font-bold text-gray-800 text-sm">Essays</h4>
+                <div class="text-2xl mb-1">✍️</div><div class="text-xs text-gray-500">Stage 3</div><h4 class="font-bold text-gray-800 text-sm">Craft & Submit</h4>
               </div>
               <div class="text-center p-3 bg-white rounded-lg border border-blue-200 shadow-sm">
-                <div class="text-2xl mb-1">⚖️</div><div class="text-xs text-gray-500">Stage 4</div><h4 class="font-bold text-gray-800 text-sm">Decide</h4>
+                <div class="text-2xl mb-1">⚖️</div><div class="text-xs text-gray-500">Stage 4</div><h4 class="font-bold text-gray-800 text-sm">Connect & Interview</h4>
               </div>
               <div class="text-center p-3 bg-white rounded-lg border border-blue-200 shadow-sm">
-                <div class="text-2xl mb-1">🗺️</div><div class="text-xs text-gray-500">Stage 5</div><h4 class="font-bold text-gray-800 text-sm">Plan</h4>
+                <div class="text-2xl mb-1">🗺️</div><div class="text-xs text-gray-500">Stage 5</div><h4 class="font-bold text-gray-800 text-sm">Decide & Depart</h4>
               </div>
             </div>
           </div>
@@ -71,19 +71,19 @@
             </h3>
             <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
               <div class="text-center p-3 bg-white rounded-lg border border-orange-200 shadow-sm">
-                <div class="text-2xl mb-1">🎯</div><div class="text-xs text-gray-500">Stage 1</div><h4 class="font-bold text-gray-800 text-sm">Goals</h4>
+                <div class="text-2xl mb-1">🎯</div><div class="text-xs text-gray-500">Stage 1</div><h4 class="font-bold text-gray-800 text-sm">Target & Plan</h4>
               </div>
               <div class="text-center p-3 bg-white rounded-lg border border-orange-200 shadow-sm">
-                <div class="text-2xl mb-1">📋</div><div class="text-xs text-gray-500">Stage 2</div><h4 class="font-bold text-gray-800 text-sm">Materials</h4>
+                <div class="text-2xl mb-1">📋</div><div class="text-xs text-gray-500">Stage 2</div><h4 class="font-bold text-gray-800 text-sm">Materials & Funding</h4>
               </div>
               <div class="text-center p-3 bg-white rounded-lg border border-orange-200 shadow-sm">
-                <div class="text-2xl mb-1">🚀</div><div class="text-xs text-gray-500">Stage 3</div><h4 class="font-bold text-gray-800 text-sm">Submit</h4>
+                <div class="text-2xl mb-1">🚀</div><div class="text-xs text-gray-500">Stage 3</div><h4 class="font-bold text-gray-800 text-sm">Apply & Submit</h4>
               </div>
               <div class="text-center p-3 bg-white rounded-lg border border-orange-200 shadow-sm">
-                <div class="text-2xl mb-1">💬</div><div class="text-xs text-gray-500">Stage 4</div><h4 class="font-bold text-gray-800 text-sm">Interview</h4>
+                <div class="text-2xl mb-1">💬</div><div class="text-xs text-gray-500">Stage 4</div><h4 class="font-bold text-gray-800 text-sm">Interview & Connect</h4>
               </div>
               <div class="text-center p-3 bg-white rounded-lg border border-orange-200 shadow-sm">
-                <div class="text-2xl mb-1">🏆</div><div class="text-xs text-gray-500">Stage 5</div><h4 class="font-bold text-gray-800 text-sm">Success</h4>
+                <div class="text-2xl mb-1">🏆</div><div class="text-xs text-gray-500">Stage 5</div><h4 class="font-bold text-gray-800 text-sm">Decide & Go</h4>
               </div>
             </div>
           </div>
@@ -276,7 +276,7 @@
           <div class="flex items-start gap-3 p-4 bg-orange-50 rounded-xl shadow-sm border border-orange-100 transition-hover hover:shadow-md">
             <span class="font-bold text-orange-700 shrink-0 text-lg">② Frontend Processing</span>
             <span class="text-sm text-gray-700 leading-relaxed">
-              Vue 3 reactive state: Calculates LV (Learning) and TV (Task) gains, dynamically applying <strong>Gear System multipliers (+5% per level)</strong> and continuous <strong>Combo bonuses</strong>.
+              Vue 3 reactive state: Calculates LV (Learning) and TV (Task) gains, dynamically applying <strong>Gear System multipliers (up to +195% total bonus)</strong> and continuous <strong>Combo bonuses</strong>.
             </span>
           </div>
           
@@ -423,7 +423,18 @@
               <!-- ⚠️ 请将这里的 src 替换为你 V4.0 第三张截图的真实路径 -->
               <img src="/images/docx/module5_prototype/10.png" alt="Version 4.0 UI Preview 3" class="w-full h-auto object-cover">
             </div>
-            
+            <div class="rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-shadow bg-gray-50">
+              <!-- ⚠️ 请将这里的 src 替换为你 V4.0 第三张截图的真实路径 -->
+              <img src="/images/docx/module5_prototype/12.png" alt="Version 4.0 UI Preview 4" class="w-full h-auto object-cover">
+            </div>
+            <div class="rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-shadow bg-gray-50">
+              <!-- ⚠️ 请将这里的 src 替换为你 V4.0 第三张截图的真实路径 -->
+              <img src="/images/docx/module5_prototype/13.png" alt="Version 4.0 UI Preview 5" class="w-full h-auto object-cover">
+            </div>
+            <div class="rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-shadow bg-gray-50">
+              <!-- ⚠️ 请将这里的 src 替换为你 V4.0 第三张截图的真实路径 -->
+              <img src="/images/docx/module5_prototype/14.png" alt="Version 4.0 UI Preview 6" class="w-full h-auto object-cover">
+            </div>
           </div>
         </div>
         <p class="text-sm text-gray-400 text-center mt-6 mb-8">Version 4.0 is available as an interactive demo - visit the /demo route to play the game</p>
@@ -535,7 +546,7 @@ const coreSteps = [
   },
   { 
     title: 'Embark on Dual-Path Stages', 
-    desc: 'Progress through a tailored 5-stage journey. Explorers focus on "Identity & Research", while Sprinters tackle "Goals, Materials & Interviews".' 
+    desc: 'Progress through a tailored 5-stage journey. Explorers focus on "Discovery" and "Research & Funding", while Sprinters tackle "Target & Plan" and "Materials & Funding".' 
   },
   { 
     title: 'Accumulate LV & TV via Mini-Games', 
