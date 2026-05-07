@@ -266,35 +266,35 @@
         
         <!-- 数据流说明 (已融入 V4.0 高级机制) -->
         <div class="space-y-4 mt-6">
-          <div class="flex items-start gap-3 p-4 bg-blue-50 rounded-xl shadow-sm border border-blue-100 transition-hover hover:shadow-md">
+          <div class="flex items-start gap-3 p-4 bg-blue-50 rounded-xl shadow-sm border border-blue-100 transition-shadow hover:shadow-md">
             <span class="font-bold text-blue-700 shrink-0 text-lg">① User Input</span>
             <span class="text-sm text-gray-700 leading-relaxed">
               <strong>Role Selection (Explorer/Sprint)</strong>, EN/ZH language toggle, quiz answers, and interactions with <strong>role-specific mini-games</strong> → validated and sanitized.
             </span>
           </div>
           
-          <div class="flex items-start gap-3 p-4 bg-orange-50 rounded-xl shadow-sm border border-orange-100 transition-hover hover:shadow-md">
+          <div class="flex items-start gap-3 p-4 bg-orange-50 rounded-xl shadow-sm border border-orange-100 transition-shadow hover:shadow-md">
             <span class="font-bold text-orange-700 shrink-0 text-lg">② Frontend Processing</span>
             <span class="text-sm text-gray-700 leading-relaxed">
               Vue 3 reactive state: Calculates LV (Learning) and TV (Task) gains, dynamically applying <strong>Gear System multipliers (up to +195% total bonus)</strong> and continuous <strong>Combo bonuses</strong>.
             </span>
           </div>
           
-          <div class="flex items-start gap-3 p-4 bg-gray-50 rounded-xl shadow-sm border border-gray-200 transition-hover hover:shadow-md">
+          <div class="flex items-start gap-3 p-4 bg-gray-50 rounded-xl shadow-sm border border-gray-200 transition-shadow hover:shadow-md">
             <span class="font-bold text-gray-700 shrink-0 text-lg">③ LocalStorage</span>
             <span class="text-sm text-gray-700 leading-relaxed">
               Auto-saves complex JSON state to ensure privacy: <code>{ role, isZh, learningValue, taskValue, gearState, dailyQuestProgress, unlockedAchievements }</code>.
             </span>
           </div>
           
-          <div class="flex items-start gap-3 p-4 bg-green-50 rounded-xl shadow-sm border border-green-100 transition-hover hover:shadow-md">
+          <div class="flex items-start gap-3 p-4 bg-green-50 rounded-xl shadow-sm border border-green-100 transition-shadow hover:shadow-md">
             <span class="font-bold text-green-700 shrink-0 text-lg">④ Output / Feedback</span>
             <span class="text-sm text-gray-700 leading-relaxed">
               Updates the <strong>SVG Knowledge Tree (growing blue/orange leaves)</strong>, triggers achievement toasts, and checks LV/TV thresholds to unlock role-specific story guides.
             </span>
           </div>
           
-          <div class="flex items-start gap-3 p-4 bg-purple-50 rounded-xl shadow-sm border border-purple-100 transition-hover hover:shadow-md">
+          <div class="flex items-start gap-3 p-4 bg-purple-50 rounded-xl shadow-sm border border-purple-100 transition-shadow hover:shadow-md">
             <span class="font-bold text-purple-700 shrink-0 text-lg">⑤ Advisor Dashboard</span>
             <span class="text-sm text-gray-700 leading-relaxed">
               Read-only aggregation: Parses LocalStorage to display student lists, categorizing them by role (Year 2 vs. Year 3) and highlighting specific knowledge gaps for targeted offline support.
@@ -403,7 +403,7 @@
         <!-- === 👇 新增的 V4.0 界面预览三图 👇 === -->
         <div class="mt-12 mb-4">
           <h3 class="text-lg font-semibold text-gray-700 mb-4">Version 4.0 (Interactive Demo Preview)</h3>
-          <!-- grid-cols-1 md:grid-cols-3 保证在手机上单列显示，在电脑上并排三列 -->
+          <!-- grid-cols-1 md:grid-cols-4 for balanced 4+3 layout -->
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             
             <!-- 图片 1 (建议放：角色差异化的界面 或 双语切换) -->

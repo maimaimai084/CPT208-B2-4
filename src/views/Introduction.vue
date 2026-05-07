@@ -1,6 +1,5 @@
 <!--
   Introduction.vue - Module 2: Introduction & Problem Statement
-  展示项目背景、痛点、核心价值
 -->
 
 <template>
@@ -267,97 +266,96 @@
         <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
           <span>💼</span> Commercial Products
         </h2>
-        <p class="text-gray-600 mb-6">We analyzed <strong>4 commercial products</strong> to identify market gaps and design opportunities.</p>
+        <p class="text-gray-600 mb-6">We analyzed <strong>4 commercial products</strong> to identify market gaps and design opportunities. The comparison below highlights how each product addresses (or fails to address) the key dimensions relevant to our design.</p>
         
-        <div class="space-y-6">
-          <!-- Product 1: Duolingo -->
-          <div class="border border-gray-100 rounded-xl p-6">
-            <h3 class="text-lg font-bold text-gray-900 mb-2">Product 1: Duolingo</h3>
-            <p class="text-sm text-gray-500 mb-3">The world's most popular language-learning app, built on XP points, streaks, leaderboards, and badges. Average session: 5–10 minutes.</p>
-            <div class="grid md:grid-cols-2 gap-4">
-              <div class="bg-green-50 rounded-lg p-3 border border-green-100">
-                <h4 class="font-bold text-green-800 text-sm mb-1">✅ Strengths</h4>
-                <ul class="text-xs text-gray-700 space-y-1">
-                  <li>• <strong>Extreme fragmentation</strong>: 3-5 minute lessons fit commutes</li>
-                  <li>• <strong>Mature gamification</strong>: Streaks, leaderboards, badges</li>
-                  <li>• <strong>Adaptive AI paths</strong>: Dynamically adjusts difficulty</li>
-                </ul>
-              </div>
-              <div class="bg-red-50 rounded-lg p-3 border border-red-100">
-                <h4 class="font-bold text-red-800 text-sm mb-1">❌ Limitations</h4>
-                <ul class="text-xs text-gray-700 space-y-1">
-                  <li>• <strong>Limited content depth</strong>: Lacks academic-writing content</li>
-                  <li>• <strong>Social competition anxiety</strong>: May cause stress</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <!-- Product 2: ApplyBoard -->
-          <div class="border border-gray-100 rounded-xl p-6">
-            <h3 class="text-lg font-bold text-gray-900 mb-2">Product 2: ApplyBoard</h3>
-            <p class="text-sm text-gray-500 mb-3">A Canadian B2B study-abroad platform connecting students, agents, and partner institutions. Offers one-stop services from school selection to visa application.</p>
-            <div class="grid md:grid-cols-2 gap-4">
-              <div class="bg-green-50 rounded-lg p-3 border border-green-100">
-                <h4 class="font-bold text-green-800 text-sm mb-1">✅ Strengths</h4>
-                <ul class="text-xs text-gray-700 space-y-1">
-                  <li>• <strong>Systematic workflow management</strong>: Integrates selection, application, visa</li>
-                  <li>• <strong>Massive institutional database</strong>: Covers multiple countries</li>
-                </ul>
-              </div>
-              <div class="bg-red-50 rounded-lg p-3 border border-red-100">
-                <h4 class="font-bold text-red-800 text-sm mb-1">❌ Limitations</h4>
-                <ul class="text-xs text-gray-700 space-y-1">
-                  <li>• <strong>Zero gamification</strong>: Pure tool-based platform</li>
-                  <li>• <strong>Not XJTLU-specific</strong>: Lacks customized content</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <!-- Product 3: Xiaohongshu / Zhihu -->
-          <div class="border border-gray-100 rounded-xl p-6">
-            <h3 class="text-lg font-bold text-gray-900 mb-2">Product 3: Xiaohongshu / Zhihu</h3>
-            <p class="text-sm text-gray-500 mb-3">China's leading social media platforms and the primary channels XJTLU students use to gather application advice via peer-shared experiences.</p>
-            <div class="grid md:grid-cols-2 gap-4">
-              <div class="bg-green-50 rounded-lg p-3 border border-green-100">
-                <h4 class="font-bold text-green-800 text-sm mb-1">✅ Strengths</h4>
-                <ul class="text-xs text-gray-700 space-y-1">
-                  <li>• <strong>High content authenticity</strong>: Real application experiences</li>
-                  <li>• <strong>Active community interaction</strong>: Comment sections enable Q&A</li>
-                </ul>
-              </div>
-              <div class="bg-red-50 rounded-lg p-3 border border-red-100">
-                <h4 class="font-bold text-red-800 text-sm mb-1">❌ Limitations</h4>
-                <ul class="text-xs text-gray-700 space-y-1">
-                  <li>• <strong>Extreme information fragmentation</strong>: No systematic curation</li>
-                  <li>• <strong>No learning incentives</strong>: No progress tracking or rewards</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <!-- Product 4: Applash -->
-          <div class="border border-gray-100 rounded-xl p-6">
-            <h3 class="text-lg font-bold text-gray-900 mb-2">Product 4: Applash</h3>
-            <p class="text-sm text-gray-500 mb-3">An AI-driven study-abroad platform matching international students with 140,000+ university programs worldwide.</p>
-            <div class="grid md:grid-cols-2 gap-4">
-              <div class="bg-green-50 rounded-lg p-3 border border-green-100">
-                <h4 class="font-bold text-green-800 text-sm mb-1">✅ Strengths</h4>
-                <ul class="text-xs text-gray-700 space-y-1">
-                  <li>• <strong>AI intelligent matching</strong>: Recommends suitable institutions</li>
-                  <li>• <strong>Scholarship data integration</strong>: 1,500+ partner institutions</li>
-                </ul>
-              </div>
-              <div class="bg-red-50 rounded-lg p-3 border border-red-100">
-                <h4 class="font-bold text-red-800 text-sm mb-1">❌ Limitations</h4>
-                <ul class="text-xs text-gray-700 space-y-1">
-                  <li>• <strong>Matching-heavy, learning-light</strong>: Focuses on "finding schools"</li>
-                  <li>• <strong>No gamification</strong>: Pure information-query tool</li>
-                </ul>
-              </div>
-            </div>
-          </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm border-collapse">
+            <thead>
+              <tr class="bg-gray-200">
+                <th class="p-3 text-left font-bold border w-[13%]">Product</th>
+                <th class="p-3 text-left font-bold border w-[10%]">Type</th>
+                <th class="p-3 text-center font-bold border w-[8%]">Gamification</th>
+                <th class="p-3 text-left font-bold border w-[25%]">Strengths</th>
+                <th class="p-3 text-left font-bold border w-[25%]">Limitations</th>
+                <th class="p-3 text-left font-bold border w-[19%]">Key Gap</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="hover:bg-blue-50/50 transition-colors">
+                <td class="p-3 border font-bold text-gray-900">Duolingo</td>
+                <td class="p-3 border text-gray-600">Language Learning App</td>
+                <td class="p-3 border text-center"><span class="text-green-600 font-bold">★★★</span></td>
+                <td class="p-3 border text-gray-700">
+                  <ul class="space-y-1">
+                    <li>• <strong>Extreme fragmentation</strong>: 3–5 min lessons</li>
+                    <li>• <strong>Mature gamification</strong>: Streaks, leaderboards, badges</li>
+                    <li>• <strong>Adaptive AI paths</strong>: Dynamic difficulty</li>
+                  </ul>
+                </td>
+                <td class="p-3 border text-gray-700">
+                  <ul class="space-y-1">
+                    <li>• <strong>Limited depth</strong>: No academic-writing content</li>
+                    <li>• <strong>Social competition anxiety</strong>: May cause stress</li>
+                  </ul>
+                </td>
+                <td class="p-3 border text-orange-700 text-xs">No postgraduate-application content; gamification model is exportable but content is language-specific</td>
+              </tr>
+              <tr class="even:bg-gray-50 hover:bg-blue-50/50 transition-colors">
+                <td class="p-3 border font-bold text-gray-900">ApplyBoard</td>
+                <td class="p-3 border text-gray-600">B2B Study-Abroad Platform</td>
+                <td class="p-3 border text-center"><span class="text-red-400 font-bold">✗</span></td>
+                <td class="p-3 border text-gray-700">
+                  <ul class="space-y-1">
+                    <li>• <strong>Systematic workflow</strong>: Selection → visa pipeline</li>
+                    <li>• <strong>Massive database</strong>: Multi-country institutions</li>
+                  </ul>
+                </td>
+                <td class="p-3 border text-gray-700">
+                  <ul class="space-y-1">
+                    <li>• <strong>Zero gamification</strong>: Pure tool platform</li>
+                    <li>• <strong>Not XJTLU-specific</strong>: Generic content</li>
+                  </ul>
+                </td>
+                <td class="p-3 border text-orange-700 text-xs">No engagement mechanism; no personalized learning path</td>
+              </tr>
+              <tr class="hover:bg-blue-50/50 transition-colors">
+                <td class="p-3 border font-bold text-gray-900">Xiaohongshu / Zhihu</td>
+                <td class="p-3 border text-gray-600">Social Media (UGC)</td>
+                <td class="p-3 border text-center"><span class="text-red-400 font-bold">✗</span></td>
+                <td class="p-3 border text-gray-700">
+                  <ul class="space-y-1">
+                    <li>• <strong>High authenticity</strong>: Real peer experiences</li>
+                    <li>• <strong>Active community</strong>: Comment Q&A</li>
+                  </ul>
+                </td>
+                <td class="p-3 border text-gray-700">
+                  <ul class="space-y-1">
+                    <li>• <strong>Extreme fragmentation</strong>: No curation</li>
+                    <li>• <strong>No incentives</strong>: No tracking or rewards</li>
+                  </ul>
+                </td>
+                <td class="p-3 border text-orange-700 text-xs">No structure; information scattered across thousands of posts</td>
+              </tr>
+              <tr class="even:bg-gray-50 hover:bg-blue-50/50 transition-colors">
+                <td class="p-3 border font-bold text-gray-900">Applash</td>
+                <td class="p-3 border text-gray-600">AI Matching Platform</td>
+                <td class="p-3 border text-center"><span class="text-red-400 font-bold">✗</span></td>
+                <td class="p-3 border text-gray-700">
+                  <ul class="space-y-1">
+                    <li>• <strong>AI matching</strong>: Recommends institutions</li>
+                    <li>• <strong>Scholarship data</strong>: 1,500+ partners</li>
+                  </ul>
+                </td>
+                <td class="p-3 border text-gray-700">
+                  <ul class="space-y-1">
+                    <li>• <strong>Matching-heavy, learning-light</strong></li>
+                    <li>• <strong>No gamification</strong>: Pure query tool</li>
+                  </ul>
+                </td>
+                <td class="p-3 border text-orange-700 text-xs">Focuses on "finding schools," not on building application skills</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </section>
 

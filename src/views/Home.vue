@@ -167,22 +167,22 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr class="hover:bg-blue-50/50 transition-colors">
                   <td class="p-3 border font-medium">Yeyun Wan</td>
                   <td class="p-3 border">Technical Lead</td>
                   <td class="p-3 border">Portfolio website development (Vue 3 + Tailwind), Game Demo frontend architecture, interactive components (RoleSelect, QuizInterface, Dashboard, AdvisorPanel), system deployment on GitHub Pages</td>
                 </tr>
-                <tr>
+                <tr class="even:bg-gray-50 hover:bg-blue-50/50 transition-colors">
                   <td class="p-3 border font-medium">Ziying Ren</td>
                   <td class="p-3 border">User Research & Video</td>
                   <td class="p-3 border">User survey design and distribution (n=90), persona creation (Emily & Alex), user testing coordination, 2-min project video production</td>
                 </tr>
-                <tr>
+                <tr class="hover:bg-blue-50/50 transition-colors">
                   <td class="p-3 border font-medium">Yueyue Wang</td>
                   <td class="p-3 border">Content Research & Video</td>
                   <td class="p-3 border">Academic literature review (4 papers), commercial product analysis (4 products), research gap synthesis, 2-min project video production</td>
                 </tr>
-                <tr>
+                <tr class="even:bg-gray-50 hover:bg-blue-50/50 transition-colors">
                   <td class="p-3 border font-medium">Ruoxuan Mai</td>
                   <td class="p-3 border">Design Methodology & Video</td>
                   <td class="p-3 border">Crazy 8s brainstorming facilitation, design process documentation, design decisions (game format / dual-value / story trigger), 2-min project video production</td>

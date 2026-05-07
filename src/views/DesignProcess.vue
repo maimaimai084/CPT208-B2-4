@@ -56,24 +56,22 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr class="hover:bg-blue-50/50 transition-colors">
                 <td class="p-3 border"><strong>R1:</strong> Need for flexible, fragmented learning without fixed schedules.</td>
                 <td class="p-3 border"><strong>DG1:</strong> Micro-learning format.</td>
                 <td class="p-3 border"><strong>SF1: 5-10 min Text Adventure Stages.</strong> Allows students to play during commutes.</td>
               </tr>
-              <tr>
+              <tr class="even:bg-gray-50 hover:bg-blue-50/50 transition-colors">
                 <td class="p-3 border"><strong>R2:</strong> Lack of intrinsic motivation and application anxiety.</td>
                 <td class="p-3 border"><strong>DG2:</strong> Gamified incentive system.</td>
                 <td class="p-3 border"><strong>SF2: Dual-Value (LV/TV) & Story Unlock.</strong> Rewards progress and satisfies psychological needs.</td>
               </tr>
-              <!-- 新功能 1 & 3 的体现 -->
-              <tr>
+              <tr class="hover:bg-blue-50/50 transition-colors">
                 <td class="p-3 border bg-blue-50"><strong>R3:</strong> Year 2 and Year 3 students have vastly different readiness levels and practical needs (found in evaluation).</td>
                 <td class="p-3 border bg-blue-50"><strong>DG3:</strong> Personalized and practical learning paths.</td>
                 <td class="p-3 border bg-blue-50"><strong>SF3: Role Differentiation & 6 TV Quests.</strong> <br><em>Explorer (Year 2)</em>: Blue theme, focuses on self-discovery (Document Rush, Timeline Puzzle). <br><em>Sprint (Year 3)</em>: Orange theme, focuses on execution (School Matcher, Email Scramble).</td>
               </tr>
-              <!-- 新功能 2 的体现 -->
-              <tr>
+              <tr class="even:bg-gray-50 hover:bg-blue-50/50 transition-colors">
                 <td class="p-3 border bg-green-50"><strong>R4:</strong> Diverse language preferences among international and domestic students.</td>
                 <td class="p-3 border bg-green-50"><strong>DG4:</strong> Inclusive accessibility.</td>
                 <td class="p-3 border bg-green-50"><strong>SF4: Full Bilingual Toggle.</strong> Complete EN/ZH translation for all questions and UI elements to eliminate language barriers.</td>
@@ -187,31 +185,31 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr class="hover:bg-blue-50/50 transition-colors">
                 <td class="p-3 border font-medium">Format</td>
                 <td class="p-3 border">PDF guides + video lectures</td>
                 <td class="p-3 border">Card collection + puzzle solving</td>
                 <td class="p-3 border bg-green-50">Story-driven + quiz decisions</td>
               </tr>
-              <tr>
+              <tr class="even:bg-gray-50 hover:bg-blue-50/50 transition-colors">
                 <td class="p-3 border font-medium">Engagement</td>
                 <td class="p-3 border">Passive reading</td>
                 <td class="p-3 border">High fun, fragmented knowledge</td>
                 <td class="p-3 border bg-green-50">Immersive, systematic</td>
               </tr>
-              <tr>
+              <tr class="hover:bg-blue-50/50 transition-colors">
                 <td class="p-3 border font-medium">Dev Cost</td>
                 <td class="p-3 border">Low</td>
                 <td class="p-3 border">High (art assets)</td>
                 <td class="p-3 border bg-green-50">Medium (text-based)</td>
               </tr>
-              <tr>
+              <tr class="even:bg-gray-50 hover:bg-blue-50/50 transition-colors">
                 <td class="p-3 border font-medium">Fragmented Fit</td>
                 <td class="p-3 border">❌ Long sessions</td>
                 <td class="p-3 border">⚠️ Long rounds</td>
                 <td class="p-3 border bg-green-50">✅ 5–10 min/stage</td>
               </tr>
-              <tr>
+              <tr class="hover:bg-blue-50/50 transition-colors">
                 <td class="p-3 border font-medium">Cross-Platform</td>
                 <td class="p-3 border">✅ PC-focused</td>
                 <td class="p-3 border">⚠️ Poor mobile</td>

@@ -1,6 +1,5 @@
 <!--
   TargetUsers.vue - Module 3: Target Users & Stakeholders
-  展示Personas、用户数据、研究对象及痛点需求
 -->
 
 <template>
@@ -17,19 +16,30 @@
       <!-- Research Subjects Overview -->
       <section id="research-subjects" class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         <h2 class="text-2xl font-bold text-gray-900 mb-6">🔍 Research Subjects</h2>
-        <p class="text-gray-700 leading-relaxed mb-4">
-          This research focuses on the undergraduate population preparing for study abroad applications, 
-          establishing a clear user persona along with corresponding needs and pain point systems. 
-          The primary users are second- and third-year undergraduate students with clear or preliminary 
-          intentions to study abroad, covering all majors, with main target regions including the UK, 
-          the US, Singapore, Hong Kong, and Australia.
-        </p>
-        <p class="text-gray-700 leading-relaxed mb-6">
-          They heavily rely on self-media platforms such as Xiaohongshu, Zhihu, and Bilibili, as well as 
-          experiences shared by seniors and alumnae for information access. They only have a moderate 
-          understanding of the application process, with vague goals and lack of detailed planning, 
-          and are accustomed to mobile-based learning in fragmented sessions of 5 to 10 minutes.
-        </p>
+
+        <div class="space-y-4 mb-6">
+          <div class="bg-blue-50/60 rounded-xl p-5 border border-blue-100">
+            <h4 class="font-bold text-blue-900 mb-2 text-sm uppercase tracking-wide">Target Population</h4>
+            <p class="text-gray-700 leading-relaxed">
+              This research focuses on the <strong>undergraduate population preparing for study abroad applications</strong>,
+              establishing a clear user persona along with corresponding needs and pain point systems.
+              The primary users are <strong>second- and third-year undergraduate students</strong> with clear or preliminary
+              intentions to study abroad, covering all majors, with main target regions including the <strong>UK,
+              the US, Singapore, Hong Kong, and Australia</strong>.
+            </p>
+          </div>
+
+          <div class="bg-orange-50/60 rounded-xl p-5 border border-orange-100">
+            <h4 class="font-bold text-orange-900 mb-2 text-sm uppercase tracking-wide">Information Behavior</h4>
+            <p class="text-gray-700 leading-relaxed">
+              They heavily rely on <strong>self-media platforms such as Xiaohongshu, Zhihu, and Bilibili</strong>, as well as
+              experiences shared by seniors and alumnae for information access. They only have a <strong>moderate
+              understanding of the application process</strong>, with <strong>vague goals and lack of detailed planning</strong>,
+              and are accustomed to <strong>mobile-based learning in fragmented sessions of 5 to 10 minutes</strong>.
+            </p>
+          </div>
+        </div>
+
         <p class="text-gray-800 leading-relaxed mb-6 font-medium bg-yellow-50 p-4 border-l-4 border-yellow-400 rounded-r-lg">
           <strong>🛡️ Ethical Considerations & Informed Consent:</strong> Prior to any data collection, informed consent was explicitly obtained from all 90 survey participants and 3 interviewed advisors. Participants were thoroughly briefed on the study's purpose. All collected data was strictly anonymized, stored securely, and used exclusively for academic design purposes in compliance with university ethical guidelines.
         </p>
@@ -323,7 +333,7 @@
             <div class="text-2xl mb-3">🛠️</div>
             <h4 class="font-bold text-gray-900 mb-2">Burdened by Repetitive Q&A</h4>
             <p class="text-sm text-gray-700 leading-relaxed">
-              Advisors currently spend a significant portion of their weekly hours answering the same foundational questions—application timelines, document checklists, and school selection basics—leaving limited time for personalized, high-value guidance on essays and interview strategy.
+              Advisors currently spend a significant portion of their weekly hours <strong>answering the same foundational questions</strong>—application timelines, document checklists, and school selection basics—leaving limited time for <strong>personalized, high-value guidance</strong> on essays and interview strategy.
             </p>
           </div>
 
@@ -331,7 +341,7 @@
             <div class="text-2xl mb-3">📚</div>
             <h4 class="font-bold text-gray-900 mb-2">Lack of Centralized Strategy Repository</h4>
             <p class="text-sm text-gray-700 leading-relaxed">
-              Core guidance materials such as school matching frameworks, personal statement templates, and interview tip sheets exist in scattered documents or individual advisors' notes. There is no unified, easily accessible repository that students can review independently before appointments.
+              Core guidance materials such as school matching frameworks, personal statement templates, and interview tip sheets exist in <strong>scattered documents or individual advisors' notes</strong>. There is <strong>no unified, easily accessible repository</strong> that students can review independently before appointments.
             </p>
           </div>
 
@@ -339,7 +349,7 @@
             <div class="text-2xl mb-3">⚡</div>
             <h4 class="font-bold text-gray-900 mb-2">No Visibility into Student Progress</h4>
             <p class="text-sm text-gray-700 leading-relaxed">
-              Advisors have no systematic way to track which students have mastered basic concepts and which are struggling with specific topics like recommendation letters or school selection. Guidance remains reactive—waiting for students to seek help—rather than proactive and data-informed.
+              Advisors have <strong>no systematic way to track</strong> which students have mastered basic concepts and which are struggling with specific topics like recommendation letters or school selection. Guidance remains <strong>reactive—waiting for students to seek help</strong>—rather than proactive and data-informed.
             </p>
           </div>
         </div>
@@ -467,10 +477,10 @@
           <div class="bg-gray-50 rounded-xl p-5">
             <h4 class="font-bold text-gray-800 mb-3 text-sm">Why This Matters</h4>
             <p class="text-sm text-gray-700 leading-relaxed mb-3">
-              <strong>78%</strong> rely on seniors' experiences and <strong>72%</strong> use social media (Xiaohongshu, Zhihu, Bilibili). This explains the "frustrating loop" in the user journey: students turn to unvetted, scattered sources first.
+              <strong>78%</strong> rely on seniors' experiences and <strong>72%</strong> use social media (Xiaohongshu, Zhihu, Bilibili). This explains the <strong>"frustrating loop"</strong> in the user journey: students turn to unvetted, scattered sources first.
             </p>
             <p class="text-sm text-gray-700 leading-relaxed">
-              Only <strong>32%</strong> attend campus workshops—primarily due to schedule conflicts—while <strong>45%</strong> seek advisor help, creating heavy repetitive workloads for advisors.
+              Only <strong>32%</strong> attend campus workshops—primarily due to <strong>schedule conflicts</strong>—while <strong>45%</strong> seek advisor help, creating <strong>heavy repetitive workloads</strong> for advisors.
             </p>
           </div>
         </div>
@@ -691,19 +701,19 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr class="hover:bg-blue-50/50 transition-colors">
                 <td class="p-3 border">😵‍💫 Scattered, conflicting info</td>
                 <td class="p-3 border">📚 <strong>5 structured stages</strong> with curated, XJTLU-specific content</td>
               </tr>
-              <tr>
+              <tr class="even:bg-gray-50 hover:bg-blue-50/50 transition-colors">
                 <td class="p-3 border">😫 Fixed workshop schedules</td>
                 <td class="p-3 border">📱 <strong>5–10 min mobile stages</strong> playable anytime, anywhere</td>
               </tr>
-              <tr>
+              <tr class="hover:bg-blue-50/50 transition-colors">
                 <td class="p-3 border">😩 Repetitive advisor Q&A</td>
                 <td class="p-3 border">📊 <strong>Advisor Dashboard</strong> with progress tracking & gap alerts</td>
               </tr>
-              <tr>
+              <tr class="even:bg-gray-50 hover:bg-blue-50/50 transition-colors">
                 <td class="p-3 border">😭 Low motivation, passive learning</td>
                 <td class="p-3 border">🎮 <strong>Dual-Value + Story Unlock</strong> transforms prep into active adventure</td>
               </tr>
@@ -807,6 +817,7 @@ const tocItems = [
   { id: 'core-pain-points', title: '😰 Core Pain Points' },
   { id: 'information-sources', title: '📱 Information Sources' },
   { id: 'current-user-journey', title: '🗺️ Current User Journey' },
+  { id: 'updated-user-journey', title: '✨ Updated User Journey' },
   { id: 'break-loop', title: '🎯 How We Break the Loop' },
   { id: 'must-have-features', title: '🎮 Must-Have Features' }
 ]

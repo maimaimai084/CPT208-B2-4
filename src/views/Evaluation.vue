@@ -1,6 +1,5 @@
 <!--
   Evaluation.vue - Module 6: Evaluation & Results
-  展示用户测试数据、量化结果和质性反馈
 -->
 
 <template>
@@ -69,7 +68,7 @@
           </div>
         </div>
 
-        <!-- === 👇 在这里插入新增的四张图片网格 👇 === -->
+        <!-- User Testing Records Grid -->
         <div class="mt-8">
           <h3 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
             <span>📸</span> User Testing Records
@@ -100,8 +99,8 @@
 
       
 
-      <!-- SUS Score Chart (原生 CSS 柱状图 - 英文版) -->
-      <section class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+      <!-- SUS Score Chart -->
+      <section id="sus-evaluation" class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         <div class="flex justify-between items-end mb-12">
           <div>
             <h3 class="text-2xl font-bold text-gray-900">SUS Score Distribution</h3>
@@ -142,7 +141,7 @@
             
             <!-- 数值和柱子 -->
             <span class="text-sm font-bold text-[#7FA1ED] mb-1">82.5</span>
-            <div class="w-full max-w-[64px] bg-[#7FA1ED] rounded-t-md transition-all duration-500 hover:opacity-80 hover:scale-y-[1.02] origin-bottom shadow-sm" style="height: 82.5%;"></div>
+            <div class="w-full max-w-[64px] bg-[#7FA1ED] rounded-t-md transition-all duration-500 hover:opacity-80 hover:scale-y-[1.02] origin-bottom shadow-sm bar-grow" style="height: 82.5%;"></div>
             
             <!-- 底部标签 -->
             <div class="absolute top-full pt-3 text-center w-full whitespace-nowrap">
@@ -158,7 +157,7 @@
             </div>
             
             <span class="text-sm font-bold text-emerald-500 mb-1">81.3</span>
-            <div class="w-full max-w-[64px] bg-emerald-400 rounded-t-md transition-all duration-500 hover:opacity-80 hover:scale-y-[1.02] origin-bottom shadow-sm" style="height: 81.3%;"></div>
+            <div class="w-full max-w-[64px] bg-emerald-400 rounded-t-md transition-all duration-500 hover:opacity-80 hover:scale-y-[1.02] origin-bottom shadow-sm bar-grow" style="height: 81.3%;"></div>
             
             <div class="absolute top-full pt-3 text-center w-full whitespace-nowrap">
               <div class="text-sm font-bold text-gray-700">Advisors</div>
@@ -173,7 +172,7 @@
             </div>
             
             <span class="text-sm font-bold text-amber-500 mb-1">81.0</span>
-            <div class="w-full max-w-[64px] bg-amber-400 rounded-t-md transition-all duration-500 hover:opacity-80 hover:scale-y-[1.02] origin-bottom shadow-sm" style="height: 81.0%;"></div>
+            <div class="w-full max-w-[64px] bg-amber-400 rounded-t-md transition-all duration-500 hover:opacity-80 hover:scale-y-[1.02] origin-bottom shadow-sm bar-grow" style="height: 81.0%;"></div>
             
             <div class="absolute top-full pt-3 text-center w-full whitespace-nowrap">
               <div class="text-sm font-bold text-gray-700">Year 2</div>
@@ -280,12 +279,27 @@
 
       <!-- Key Findings -->
       <section id="key-findings" class="p-6 bg-blue-50 rounded-xl border border-blue-100">
-        <h2 class="text-2xl font-bold mb-4">🔍 Key Findings</h2>
-        <p class="text-lg leading-relaxed">
-          Overall, the final evaluation confirms that gamification serves as a highly effective complement to traditional college guidance. The points-based story unlocking mechanism significantly enhances students' sustained motivation, transforming a high-anxiety application process into a structured, rewarding journey. Furthermore, the dual-value system successfully distinguishes theoretical learning from practical execution. 
-          <br><br>
-          <strong>Most importantly, the data validates our iterative design:</strong> while early testing revealed that Year 2 students lacked urgency and felt disconnected, the subsequent introduction of customized mini-games successfully bridged this gap. As a result, both Year 2 and Year 3 students now exhibit exceptionally high satisfaction and engagement, proving the system's inclusivity and adaptability.
-        </p>
+        <h2 class="text-2xl font-bold mb-6">🔍 Key Findings</h2>
+        <div class="space-y-4">
+          <div class="bg-white rounded-xl p-5 border border-blue-100">
+            <h3 class="font-bold text-gray-900 mb-2">1. Gamification Effectively Complements Traditional Guidance</h3>
+            <p class="text-gray-700 leading-relaxed">
+              The final evaluation confirms that <strong>gamification serves as a highly effective complement to traditional college guidance</strong>. The points-based story unlocking mechanism significantly enhances students' sustained motivation, transforming a <strong>high-anxiety application process into a structured, rewarding journey</strong>.
+            </p>
+          </div>
+          <div class="bg-white rounded-xl p-5 border border-blue-100">
+            <h3 class="font-bold text-gray-900 mb-2">2. Dual-Value System Distinguishes Learning from Practice</h3>
+            <p class="text-gray-700 leading-relaxed">
+              The <strong>dual-value system successfully distinguishes theoretical learning from practical execution</strong>, allowing students to build knowledge and apply it through separate, complementary mechanics.
+            </p>
+          </div>
+          <div class="bg-white rounded-xl p-5 border border-blue-100">
+            <h3 class="font-bold text-gray-900 mb-2">3. Iterative Design Validated by Data</h3>
+            <p class="text-gray-700 leading-relaxed">
+              Early testing revealed that Year 2 students lacked urgency and felt disconnected. The subsequent introduction of <strong>customized mini-games successfully bridged this gap</strong>. As a result, both Year 2 and Year 3 students now exhibit <strong>exceptionally high satisfaction and engagement</strong>, proving the system's <strong>inclusivity and adaptability</strong>.
+            </p>
+          </div>
+        </div>
       </section>
 
       <!-- Reference -->
@@ -305,9 +319,8 @@ import TableOfContents from '../components/portfolio/TableOfContents.vue'
 
 const tocItems = [
   { id: 'evaluation-methods', title: '🔬 Evaluation Methods' },
-  { id: 'user-feedback', title: '💬 User Feedback' },
-  { id: 'User Testing Records', title: '📸 User Testing Records' },
-  { id: 'SUS Evaluation', title: '🔬 SUS Evaluation' },
+  { id: 'user-feedback', title: '💬 User Feedback & Testing' },
+  { id: 'sus-evaluation', title: '📊 SUS Score & Dimensions' },
   { id: 'key-findings', title: '🔍 Key Findings' },
   { id: 'reference', title: '📚 Reference' }
 ]
@@ -316,4 +329,13 @@ const tocItems = [
 <style scoped>
 .evaluation-page { animation: fadeIn 0.5s ease-out; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.bar-grow {
+  animation: barGrowUp 1s ease-out forwards;
+  transform-origin: bottom;
+}
+@keyframes barGrowUp {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
 </style>
