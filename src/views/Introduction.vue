@@ -30,14 +30,12 @@
         </div>
       </section>
 
-      <!-- Section 2: Pain Points -->
       <section id="pain-points" class="mb-12">
         <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
           <span>😰</span> Current Pain Points
         </h2>
         
-        <div class="grid md:grid-cols-2 gap-6">
-          <!-- Campus Support -->
+        <div class="grid md:grid-cols-2 gap-6 mb-6">
           <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
             <div class="flex items-center gap-3 mb-4">
               <span class="text-3xl">🏫</span>
@@ -59,7 +57,6 @@
             </ul>
           </div>
 
-          <!-- Commercial Tools -->
           <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
             <div class="flex items-center gap-3 mb-4">
               <span class="text-3xl">💼</span>
@@ -82,44 +79,20 @@
           </div>
         </div>
 
-        <!-- Core Problem Summary -->
-        <div class="mt-6 bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl p-6 border border-red-100">
+        <div class="mb-8 bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl p-6 border border-red-100">
           <h3 class="font-bold text-gray-900 mb-3">🔍 Core Problem</h3>
           <p class="text-gray-700">
             Postgraduate application knowledge is fragmented, students lack motivation for active learning, 
             and advisors need lightweight auxiliary tools to improve guidance efficiency.
           </p>
         </div>
-      </section>
 
-      <!-- Section 3: Research Questions -->
-      <section id="research-questions" class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-          <span>❓</span> Research Questions
-        </h2>
-        
-        <div class="space-y-4">
-          <div class="flex items-start gap-4 p-4 bg-blue-50 rounded-xl border border-blue-100">
-            <div class="w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">
-              RQ1
-            </div>
-            <div>
-              <p class="text-gray-700">
-                Can a gamified text-based game improve XJTLU students understanding of postgraduate application processes?
-              </p>
-            </div>
-          </div>
-          
-          <div class="flex items-start gap-4 p-4 bg-orange-50 rounded-xl border border-orange-100">
-            <div class="w-10 h-10 bg-orange-500 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">
-              RQ2
-            </div>
-            <div>
-              <p class="text-gray-700">
-                Can a points-based progression system enhance students motivation in engaging with college guidance?
-              </p>
-            </div>
-          </div>
+        <div class="w-full mt-2">
+          <img 
+            src="/images/docx/module1_introduction/003.png" 
+            alt="Current Pain Points Illustration" 
+            class="w-full h-auto rounded-xl shadow-sm border border-gray-100"
+          />
         </div>
       </section>
 
@@ -259,6 +232,19 @@
             </div>
           </div>
         </div>
+
+        <div class="mb-10 w-full flex flex-col items-center bg-gray-50 p-6 rounded-xl border border-gray-100">
+          <p class="text-gray-700 font-medium mb-6 text-center max-w-3xl">
+            The diagram below illustrates how these foundational theories (e.g., Self-Determination Theory) are mapped into cognitive, motivational, and affective pillars to directly inform our system design elements.
+          </p>
+          <img 
+            src="/images/docx/module1_introduction/001.png" 
+            alt="Theoretical Framework Pillars Mapping" 
+            class="w-full max-w-4xl h-auto rounded-lg shadow-sm border border-gray-200 object-contain"
+          />
+        </div>
+
+        
       </section>
 
       <!-- Section 6: Commercial Products -->
@@ -359,7 +345,6 @@
         </div>
       </section>
 
-      <!-- Section 7: Research Gap -->
       <section id="research-gap" class="mb-12 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-8 border border-indigo-100">
         <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
           <span>🔍</span> Research Gap Identified
@@ -367,33 +352,53 @@
         
         <p class="text-gray-700 mb-6">Existing studies and products collectively lack four critical dimensions:</p>
         
-        <div class="grid md:grid-cols-2 gap-4 mb-6">
-          <div class="bg-white rounded-xl p-4 border border-indigo-100">
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+          <div class="bg-white rounded-xl p-5 border border-indigo-100 shadow-sm">
             <h4 class="font-bold text-indigo-800 mb-2">1️⃣ Longitudinal Engagement Tracking</h4>
             <p class="text-sm text-gray-600">Most gamification research relies on single-session lab experiments</p>
           </div>
-          <div class="bg-white rounded-xl p-4 border border-indigo-100">
+          <div class="bg-white rounded-xl p-5 border border-indigo-100 shadow-sm">
             <h4 class="font-bold text-indigo-800 mb-2">2️⃣ Mobile-Native Fragmented Learning</h4>
             <p class="text-sm text-gray-600">Ignores 5-10 minute commute/break contexts</p>
           </div>
-          <div class="bg-white rounded-xl p-4 border border-indigo-100">
+          <div class="bg-white rounded-xl p-5 border border-indigo-100 shadow-sm">
             <h4 class="font-bold text-indigo-800 mb-2">3️⃣ Postgraduate-Application-Specific Content</h4>
             <p class="text-sm text-gray-600">Generic templates fail to address the five-stage journey</p>
           </div>
-          <div class="bg-white rounded-xl p-4 border border-indigo-100">
+          <div class="bg-white rounded-xl p-5 border border-indigo-100 shadow-sm">
             <h4 class="font-bold text-indigo-800 mb-2">4️⃣ Advisor-Student Dual-End Design</h4>
             <p class="text-sm text-gray-600">No solution provides analytics for targeted offline guidance</p>
           </div>
         </div>
 
-        <div class="bg-indigo-600 text-white rounded-xl p-6">
-          <h4 class="font-bold mb-3">MasterApply Quest addresses these gaps by:</h4>
-          <ul class="text-sm space-y-2">
-            <li>✅ <strong>Long-term tracking</strong> via cumulative Learning/Task Values with threshold-based story triggers</li>
-            <li>✅ <strong>Mobile-native fragmented design</strong> with 5-10 minute text-based stages</li>
-            <li>✅ <strong>Postgraduate-specific content</strong> structured around XJTLU students' five-stage journey</li>
-            <li>✅ <strong>Dual-end ecosystem</strong> with student gameplay + advisor analytics dashboard</li>
+        <div class="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-12 shadow-sm">
+          <h4 class="font-bold text-blue-900 mb-4">MasterApply Quest addresses these gaps by:</h4>
+          <ul class="text-sm text-gray-800 space-y-3">
+            <li class="flex items-start gap-2">
+              <span class="mt-0.5">✅</span> 
+              <span><strong>Long-term tracking</strong> via cumulative Learning/Task Values with threshold-based story triggers</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="mt-0.5">✅</span> 
+              <span><strong>Mobile-native fragmented design</strong> with 5-10 minute text-based stages</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="mt-0.5">✅</span> 
+              <span><strong>Postgraduate-specific content</strong> structured around XJTLU students' five-stage journey</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="mt-0.5">✅</span> 
+              <span><strong>Dual-end ecosystem</strong> with student gameplay + advisor analytics dashboard</span>
+            </li>
           </ul>
+        </div>
+
+        <div class="w-full flex justify-center">
+          <img 
+            src="/images/docx/module1_introduction/002.png" 
+            alt="Research Gap Illustration" 
+            class="w-full max-w-4xl h-auto rounded-xl shadow-md border border-indigo-200 object-contain"
+          />
         </div>
       </section>
 

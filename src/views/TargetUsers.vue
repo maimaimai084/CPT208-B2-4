@@ -491,44 +491,16 @@
         <h2 class="text-2xl font-bold text-gray-900 mb-6">🗺️ Current User Journey</h2>
         <p class="text-gray-600 mb-6">Before MasterApply Quest, students were trapped in a <strong>frustrating, fragmented loop</strong> with no structured support:</p>
         
-        <div class="flex flex-wrap flex-col md:flex-row items-center justify-center gap-4">
-          <div class="px-4 py-3 bg-gray-100 rounded-lg text-center">
-            <div class="text-2xl mb-1">🎓</div>
-            <div class="text-sm font-medium">Student considers<br/>PG study</div>
-          </div>
-          <div class="flex flex-row md:flex-col items-center gap-4 md:gap-0">
-            <span class="text-3xl text-gray-400">→</span>
-            <span class="text-2xl">😰</span>
-          </div>
-          <div class="px-4 py-3 bg-gray-100 rounded-lg text-center">
-            <div class="text-2xl mb-1">📱</div>
-            <div class="text-sm font-medium">Opens<br/>Xiaohongshu/Zhihu</div>
-          </div>
-          <div class="flex flex-row md:flex-col items-center gap-4 md:gap-0">
-            <span class="text-3xl text-gray-400">→</span>
-            <span class="text-2xl">😵‍💫</span>
-          </div>
-          <div class="px-4 py-3 bg-gray-100 rounded-lg text-center">
-            <div class="text-2xl mb-1">📚</div>
-            <div class="text-sm font-medium">Information overload<br/>conflicting advice</div>
-          </div>
-          <div class="flex flex-row md:flex-col items-center gap-4 md:gap-0">
-            <span class="text-3xl text-gray-400">→</span>
-            <span class="text-2xl">😤</span>
-          </div>
-          <div class="px-4 py-3 bg-gray-100 rounded-lg text-center">
-            <div class="text-2xl mb-1">🏫</div>
-            <div class="text-sm font-medium">Wants campus<br/>workshop</div>
-          </div>
-          <div class="flex flex-row md:flex-col items-center gap-4 md:gap-0">
-            <span class="text-3xl text-gray-400">→</span>
-            <span class="text-2xl">😫</span>
-          </div>
-          <div class="px-4 py-3 bg-red-100 rounded-lg text-center">
-            <div class="text-2xl mb-1">❌</div>
-            <div class="text-sm font-medium">Schedule conflict<br/>class/internship</div>
-          </div>
+        <div class="w-full flex justify-center mb-10">
+          <img 
+            src="/images/docx/module3_users/image_006.png" 
+            alt="Current User Journey Map" 
+            class="max-w-full h-auto rounded-xl shadow-sm border border-gray-200 object-contain"
+          >
         </div>
+
+        
+        
       </section>
 
       <!-- Transition Note -->
@@ -538,153 +510,29 @@
         </p>
       </div>
 
-      <!-- Updated User Journey — Full Flowchart -->
       <section id="updated-user-journey" class="mb-12 bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 rounded-2xl shadow-sm border border-green-200 p-8">
-        <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">
           <span>✨</span> Updated User Journey — MasterApply Quest
         </h2>
         <p class="text-gray-600 mb-8">
           The redesigned journey transforms the fragmented loop into a structured, gamified adventure spanning five progressive stages — accessible anytime via both mobile and desktop.
         </p>
 
-        <!-- Layer 1: Dual Platform -->
-        <div class="flex justify-center mb-6">
-          <div class="bg-white rounded-xl border-2 border-gray-300 px-8 py-4 text-center shadow-sm">
-            <div class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Dual Platform: Mobile + PC</div>
-            <div class="flex gap-8 justify-center">
-              <div class="text-center"><span class="text-2xl">📱</span><div class="text-xs font-medium mt-1">Mobile App</div></div>
-              <div class="text-center"><span class="text-2xl">💻</span><div class="text-xs font-medium mt-1">PC Portal</div></div>
-            </div>
-          </div>
-        </div>
-        <div class="text-center text-gray-400 text-2xl mb-4">▼</div>
-
-        <!-- Layer 2: Onboarding + Register -->
-        <div class="flex flex-col md:flex-row justify-center items-center gap-4 mb-6">
-          <div class="bg-green-100 border border-green-300 rounded-lg px-5 py-3 text-center w-52 shadow-sm">
-            <span class="text-2xl">🚀</span>
-            <div class="font-semibold text-sm mt-1">Onboarding Tour</div>
-            <div class="text-xs text-gray-500">First-time guided walkthrough</div>
-          </div>
-          <span class="text-gray-400 text-xl">→</span>
-          <div class="bg-blue-100 border border-blue-300 rounded-lg px-5 py-3 text-center w-52 shadow-sm">
-            <span class="text-2xl">📝</span>
-            <div class="font-semibold text-sm mt-1">Register</div>
-            <div class="text-xs text-gray-500">Create your learner profile</div>
-          </div>
-          <span class="text-gray-400 text-xl">→</span>
-          <div class="bg-blue-100 border border-blue-300 rounded-lg px-5 py-3 text-center w-52 shadow-sm">
-            <span class="text-2xl">👤</span>
-            <div class="font-semibold text-sm mt-1">Choose Your Role</div>
-            <div class="text-xs text-gray-500">🧭 Explorer    &    🎯 Sprint </div>
-          </div>
-        </div>
-        <div class="text-center text-gray-400 text-2xl mb-4">▼</div>
-
-        <!-- Layer 3: Dual-path 5 Stages -->
-        <div class="grid md:grid-cols-2 gap-6 mb-6">
-          <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-4 shadow-sm">
-            <div class="font-bold text-sm text-indigo-700 mb-3 text-center">🧭 Explorer Path — 5 Stages</div>
-            <div class="space-y-2 text-xs">
-              <div class="bg-white rounded px-3 py-2 border flex items-center gap-2"><span class="font-bold text-indigo-500">1.</span> Discovery</div>
-              <div class="bg-white rounded px-3 py-2 border flex items-center gap-2"><span class="font-bold text-indigo-500">2.</span> Research & Funding</div>
-              <div class="bg-white rounded px-3 py-2 border flex items-center gap-2"><span class="font-bold text-indigo-500">3.</span> Craft & Submit</div>
-              <div class="bg-white rounded px-3 py-2 border flex items-center gap-2"><span class="font-bold text-indigo-500">4.</span> Connect & Interview</div>
-              <div class="bg-white rounded px-3 py-2 border flex items-center gap-2"><span class="font-bold text-indigo-500">5.</span> Decide & Depart</div>
-            </div>
-          </div>
-          <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 shadow-sm">
-            <div class="font-bold text-sm text-amber-700 mb-3 text-center">🎯 Sprint Path — 5 Stages</div>
-            <div class="space-y-2 text-xs">
-              <div class="bg-white rounded px-3 py-2 border flex items-center gap-2"><span class="font-bold text-amber-500">1.</span> Target & Plan</div>
-              <div class="bg-white rounded px-3 py-2 border flex items-center gap-2"><span class="font-bold text-amber-500">2.</span> Materials & Funding</div>
-              <div class="bg-white rounded px-3 py-2 border flex items-center gap-2"><span class="font-bold text-amber-500">3.</span> Apply & Submit</div>
-              <div class="bg-white rounded px-3 py-2 border flex items-center gap-2"><span class="font-bold text-amber-500">4.</span> Interview & Connect</div>
-              <div class="bg-white rounded px-3 py-2 border flex items-center gap-2"><span class="font-bold text-amber-500">5.</span> Decide & Go</div>
-            </div>
-          </div>
-        </div>
-        <div class="text-center text-gray-400 text-2xl mb-4">▼</div>
-
-        <!-- Layer 4: In-Stage Gameplay -->
-        <div class="bg-white rounded-xl border border-gray-200 p-6 mb-6 shadow-sm">
-          <div class="font-bold text-gray-800 mb-4 text-center">🎮 In-Stage Gameplay (Per Stage)</div>
-          <div class="grid md:grid-cols-2 gap-4">
-            <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-              <div class="font-semibold text-sm mb-2">📝 Quiz Questions → Earn LV</div>
-              <div class="text-xs text-gray-600">🔥 Combo streaks: 3+ / 5+ / 10+ / 15+ → Bonus LV & TV</div>
-            </div>
-            <div class="bg-orange-50 border border-orange-200 rounded-lg p-4">
-              <div class="font-semibold text-sm mb-2">🎯 TV Quest Mini-Games → Earn TV</div>
-              <div class="text-xs text-gray-600 space-y-1">
-                <div>🧩 Timeline Puzzle</div>
-                <div>🏫 School Matcher</div>
-                <div>📄 Document Rush (21 rounds)</div>
-                <div>📧 Email Scramble (5 scenarios)</div>
-                <div>🎤 Interview Simulation</div>
-                <div>✍️ PS Workshop</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="text-center text-gray-400 text-2xl mb-4">▼</div>
-
-        <!-- Layer 5: Dual Economy -->
-        <div class="bg-amber-50 border border-amber-200 rounded-xl p-6 mb-6 shadow-sm">
-          <div class="font-bold text-gray-800 mb-4 text-center">💰 Dual Economy Loop</div>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
-            <div class="bg-white rounded-lg p-3 border text-center">
-              <div class="text-lg mb-1">⚙️</div>
-              <div class="font-semibold">Gear Shop</div>
-              <div class="text-xs text-gray-500">LV → Upgrade gear<br/>TV bonus up to +195%</div>
-            </div>
-            <div class="bg-white rounded-lg p-3 border text-center">
-              <div class="text-lg mb-1">💬</div>
-              <div class="font-semibold">Q&A Credit</div>
-              <div class="text-xs text-gray-500">50 LV → 1 Teacher Question</div>
-            </div>
-            <div class="bg-white rounded-lg p-3 border text-center">
-              <div class="text-lg mb-1">🏪</div>
-              <div class="font-semibold">TV Store</div>
-              <div class="text-xs text-gray-500">TV → Items<br/>Hearts / Hints / XP Boosts</div>
-            </div>
-          </div>
-        </div>
-        <div class="text-center text-gray-400 text-2xl mb-4">▼</div>
-
-        <!-- Layer 6: Progression & Unlock -->
-        <div class="bg-purple-50 border border-purple-200 rounded-xl p-6 mb-6 shadow-sm">
-          <div class="font-bold text-gray-800 mb-4 text-center">📈 Progression & Unlock</div>
-          <div class="flex flex-wrap justify-center gap-2 text-xs">
-            <span class="bg-white border rounded-full px-3 py-1">📅 Daily & Weekly Quests</span>
-            <span class="bg-white border rounded-full px-3 py-1">🏆 13 Achievements</span>
-            <span class="bg-white border rounded-full px-3 py-1">📖 Story Unlock (Threshold Guides)</span>
-            <span class="bg-white border rounded-full px-3 py-1">🃏 Admission Case Flip Cards</span>
-            <span class="bg-white border rounded-full px-3 py-1">🌳 Knowledge Tree (SVG)</span>
-          </div>
-        </div>
-        <div class="text-center text-gray-400 text-2xl mb-4">▼</div>
-
-        <!-- Layer 7: Advisor Guidance -->
-        <div class="bg-indigo-50 border border-indigo-300 rounded-xl p-6 mb-6 shadow-sm text-center">
-          <span class="text-3xl">📊</span>
-          <div class="font-bold text-lg mt-2">Advisor Guidance</div>
-          <div class="text-sm text-gray-600 mt-2">Dashboard analytics · Knowledge gap tags · Progress tracking · Offline support</div>
-        </div>
-        <div class="text-center text-gray-400 text-2xl mb-4">▼</div>
-
-        <!-- Layer 8: Loop Back -->
-        <div class="flex justify-center gap-8 text-center">
-          <div class="bg-gray-100 border border-gray-300 rounded-lg px-6 py-3 shadow-sm">
-            <span class="text-2xl">📱</span>
-            <div class="text-xs font-medium mt-1">Back to Mobile App</div>
-          </div>
-          <div class="bg-gray-100 border border-gray-300 rounded-lg px-6 py-3 shadow-sm">
-            <span class="text-2xl">💻</span>
-            <div class="text-xs font-medium mt-1">Back to PC Portal</div>
-          </div>
+        <div class="flex flex-col items-center gap-8 w-full">
+          <img 
+            src="/images/docx/module3_users/image_007.png" 
+            alt="Updated User Journey Part 1" 
+            class="w-full max-w-4xl h-auto rounded-xl shadow-md border border-white/60 object-contain"
+          />
+          <img 
+            src="/images/docx/module3_users/image_008.png" 
+            alt="Updated User Journey Part 2" 
+            class="w-full max-w-4xl h-auto rounded-xl shadow-md border border-white/60 object-contain"
+          />
         </div>
       </section>
+
+      
 
       <!-- How MasterApply Quest Breaks This Loop -->
       <section id="break-loop" class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">

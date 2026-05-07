@@ -10,24 +10,73 @@
     <main class="max-w-7xl mx-auto px-4 py-8 pb-20">
       <TableOfContents :items="tocItems" />
 
-      <!-- Section 1: User Journey -->
       <section id="user-journey" class="mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
           <span>👤</span> User Journey
         </h2>
 
-        <img src="/images/docx/module5_prototype/11.png" alt="User Journey" class="max-w-full mx-auto mb-6 rounded-lg border border-gray-200">
+        <div class="mb-10 text-center">
+          <img src="/images/docx/module5_prototype/11.png" alt="User Journey V2.5" class="max-w-full mx-auto mb-2 rounded-lg border border-gray-200 shadow-sm">
+          <p class="text-xs text-gray-400 uppercase tracking-widest font-medium">V2.5 Journey Map (Initial Design)</p>
+        </div>
 
-        <div class="space-y-4">
-          <div v-for="(step, index) in coreSteps" :key="index"
-               class="flex items-start gap-4 p-4 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors">
-            <div class="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold flex-shrink-0">
-              {{ index + 1 }}
+        <div class="mb-10 text-center">
+          <img src="/images/docx/module5_prototype/18.png" alt="User Journey V4.0" class="max-w-full mx-auto mb-2 rounded-lg border border-gray-200 shadow-md">
+          <p class="text-xs text-blue-500 uppercase tracking-widest font-bold">V4.0 Journey Map (Personalized & Inclusive)</p>
+        </div>
+
+        <div class="mb-12">
+          <h3 class="text-lg font-bold text-gray-800 mb-4">V4.0 Interaction Steps</h3>
+          <div class="space-y-4">
+            <div v-for="(step, index) in coreSteps" :key="index"
+                 class="flex items-start gap-4 p-4 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors">
+              <div class="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold flex-shrink-0">
+                {{ index + 1 }}
+              </div>
+              <div>
+                <h4 class="font-bold text-gray-900">{{ step.title }}</h4>
+                <p class="text-gray-600">{{ step.desc }}</p>
+              </div>
             </div>
-            <div>
-              <h4 class="font-bold text-gray-900">{{ step.title }}</h4>
-              <p class="text-gray-600">{{ step.desc }}</p>
-            </div>
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl p-6 border border-indigo-100">
+          <h3 class="text-lg font-bold text-indigo-900 mb-4 flex items-center gap-2">
+            <span>🔄</span> Evolution Matrix: V2.5 ➡️ V4.0
+          </h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm border-collapse bg-white rounded-xl overflow-hidden shadow-sm">
+              <thead>
+                <tr class="bg-indigo-100/50">
+                  <th class="p-4 text-left font-bold text-indigo-900 border-b border-indigo-100 w-1/5">Dimension</th>
+                  <th class="p-4 text-left font-bold text-indigo-900 border-b border-indigo-100 w-2/5">V2.5 Basic Journey</th>
+                  <th class="p-4 text-left font-bold text-indigo-900 border-b border-indigo-100 w-2/5">V4.0 Personalized Journey (New)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="hover:bg-indigo-50/30 transition-colors border-b border-gray-50">
+                  <td class="p-4 font-semibold text-gray-800">Platform Strategy</td>
+                  <td class="p-4 text-gray-600">Dual-Platform (Mobile + PC Portal)</td>
+                  <td class="p-4 text-gray-800"><span class="text-green-500 mr-1">✅</span><strong>Optimized Dual-Platform</strong> with enhanced UI.</td>
+                </tr>
+                <tr class="hover:bg-indigo-50/30 transition-colors border-b border-gray-50 bg-gray-50/30">
+                  <td class="p-4 font-semibold text-gray-800">User Differentiation</td>
+                  <td class="p-4 text-gray-600">Single generic path for all users.</td>
+                  <td class="p-4 text-gray-800"><span class="text-green-500 mr-1">✅</span><strong>Role-based paths</strong>: 'Explorer' (Year 2) vs 'Sprint' (Year 3).</td>
+                </tr>
+                <tr class="hover:bg-indigo-50/30 transition-colors border-b border-gray-50">
+                  <td class="p-4 font-semibold text-gray-800">Gamification (TV Quests)</td>
+                  <td class="p-4 text-gray-600">Basic/Generic task mechanics.</td>
+                  <td class="p-4 text-gray-800"><span class="text-green-500 mr-1">✅</span><strong>Expanded Mini-games</strong>: Specialized quests like Email Scramble & Timeline Puzzle.</td>
+                </tr>
+                <tr class="hover:bg-indigo-50/30 transition-colors bg-gray-50/30">
+                  <td class="p-4 font-semibold text-gray-800">Inclusivity</td>
+                  <td class="p-4 text-gray-600">Single language (EN or ZH only).</td>
+                  <td class="p-4 text-gray-800"><span class="text-green-500 mr-1">✅</span><strong>Full Bilingual Support</strong>: Seamless EN/ZH toggle across the system.</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </section>
@@ -357,24 +406,41 @@
 
         </div>
 
-        <!-- 3 Key Improvements -->
-        <div class="grid md:grid-cols-3 gap-4 mt-6">
-          <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 border border-blue-200">
-            <div class="text-2xl mb-2">📱💻</div>
-            <h4 class="font-bold text-gray-900">Single → Dual Platform</h4>
-            <p class="text-sm text-gray-600 mt-1">Mobile for fragmented learning + PC for deep reading</p>
+        <div class="mb-12">
+          <h3 class="text-lg font-semibold text-gray-700 mb-4">Version 2.5 (Evolution & Optimization)</h3>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+            <div class="rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-white">
+              <img src="/images/docx/module5_prototype/15.png" alt="V2.5 UI 1" class="w-full h-auto object-cover">
+            </div>
+            <div class="rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-white">
+              <img src="/images/docx/module5_prototype/16.png" alt="V2.5 UI 2" class="w-full h-auto object-cover">
+            </div>
+            <div class="rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-white">
+              <img src="/images/docx/module5_prototype/17.png" alt="V2.5 UI 3" class="w-full h-auto object-cover">
+            </div>
           </div>
-          <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-4 border border-green-200">
-            <div class="text-2xl mb-2">📊</div>
-            <h4 class="font-bold text-gray-900">Value Visualization</h4>
-            <p class="text-sm text-gray-600 mt-1">Real-time progress bars for Learning & Task values with unlock nodes</p>
+
+          <div class="grid md:grid-cols-3 gap-4">
+            <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 border border-blue-200">
+              <div class="text-2xl mb-2">📱💻</div>
+              <h4 class="font-bold text-gray-900">Single → Dual Platform</h4>
+              <p class="text-sm text-gray-600 mt-1">Mobile for fragmented learning + PC for deep reading</p>
+            </div>
+            <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-4 border border-green-200">
+              <div class="text-2xl mb-2">📊</div>
+              <h4 class="font-bold text-gray-900">Value Visualization</h4>
+              <p class="text-sm text-gray-600 mt-1">Real-time progress bars for Learning & Task values with unlock nodes</p>
+            </div>
+            <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-4 border border-purple-200">
+              <div class="text-2xl mb-2">✨</div>
+              <h4 class="font-bold text-gray-900">Simplified Interface</h4>
+              <p class="text-sm text-gray-600 mt-1">Focus on core task entries, reduce visual distraction and cognitive load</p>
+            </div>
           </div>
-          <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-4 border border-purple-200">
-            <div class="text-2xl mb-2">✨</div>
-            <h4 class="font-bold text-gray-900">Simplified Interface</h4>
-            <p class="text-sm text-gray-600 mt-1">Focus on core task entries, reduce visual distraction and cognitive load</p>
-          </div>
+          <p class="text-sm text-gray-400 text-center mt-3">Version 2.5 </p>
         </div>
+        
           <!-- === 👇 新增的 V3.0 界面预览双图 👇 === -->
         <div class="mt-8 mb-4">
           <h3 class="text-lg font-semibold text-gray-700 mb-4">Version 3.0 (Interactive Demo Preview)</h3>
@@ -467,6 +533,16 @@
               <p class="text-sm text-gray-600 mt-2">
                 <strong>Focus:</strong> Visual design and basic interactions.<br>
                 <strong>Action:</strong> Developed the initial Vue 3 prototype and gathered preliminary feedback.<br>
+                
+              </p>
+            </div>
+
+            <div class="relative pl-6">
+              <div class="absolute -left-[9px] top-1 w-4 h-4 bg-indigo-400 rounded-full border-2 border-white"></div>
+              <h4 class="font-bold text-gray-900">Version 2.5: UI Optimization & Dual-Platform Strategy</h4>
+              <p class="text-sm text-gray-600 mt-2">
+                <strong>Focus:</strong> Mobile adaptation and interface simplification.<br>
+                <strong>Action:</strong> Established a dual-platform strategy (Mobile for fragmented learning + PC for deep reading) and optimized the visual display of Dual-Value (LV/TV) progress.
                 <span class="inline-block mt-2 px-3 py-1.5 bg-orange-100 text-orange-800 rounded-md text-xs font-medium">
                   💡 Insight: Users found the early version slightly dry and requested more engaging, gamified elements and basic tasks to practice.
                 </span>
